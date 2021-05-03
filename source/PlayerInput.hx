@@ -17,8 +17,9 @@ class PlayerInput extends FlxTypedGroup<FlxSprite>
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = [];
 	var submitText:FlxText;
+	var currentCustomer:Customer;
 
-	public function new()
+	public function new(labels:Array<String>)
 	{
 		super();
 
@@ -29,9 +30,10 @@ class PlayerInput extends FlxTypedGroup<FlxSprite>
 
 		fields = new FlxTypedGroup<FlxUIInputText>();
 		currentField = 0;
-		addInputField("Name");
-		addInputField("Order");
-		addInputField();
+		for (label in labels)
+		{
+			addInputField(label);
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -49,15 +51,25 @@ class PlayerInput extends FlxTypedGroup<FlxSprite>
 			trace("shift");
 			changeSelected(-1);
 		}
-		if (pressedEnter)
+		if (pressedEnter && currentCustomer != null)
 		{
 			trace("enter");
+			var customerOrder:Array<String> = currentCustomer.getOrder();
 			fields.forEach(function(item:FlxUIInputText)
 			{
 				trace(labels[item.ID] + ": " + item.text);
+				if (item.text == customerOrder[item.ID])
+				{
+					trace(labels[item.ID] + " matches");
+				}
 			});
 		}
 		super.update(elapsed);
+	}
+
+	public function setCurrentCustomer(customer:Customer)
+	{
+		currentCustomer = customer;
 	}
 
 	function addInputField(label:String = "Label")

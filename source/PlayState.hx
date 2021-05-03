@@ -27,6 +27,9 @@ class PlayState extends FlxState
 	{
 		super.create();
 
+		// background color
+		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
+
 		// Add HUD (score + day)
 		hud = new HUD();
 		add(hud);
@@ -45,11 +48,11 @@ class PlayState extends FlxState
 		}
 
 		// Add customers
-		var customer:Customer = new Customer(50, "name", ["order"], 10);
+		var customer:Customer = new Customer(1, 50, "name", ["order"], 10);
 		customers.set(1, customer);
 		add(customer);
 		customer.startTimer();
-		var customer2 = new Customer(200, "bob", ["latte"], 20);
+		var customer2 = new Customer(2, 200, "bob", ["latte"], 20);
 		customers.set(2, customer2);
 		add(customer2);
 		customer2.startTimer();

@@ -81,16 +81,45 @@ class PlayState extends FlxState
 			fields.forEach(function(item:FlxUIInputText)
 			{
 				trace(labels[item.ID] + ": " + item.text);
-				if (item.text == customerOrder[item.ID])
+				if (StringTools.trim(item.text) == customerOrder[item.ID])
 				{
 					trace(labels[item.ID] + " matches");
 				}
 			});
 
-			// Reset fields doesn't update visually :(
+			// Reset fields doesn't work properly
 			resetFields();
+			currentCustomer = null;
 
 			// Still need to handle customer satisfaction + points
+		}
+
+		// Enable spaces in input
+		var pressedSpace = FlxG.keys.justPressed.SPACE;
+		if (pressedSpace && currentField >= 0)
+		{
+			fields.forEach(function(item:FlxUIInputText)
+			{
+				if (item.ID == currentField)
+				{
+					item.text += " ";
+					item.caretIndex++;
+				}
+			});
+		}
+
+		// Backspace "fix" - looks a bit weird/inconsistent with extra space sometimes in the beginning
+		var pressedBackspace = FlxG.keys.justPressed.BACKSPACE;
+		if (pressedBackspace && currentField >= 0)
+		{
+			fields.forEach(function(item:FlxUIInputText)
+			{
+				if (item.ID == currentField && item.text == "")
+				{
+					item.text = " ";
+					item.caretIndex = 0;
+				}
+			});
 		}
 
 		// Customer selection
@@ -188,7 +217,8 @@ class PlayState extends FlxState
 		fields.forEach(function(item:FlxUIInputText)
 		{
 			// DOES NOT PROPERLY UPDATE VISUALLY
-			item.text = "";
+			item.text = " "; // makeshift solution for now - does "remove" the text but weird spacing
+			item.caretIndex = 0;
 			if (item.ID == currentField)
 			{
 				item.hasFocus = true;

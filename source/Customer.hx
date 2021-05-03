@@ -32,6 +32,8 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		}
 		textbox = new FlxText(x, 120, 200, text, 16);
 		add(textbox);
+		var number = new FlxText(x, 220, 0, Std.string(index), 25);
+		add(number);
 		patience = new FlxTimer();
 		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, 100, 10, patience, "timeLeft", 0, time);
 		add(patienceBar);

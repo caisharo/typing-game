@@ -83,6 +83,11 @@ class PlayState extends FlxState
 					trace(labels[item.ID] + " matches");
 				}
 			});
+
+			// Reset fields doesn't update visually :(
+			resetFields();
+
+			// Still need to handle customer satisfaction + points
 		}
 
 		// Customer selection
@@ -166,6 +171,25 @@ class PlayState extends FlxState
 				item.hasFocus = true;
 				item.backgroundColor = FlxColor.YELLOW;
 				trace(item.ID + " is focused");
+			}
+			else
+			{
+				item.hasFocus = false;
+				item.backgroundColor = FlxColor.WHITE;
+			}
+		});
+	}
+
+	function resetFields()
+	{
+		fields.forEach(function(item:FlxUIInputText)
+		{
+			// DOES NOT PROPERLY UPDATE VISUALLY
+			item.text = "";
+			if (item.ID == currentField)
+			{
+				item.hasFocus = true;
+				item.backgroundColor = FlxColor.YELLOW;
 			}
 			else
 			{

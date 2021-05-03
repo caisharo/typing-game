@@ -15,10 +15,11 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	var customer:FlxSprite;
 	var textbox:FlxText;
 
+	var index:Int;
 	var time:Float;
 	var order:Array<String>;
 
-	public function new(x:Float, name:String, order:Array<String>, time:Float)
+	public function new(index:Int, x:Float, name:String, order:Array<String>, time:Float)
 	{
 		super();
 		customer = new FlxSprite(x - 40, 170, AssetPaths.customer__png);
@@ -34,6 +35,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		patience = new FlxTimer();
 		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, 100, 10, patience, "timeLeft", 0, time);
 		add(patienceBar);
+		this.index = index;
 		this.order = order;
 		this.time = time;
 		this.order = [name].concat(order);

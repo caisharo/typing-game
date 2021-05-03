@@ -131,27 +131,52 @@ class PlayState extends FlxState
 		if (pressedOne)
 		{
 			trace("customer 1 selected");
+			if (currentCustomer != null)
+			{
+				currentCustomer.changeNumColor(FlxColor.WHITE);
+			}
 			currentCustomer = customers.get(1);
+			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedTwo)
 		{
+			if (currentCustomer != null)
+			{
+				currentCustomer.changeNumColor(FlxColor.WHITE);
+			}
 			trace("customer 2 selected");
 			currentCustomer = customers.get(2);
+			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedThree)
 		{
+			if (currentCustomer != null)
+			{
+				currentCustomer.changeNumColor(FlxColor.WHITE);
+			}
 			trace("customer 3 selected");
 			currentCustomer = customers.get(3);
+			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedFour)
 		{
+			if (currentCustomer != null)
+			{
+				currentCustomer.changeNumColor(FlxColor.WHITE);
+			}
 			trace("customer 4 selected");
 			currentCustomer = customers.get(4);
+			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedFive)
 		{
+			if (currentCustomer != null)
+			{
+				currentCustomer.changeNumColor(FlxColor.WHITE);
+			}
 			trace("customer 5 selected");
 			currentCustomer = customers.get(5);
+			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 
 		super.update(elapsed);

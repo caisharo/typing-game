@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxBar;
+import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
 using flixel.util.FlxSpriteUtil;
@@ -14,6 +15,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	var patienceBar:FlxBar;
 	var customer:FlxSprite;
 	var textbox:FlxText;
+	var number:FlxText;
 
 	var index:Int;
 	var time:Float;
@@ -32,7 +34,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		}
 		textbox = new FlxText(x, 120, 200, text, 16);
 		add(textbox);
-		var number = new FlxText(x, 220, 0, Std.string(index), 25);
+		number = new FlxText(x, 220, 0, Std.string(index), 25);
 		add(number);
 		patience = new FlxTimer();
 		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, 100, 10, patience, "timeLeft", 0, time);
@@ -51,6 +53,11 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	public function getOrder()
 	{
 		return order;
+	}
+
+	public function changeNumColor(color:FlxColor)
+	{
+		number.color = color;
 	}
 
 	function deleteBar(timer:FlxTimer):Void

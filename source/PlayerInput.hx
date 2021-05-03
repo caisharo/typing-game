@@ -12,7 +12,7 @@ using flixel.util.FlxSpriteUtil;
 
 class PlayerInput extends FlxTypedGroup<FlxSprite>
 {
-	var yShift = 100; // how much to move everything down by
+	var yShift = 150; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = [];

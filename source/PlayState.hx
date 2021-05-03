@@ -78,12 +78,15 @@ class PlayState extends FlxState
 		{
 			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
+			// Go through each input field to validate matches
 			fields.forEach(function(item:FlxUIInputText)
 			{
 				trace(labels[item.ID] + ": " + item.text);
 				if (StringTools.trim(item.text) == customerOrder[item.ID])
 				{
 					trace(labels[item.ID] + " matches");
+					// maybe do some sort of counter to calculate % of matches? (e.g. 100% = happy, 50%+ = satsified, <50% = angry)
+					// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
 				}
 			});
 
@@ -91,7 +94,9 @@ class PlayState extends FlxState
 			resetFields();
 			currentCustomer = null;
 
-			// Still need to handle customer satisfaction + points
+			// TODO: Still need to handle customer satisfaction + points
+			// Example image change:
+			// customer.loadGraphic(AssetPaths.angry_customer__png);
 		}
 
 		// Enable spaces in input

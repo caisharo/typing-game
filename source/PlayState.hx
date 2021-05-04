@@ -80,8 +80,6 @@ class PlayState extends FlxState
 		if (pressedEnter && currentCustomer != null)
 		{
 			trace("enter");
-			trace("displayed: " + displayedCustomers);
-			trace("remaining " + remainingCustomers);
 			var customerOrder:Array<String> = currentCustomer.getOrder();
 			var matches:Int = 0;
 			// Go through each input field to validate matches
@@ -250,7 +248,7 @@ class PlayState extends FlxState
 				// replace customer?
 				if (remainingCustomers.length > 0)
 				{
-					replaceCustomer(key);
+					Timer.delay(replaceCustomer.bind(key), 1500);
 				}
 			}
 		}

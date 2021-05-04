@@ -4,10 +4,11 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
+import flixel.effects.FlxFlicker;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import js.lib.Set;
+import flixel.util.FlxTimer;
 
 class TutorialState extends FlxState
 {
@@ -23,13 +24,22 @@ class TutorialState extends FlxState
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = ["Name", "Order"];
-	var submitText:FlxText;
+	var selectText = new FlxText(0, 0, 0, "PRESS NUMBER KEY TO SELECT CUSTOMER", 15);
+	var typeText = new FlxText(0, 0, 0, "TYPE NAME AND ORDER ABOVE THE CUSTOMER CORRECTLY", 15);
+	var typeText_2 = new FlxText(0, 0, 0, "PRESS TAB OR SHIFT TO CHANGE TEXT FIELD", 15);
+	var patienceText = new FlxText(0, 0, 0, "HURRY UP! DON'T LET THE GREEN BAR RUN OUT!", 15);
+	var submitText = new FlxText(0, 0, 0, "AFTER FINISHED, PRESS ENTER TO SUBMIT", 15);
+	var completeText = new FlxText(0, 0, 0, "NOW COMPLETE THE REST OF THE TUTORIAL", 15);
+	var finishText = new FlxText(0, 0, 0, "NOW YOU FINISHED THE TUTORIAL, GOOD JOB!", 15);
+
+	// var wellDone = new FlxText(0, 0, 0, "WELL DONE", 15);
+	var phase = 1;
 
 	override public function create()
 	{
 		super.create();
 
-		FlxG.mouse.visible = false;
+		// FlxG.mouse.visible = false;
 
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
@@ -37,12 +47,6 @@ class TutorialState extends FlxState
 		// Add HUD (score + day)
 		hud = new HUD();
 		add(hud);
-
-		// Add player input section
-		submitText = new FlxText(0, 0, 0, "PRESS ENTER TO COMPLETE ORDER", 15);
-		submitText.screenCenter();
-		submitText.y += yShift + 20;
-		add(submitText);
 
 		fields = new FlxTypedGroup<FlxUIInputText>();
 		currentField = 0;
@@ -53,16 +57,26 @@ class TutorialState extends FlxState
 
 		// Add customers
 		addCustomers();
+
+		showText(selectText);
+	}
+
+	private function showText(text:FlxText, offset:Int = 80)
+	{
+		text.screenCenter();
+		text.y += yShift + offset;
+		add(text);
+		// FlxFlicker.flicker(text, 0, .9);
 	}
 
 	private function addCustomers()
 	{
-		var customer:Customer = new Customer(1, 50, "name", ["order"], 10);
+		var customer:Customer = new Customer(1, 50, "alice", ["black"], 20);
 		customers.set(1, customer);
 		left++;
 		add(customer);
 		customer.startTimer();
-		var customer2 = new Customer(2, 200, "bob", ["latte"], 20);
+		var customer2 = new Customer(2, 200, "bob", ["latte"], 30);
 		customers.set(2, customer2);
 		left++;
 		add(customer2);
@@ -101,22 +115,27 @@ class TutorialState extends FlxState
 				}
 			});
 
-			// Reset fields doesn't work properly
 			resetFields();
-			remove(currentCustomer);
-			if (left == 1)
-			{
-				left = 0;
-				FlxG.switchState(new MenuState());
-			}
-			else
-			{
-				left--;
-			}
 
 			// TODO: Still need to handle customer satisfaction + points
 			// Example image change:
 			// customer.loadGraphic(AssetPaths.angry_customer__png);
+			remove(currentCustomer);
+			if (left == 1)
+			{
+				left = 0;
+				if (phase == 4)
+				{
+					remove(completeText);
+					haxe.Timer.delay(showText.bind(finishText), 500);
+				}
+				haxe.Timer.delay(FlxG.switchState.bind(new MenuState()), 3000);
+			}
+			else
+			{
+				left--;
+				currentCustomer = null;
+			}
 		}
 
 		// Enable spaces in input
@@ -204,6 +223,31 @@ class TutorialState extends FlxState
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 
+		if (phase == 1 && (pressedOne || pressedTwo || pressedThree || pressedFour || pressedFive))
+		{
+			remove(selectText);
+			haxe.Timer.delay(showText.bind(typeText), 800);
+			haxe.Timer.delay(showText.bind(typeText_2, 110), 800);
+			phase++;
+		}
+
+		if (phase == 2 && (pressedShift || pressedTab))
+		{
+			remove(typeText);
+			remove(typeText_2);
+			haxe.Timer.delay(showText.bind(patienceText), 800);
+			haxe.Timer.delay(showText.bind(submitText, 110), 800);
+			phase++;
+		}
+
+		if (phase == 3 && pressedEnter)
+		{
+			remove(submitText);
+			remove(patienceText);
+			haxe.Timer.delay(showText.bind(completeText), 800);
+			phase++;
+		}
+
 		super.update(elapsed);
 	}
 
@@ -266,19 +310,12 @@ class TutorialState extends FlxState
 	{
 		fields.forEach(function(item:FlxUIInputText)
 		{
-			// DOES NOT PROPERLY UPDATE VISUALLY
 			item.text = " "; // makeshift solution for now - does "remove" the text but weird spacing
 			item.caretIndex = 0;
-			if (item.ID == currentField)
-			{
-				item.hasFocus = true;
-				item.backgroundColor = FlxColor.YELLOW;
-			}
-			else
-			{
-				item.hasFocus = false;
-				item.backgroundColor = FlxColor.WHITE;
-			}
+			item.hasFocus = false;
+			item.backgroundColor = FlxColor.WHITE;
 		});
+		fields.getFirstExisting().hasFocus = true;
+		fields.getFirstExisting().backgroundColor = FlxColor.YELLOW;
 	}
 }

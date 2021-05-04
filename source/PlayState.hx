@@ -389,17 +389,8 @@ class PlayState extends FlxState
 		fields.getFirstExisting().backgroundColor = FlxColor.YELLOW;
 	}
 
-	function getRandomLine(filePath:String):String
-	{
-		var fileContent:String = Assets.getText(filePath);
-		var lines:Array<String> = fileContent.split("\n");
-		var random = new FlxRandom();
-		return random.getObject(lines);
-	}
-
 	function replaceCustomer(position:Int)
 	{
-		// displayedCustomers.get(position).destroy();
 		remove(displayedCustomers.get(position));
 		var newCustomer:Customer = remainingCustomers.shift();
 		newCustomer.setPosition(position);

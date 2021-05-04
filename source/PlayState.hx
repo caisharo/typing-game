@@ -24,6 +24,7 @@ class PlayState extends FlxState
 	var currentCustomer:Customer;
 	var maxCustomersAtOnce = 3;
 	var possibleOrders:Map<String, Array<String>> = []; // maps label to array of possible choices (so we don't have to parse file every time)
+	var currentCustomerText:FlxText;
 
 	// Player input section
 	var yShift = 150; // how much to move everything down by
@@ -42,6 +43,17 @@ class PlayState extends FlxState
 		// Add HUD (score + day)
 		hud = new HUD();
 		add(hud);
+
+		var text = "Current customer: ";
+		if (currentCustomer != null)
+		{
+			text += currentCustomer.getPosition();
+		}
+		currentCustomerText = new FlxText(0, 0, 0, text, 15);
+		currentCustomerText.screenCenter();
+		currentCustomerText.y += 160;
+		currentCustomerText.x -= 300;
+		add(currentCustomerText);
 
 		// These will need to change (maybe use values in save data??)
 		// With more fields we will need more text files (with the way it is currently implemented)
@@ -138,6 +150,7 @@ class PlayState extends FlxState
 			}
 
 			currentCustomer = null;
+			currentCustomerText.text = "Current customer: ";
 		}
 
 		// Enable spaces in input
@@ -176,7 +189,7 @@ class PlayState extends FlxState
 		var pressedFive = FlxG.keys.justPressed.FIVE;
 		// Will we have more than 5 at a time?
 
-		if (pressedOne)
+		if (pressedOne && maxCustomersAtOnce >= 1)
 		{
 			trace("customer 1 selected");
 			if (currentCustomer != null)
@@ -184,9 +197,10 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			currentCustomer = displayedCustomers.get(1);
+			currentCustomerText.text = "Current customer: 1";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
-		if (pressedTwo)
+		if (pressedTwo && maxCustomersAtOnce >= 2)
 		{
 			if (currentCustomer != null)
 			{
@@ -194,9 +208,10 @@ class PlayState extends FlxState
 			}
 			trace("customer 2 selected");
 			currentCustomer = displayedCustomers.get(2);
+			currentCustomerText.text = "Current customer: 2";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
-		if (pressedThree)
+		if (pressedThree && maxCustomersAtOnce >= 3)
 		{
 			if (currentCustomer != null)
 			{
@@ -204,9 +219,10 @@ class PlayState extends FlxState
 			}
 			trace("customer 3 selected");
 			currentCustomer = displayedCustomers.get(3);
+			currentCustomerText.text = "Current customer: 3";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
-		if (pressedFour)
+		if (pressedFour && maxCustomersAtOnce >= 4)
 		{
 			if (currentCustomer != null)
 			{
@@ -214,9 +230,10 @@ class PlayState extends FlxState
 			}
 			trace("customer 4 selected");
 			currentCustomer = displayedCustomers.get(4);
+			currentCustomerText.text = "Current customer: 4";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
-		if (pressedFive)
+		if (pressedFive && maxCustomersAtOnce >= 5)
 		{
 			if (currentCustomer != null)
 			{
@@ -224,6 +241,7 @@ class PlayState extends FlxState
 			}
 			trace("customer 5 selected");
 			currentCustomer = displayedCustomers.get(5);
+			currentCustomerText.text = "Current customer: 5";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 

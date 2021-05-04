@@ -1,7 +1,0 @@
-coffee
-latte
-americano
-mocha
-espresso
-affogato
-cappuccino

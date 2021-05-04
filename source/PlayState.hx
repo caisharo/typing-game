@@ -1,18 +1,21 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import haxe.Timer;
 
 class PlayState extends FlxState
 {
 	var hud:HUD;
-	var day:Int;
-	var money:Int;
+	var day:Int = 1;
+	var money:Int = 0;
 	var customers:Map<Int, Customer> = []; // map customer position (numkey) to customer
 	var currentCustomer:Customer;
 
@@ -48,11 +51,11 @@ class PlayState extends FlxState
 		}
 
 		// Add customers
-		var customer:Customer = new Customer(1, 50, "name", ["order"], 10);
+		var customer:Customer = new Customer(1, 50, ["name", "order"], 10);
 		customers.set(1, customer);
 		add(customer);
 		customer.startTimer();
-		var customer2 = new Customer(2, 200, "bob", ["latte"], 20);
+		var customer2 = new Customer(2, 200, ["bob", "latte"], 20);
 		customers.set(2, customer2);
 		add(customer2);
 		customer2.startTimer();
@@ -78,6 +81,8 @@ class PlayState extends FlxState
 		{
 			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
+			var matches:Float = 0;
+
 			// Go through each input field to validate matches
 			fields.forEach(function(item:FlxUIInputText)
 			{
@@ -85,10 +90,44 @@ class PlayState extends FlxState
 				if (StringTools.trim(item.text) == customerOrder[item.ID])
 				{
 					trace(labels[item.ID] + " matches");
-					// maybe do some sort of counter to calculate % of matches? (e.g. 100% = happy, 50%+ = satsified, <50% = angry)
-					// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
+					matches++;
 				}
 			});
+
+			// currently doing this for matches: 100% = happy, 50%+ = satsified, <50% = angry
+			// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
+			var score = matches / labels.length;
+			trace("matches score: " + score);
+			if (score == 1)
+			{
+				currentCustomer.stopPatienceBar();
+				currentCustomer.changeSprite(AssetPaths.happy_customer__png);
+				money += 10;
+				currentCustomer.showScore("+10", FlxColor.GREEN);
+				currentCustomer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(currentCustomer), 1500);
+			}
+			else if (score >= 0.5)
+			{
+				currentCustomer.stopPatienceBar();
+				currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
+				money += 5;
+				currentCustomer.showScore("+5", FlxColor.YELLOW);
+				currentCustomer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(currentCustomer), 1500);
+			}
+			else
+			{
+				currentCustomer.stopPatienceBar();
+				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
+				money -= 5;
+				currentCustomer.showScore("-5", FlxColor.RED);
+				currentCustomer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(currentCustomer), 1500);
+			}
 
 			// Reset fields doesn't work properly
 			resetFields();
@@ -182,6 +221,26 @@ class PlayState extends FlxState
 			trace("customer 5 selected");
 			currentCustomer = customers.get(5);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
+		}
+
+		// if a customer has run out of patience
+		for (key in customers.keys())
+		{
+			if (!customers.get(key).hasPatience)
+			{
+				if (currentCustomer == customers.get(key))
+				{
+					currentCustomer = null;
+				}
+				var customer:Customer = customers.get(key);
+				customer.changeSprite(AssetPaths.angry_customer__png);
+				money -= 5;
+				customer.showScore("-5", FlxColor.RED);
+				customer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(customer), 1500);
+				customers.remove(key);
+			}
 		}
 
 		super.update(elapsed);

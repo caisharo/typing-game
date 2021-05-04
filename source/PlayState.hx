@@ -382,20 +382,13 @@ class PlayState extends FlxState
 	{
 		fields.forEach(function(item:FlxUIInputText)
 		{
-			// DOES NOT PROPERLY UPDATE VISUALLY
 			item.text = " "; // makeshift solution for now - does "remove" the text but weird spacing
 			item.caretIndex = 0;
-			if (item.ID == currentField)
-			{
-				item.hasFocus = true;
-				item.backgroundColor = FlxColor.YELLOW;
-			}
-			else
-			{
-				item.hasFocus = false;
-				item.backgroundColor = FlxColor.WHITE;
-			}
+			item.hasFocus = false;
+			item.backgroundColor = FlxColor.WHITE;
 		});
+		fields.getFirstExisting().hasFocus = true;
+		fields.getFirstExisting().backgroundColor = FlxColor.YELLOW;
 	}
 
 	function getRandomLine(filePath:String):String

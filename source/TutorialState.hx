@@ -9,12 +9,13 @@ import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import haxe.Timer;
 
 class TutorialState extends FlxState
 {
 	var hud:HUD;
-	var day:Int;
-	var money:Int;
+	var day:Int = 1;
+	var money:Int = 0;
 	var customers:Map<Int, Customer> = []; // map customer position (numkey) to customer
 	var currentCustomer:Customer;
 	var left = 0;
@@ -103,6 +104,8 @@ class TutorialState extends FlxState
 		{
 			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
+			var matches:Float = 0;
+
 			// Go through each input field to validate matches
 			fields.forEach(function(item:FlxUIInputText)
 			{
@@ -110,17 +113,51 @@ class TutorialState extends FlxState
 				if (StringTools.trim(item.text) == customerOrder[item.ID])
 				{
 					trace(labels[item.ID] + " matches");
-					// maybe do some sort of counter to calculate % of matches? (e.g. 100% = happy, 50%+ = satsified, <50% = angry)
-					// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
+					matches++;
 				}
 			});
+
+			// currently doing this for matches: 100% = happy, 50%+ = satsified, <50% = angry
+			// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
+			var score = matches / labels.length;
+			trace("matches score: " + score);
+			if (score == 1)
+			{
+				currentCustomer.stopPatienceBar();
+				currentCustomer.changeSprite(AssetPaths.happy_customer__png);
+				money += 10;
+				currentCustomer.showScore("+10", FlxColor.GREEN);
+				currentCustomer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(currentCustomer), 1500);
+			}
+			else if (score >= 0.5)
+			{
+				currentCustomer.stopPatienceBar();
+				currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
+				money += 5;
+				currentCustomer.showScore("+5", FlxColor.YELLOW);
+				currentCustomer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(currentCustomer), 1500);
+			}
+			else
+			{
+				currentCustomer.stopPatienceBar();
+				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
+				money -= 5;
+				currentCustomer.showScore("-5", FlxColor.RED);
+				currentCustomer.fadeAway();
+				Timer.delay(hud.updateHUD.bind(day, money), 1500);
+				Timer.delay(remove.bind(currentCustomer), 1500);
+			}
 
 			resetFields();
 
 			// TODO: Still need to handle customer satisfaction + points
 			// Example image change:
 			// customer.loadGraphic(AssetPaths.angry_customer__png);
-			remove(currentCustomer);
+
 			if (left == 1)
 			{
 				left = 0;

@@ -75,13 +75,13 @@ class TutorialState extends FlxState
 
 	private function addCustomers()
 	{
-		var customer:Customer = new Customer(1, ["alice", "black"], 20);
+		var customer:Customer = new Customer(1, ["alice", "black"], 25);
 		customers.set(1, customer);
 		left++;
 		add(customer);
 		Timer.delay(customer.stopPatienceBar, 24000);
 		customer.startTimer();
-		var customer2 = new Customer(2, ["bob", "latte"], 30);
+		var customer2 = new Customer(2, ["bob", "latte"], 40);
 		customers.set(2, customer2);
 		left++;
 		add(customer2);

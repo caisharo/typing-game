@@ -42,11 +42,6 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		}
 		textbox = new FlxText(x, 120, 200, text, 16);
 		add(textbox);
-		var timer = new Timer(3000);
-		timer.run = function()
-		{
-			textbox.alpha = 0;
-		}
 		customerPosition = new FlxText(x, 220, 0, Std.string(position), 25);
 		add(customerPosition);
 		patience = new FlxTimer();
@@ -126,7 +121,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		{
 			textbox.alpha = 0;
 		}
-		patience.start(patience.timeLeft - cost, deleteBar, 1);
+		patience.start(Math.max(0, patience.timeLeft - cost), deleteBar, 1);
 	}
 
 	// function so that bar gets properly deleted when time runs out (killOnEmpty doesn't seem to work)

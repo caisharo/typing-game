@@ -197,9 +197,12 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			currentCustomer = displayedCustomers.get(1);
-			currentCustomerText.text = "Current customer: 1";
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-			currentCustomer.showText(3000, 3);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 1";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+				currentCustomer.showText(3000, 3);
+			}
 		}
 		if (pressedTwo && maxCustomersAtOnce >= 2)
 		{
@@ -209,9 +212,12 @@ class PlayState extends FlxState
 			}
 			trace("customer 2 selected");
 			currentCustomer = displayedCustomers.get(2);
-			currentCustomerText.text = "Current customer: 2";
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-			currentCustomer.showText(3000, 3);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 2";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+				currentCustomer.showText(3000, 3);
+			}
 		}
 		if (pressedThree && maxCustomersAtOnce >= 3)
 		{
@@ -221,9 +227,12 @@ class PlayState extends FlxState
 			}
 			trace("customer 3 selected");
 			currentCustomer = displayedCustomers.get(3);
-			currentCustomerText.text = "Current customer: 3";
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-			currentCustomer.showText(3000, 3);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 3";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+				currentCustomer.showText(3000, 3);
+			}
 		}
 		if (pressedFour && maxCustomersAtOnce >= 4)
 		{
@@ -233,9 +242,12 @@ class PlayState extends FlxState
 			}
 			trace("customer 4 selected");
 			currentCustomer = displayedCustomers.get(4);
-			currentCustomerText.text = "Current customer: 4";
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-			currentCustomer.showText(3000, 3);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 4";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+				currentCustomer.showText(3000, 3);
+			}
 		}
 		if (pressedFive && maxCustomersAtOnce >= 5)
 		{
@@ -245,9 +257,12 @@ class PlayState extends FlxState
 			}
 			trace("customer 5 selected");
 			currentCustomer = displayedCustomers.get(5);
-			currentCustomerText.text = "Current customer: 5";
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-			currentCustomer.showText(3000, 3);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 5";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+				currentCustomer.showText(3000, 3);
+			}
 		}
 
 		// check if a customer has run out of patience
@@ -308,6 +323,7 @@ class PlayState extends FlxState
 				displayedCustomers.set(position, customer);
 				add(customer);
 				customer.startTimer();
+				customer.showText(5000, 0);
 				trace("test: " + customer.getOrder());
 			}
 			else

@@ -49,7 +49,7 @@ class PlayState extends FlxState
 		{
 			text += currentCustomer.getPosition();
 		}
-		currentCustomerText = new FlxText(0, 0, 0, text, 15);
+		currentCustomerText = new FlxText(0, 0, 0, text, 18);
 		currentCustomerText.screenCenter();
 		currentCustomerText.y += 160;
 		currentCustomerText.x -= 300;

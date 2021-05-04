@@ -22,7 +22,7 @@ class TutorialState extends FlxState
 	var left = 0;
 
 	// Player input section
-	var yShift = 150; // how much to move everything down by
+	var yShift = 120; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = ["Name", "Order"];

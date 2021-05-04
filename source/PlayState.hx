@@ -23,6 +23,7 @@ class PlayState extends FlxState
 	var remainingCustomers:Array<Customer> = [];
 	var currentCustomer:Customer;
 	var maxCustomersAtOnce = 3;
+	var possibleOrders:Map<String, Array<String>> = []; // maps label to array of possible choices (so we don't have to parse file every time)
 
 	// Player input section
 	var yShift = 150; // how much to move everything down by
@@ -43,7 +44,17 @@ class PlayState extends FlxState
 		add(hud);
 
 		// These will need to change (maybe use values in save data??)
+		// With more fields we will need more text files (with the way it is currently implemented)
 		addInput(["Name", "Order"]);
+
+		// parse files once
+		for (label in labels)
+		{
+			var fileContent:String = Assets.getText("assets/data/" + label + ".txt");
+			var lines:Array<String> = fileContent.split("\n");
+			possibleOrders.set(label, lines);
+		}
+
 		setMaxCustomers(3);
 		addCustomers(10);
 	}
@@ -260,18 +271,19 @@ class PlayState extends FlxState
 		for (i in 0...numberOfCustomers)
 		{
 			var position = i + 1;
+			var order:Array<String> = [];
+			var random = new FlxRandom();
+			var patience = 10 + random.float() * 100 / 2;
 			if (position <= maxCustomersAtOnce && displayedCustomers.get(position) == null)
 			{
 				// no customer in position yet - add
-				var order:Array<String> = [];
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(getRandomLine("assets/data/" + label + ".txt"));
+					order.push(random.getObject(possibleOrders.get(label)));
 				}
-				var random = new FlxRandom();
 				// actual customer patience timer length still to be decided
-				var customer = new Customer(position, 50 + 200 * i, order, 10 + random.float() * 100);
+				var customer = new Customer(position, order, patience);
 				displayedCustomers.set(position, customer);
 				add(customer);
 				customer.startTimer();
@@ -285,9 +297,9 @@ class PlayState extends FlxState
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(getRandomLine("assets/data/" + label + ".txt"));
+					order.push(random.getObject(possibleOrders.get(label)));
 				}
-				var customer = new Customer(position, 50, order, 10);
+				var customer = new Customer(position, order, patience);
 				remainingCustomers.push(customer);
 			}
 		}

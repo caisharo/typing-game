@@ -15,7 +15,7 @@ import haxe.Timer;
 class TutorialState extends FlxState
 {
 	var hud:HUD;
-	var day:Int = 1;
+	var day:Int = 0;
 	var money:Int = 0;
 	var customers:Map<Int, Customer> = []; // map customer position (numkey) to customer
 	var currentCustomer:Customer;
@@ -50,6 +50,7 @@ class TutorialState extends FlxState
 
 		// Add HUD (score + day)
 		hud = new HUD();
+		hud.updateHUD(day, money);
 		add(hud);
 
 		fields = new FlxTypedGroup<FlxUIInputText>();

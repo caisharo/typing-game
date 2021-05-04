@@ -4,3 +4,4 @@ americano
 mocha
 espresso
 affogato
+cappuccino

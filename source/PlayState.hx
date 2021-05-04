@@ -360,13 +360,14 @@ class PlayState extends FlxState
 		}
 	}
 
-	function addInputField(label:String = "Label")
+	function addInputField(label:String = "Name")
 	{
 		var newField = new FlxUIInputText(0, 0, 200, "", 15);
 		newField.filterMode = FlxInputText.ONLY_ALPHA;
 		newField.forceCase = FlxInputText.LOWER_CASE;
 		newField.ID = fields.length;
 		newField.screenCenter();
+		newField.x += 35;
 		newField.y += yShift + (25 * fields.length);
 
 		var fieldLabel = new FlxText(0, 0, 0, label, 15);

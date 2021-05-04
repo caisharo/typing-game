@@ -362,17 +362,17 @@ class PlayState extends FlxState
 
 	function addInputField(label:String = "Label")
 	{
-		var newField = new FlxUIInputText();
+		var newField = new FlxUIInputText(0, 0, 200, "", 15);
 		newField.filterMode = FlxInputText.ONLY_ALPHA;
 		newField.forceCase = FlxInputText.LOWER_CASE;
 		newField.ID = fields.length;
 		newField.screenCenter();
-		newField.y += yShift + (20 * fields.length);
+		newField.y += yShift + (25 * fields.length);
 
 		var fieldLabel = new FlxText(0, 0, 0, label, 15);
 		fieldLabel.screenCenter();
 		fieldLabel.x = newField.x - 75;
-		fieldLabel.y += yShift + (20 * fields.length);
+		fieldLabel.y += yShift + (25 * fields.length);
 		add(fieldLabel);
 
 		if (fields.length == 0)
@@ -384,7 +384,7 @@ class PlayState extends FlxState
 		fields.add(newField);
 		add(newField);
 
-		submitText.y += 20;
+		submitText.y += 25;
 	}
 
 	function changeSelected(direction:Int = 0)

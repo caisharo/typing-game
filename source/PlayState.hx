@@ -199,6 +199,7 @@ class PlayState extends FlxState
 			currentCustomer = displayedCustomers.get(1);
 			currentCustomerText.text = "Current customer: 1";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			currentCustomer.showText(3000, 3);
 		}
 		if (pressedTwo && maxCustomersAtOnce >= 2)
 		{
@@ -210,6 +211,7 @@ class PlayState extends FlxState
 			currentCustomer = displayedCustomers.get(2);
 			currentCustomerText.text = "Current customer: 2";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			currentCustomer.showText(3000, 3);
 		}
 		if (pressedThree && maxCustomersAtOnce >= 3)
 		{
@@ -221,6 +223,7 @@ class PlayState extends FlxState
 			currentCustomer = displayedCustomers.get(3);
 			currentCustomerText.text = "Current customer: 3";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			currentCustomer.showText(3000, 3);
 		}
 		if (pressedFour && maxCustomersAtOnce >= 4)
 		{
@@ -232,6 +235,7 @@ class PlayState extends FlxState
 			currentCustomer = displayedCustomers.get(4);
 			currentCustomerText.text = "Current customer: 4";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			currentCustomer.showText(3000, 3);
 		}
 		if (pressedFive && maxCustomersAtOnce >= 5)
 		{
@@ -243,6 +247,7 @@ class PlayState extends FlxState
 			currentCustomer = displayedCustomers.get(5);
 			currentCustomerText.text = "Current customer: 5";
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			currentCustomer.showText(3000, 3);
 		}
 
 		// check if a customer has run out of patience

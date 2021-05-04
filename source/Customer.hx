@@ -9,6 +9,7 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import haxe.Timer;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -41,6 +42,11 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		}
 		textbox = new FlxText(x, 120, 200, text, 16);
 		add(textbox);
+		var timer = new Timer(3000);
+		timer.run = function()
+		{
+			textbox.alpha = 0;
+		}
 		customerPosition = new FlxText(x, 220, 0, Std.string(position), 25);
 		add(customerPosition);
 		patience = new FlxTimer();
@@ -110,6 +116,17 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		score.color = color;
 		add(score);
 		FlxTween.tween(score, {x: 10, y: 10}, 1.5);
+	}
+
+	public function showText(time:Int, cost:Int)
+	{
+		textbox.alpha = 1;
+		var timer = new Timer(time);
+		timer.run = function()
+		{
+			textbox.alpha = 0;
+		}
+		patience.start(patience.timeLeft - cost, deleteBar, 1);
 	}
 
 	// function so that bar gets properly deleted when time runs out (killOnEmpty doesn't seem to work)

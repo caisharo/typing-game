@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
@@ -25,15 +26,17 @@ class TutorialState extends FlxState
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = ["Name", "Order"];
-	var selectText = new FlxText(0, 0, 0, "PRESS NUMBER KEY TO SELECT CUSTOMER", 15);
-	var typeText = new FlxText(0, 0, 0, "TYPE NAME AND ORDER ABOVE THE CUSTOMER CORRECTLY", 15);
-	var typeText_2 = new FlxText(0, 0, 0, "PRESS TAB OR SHIFT TO CHANGE TEXT FIELD", 15);
-	var patienceText = new FlxText(0, 0, 0, "HURRY UP! DON'T LET THE GREEN BAR RUN OUT!", 15);
-	var submitText = new FlxText(0, 0, 0, "AFTER FINISHED, PRESS ENTER TO SUBMIT", 15);
-	var completeText = new FlxText(0, 0, 0, "NOW COMPLETE THE REST OF THE TUTORIAL", 15);
-	var finishText = new FlxText(0, 0, 0, "NOW YOU FINISHED THE TUTORIAL, GOOD JOB!", 15);
 
-	// var wellDone = new FlxText(0, 0, 0, "WELL DONE", 15);
+	var selectText = new FlxText(0, 0, 0, "USE NUMBER KEYS TO SELECT A CUSTOMER.", 20);
+	var typeText = new FlxText(0, 0, 0, "TYPE THE TEXT ABOVE YOUR SELECTED CUSTOMER INTO THE PROPER FIELDS.", 20);
+	var typeText2 = new FlxText(0, 0, 0, "PRESS TAB OR SHIFT TO CHANGE FIELDS.", 20);
+	var patienceText = new FlxText(0, 0, 0, "DON'T LET THE GREEN PATIENCE BAR RUN OUT!", 20);
+	var submitText = new FlxText(0, 0, 0, "WHEN YOU'RE DONE TYPING, PRESS ENTER.", 20);
+	var submitText2 = new FlxText(0, 0, 0, "MAKE SURE YOU HAVE A CUSTOMER SELECTED BEFORE HITTING ENTER.", 20);
+	var completeText = new FlxText(0, 0, 0, "NOW COMPLETE THE REST OF THE TUTORIAL.", 20);
+	var finishText = new FlxText(0, 0, 0, "YOU HAVE FINISHED THE TUTORIAL, GOOD JOB!", 20);
+
+	// var wellDone = new FlxText(0, 0, 0, "WELL DONE", 25);
 	var phase = 1;
 
 	override public function create()
@@ -72,15 +75,17 @@ class TutorialState extends FlxState
 
 	private function addCustomers()
 	{
-		var customer:Customer = new Customer(1, 50, ["alice", "black"], 20);
+		var customer:Customer = new Customer(1, 50, ["alice", "black"], 25);
 		customers.set(1, customer);
 		left++;
 		add(customer);
+		Timer.delay(customer.stopPatienceBar, 24000);
 		customer.startTimer();
-		var customer2 = new Customer(2, 200, ["bob", "latte"], 30);
+		var customer2 = new Customer(2, 200, ["bob", "latte"], 40);
 		customers.set(2, customer2);
 		left++;
 		add(customer2);
+		Timer.delay(customer2.stopPatienceBar, 39000);
 		customer2.startTimer();
 	}
 
@@ -153,6 +158,7 @@ class TutorialState extends FlxState
 			}
 
 			resetFields();
+			currentCustomer = null;
 
 			// TODO: Still need to handle customer satisfaction + points
 			// Example image change:
@@ -164,9 +170,9 @@ class TutorialState extends FlxState
 				if (phase == 4)
 				{
 					remove(completeText);
-					haxe.Timer.delay(showText.bind(finishText), 500);
+					Timer.delay(showText.bind(finishText), 500);
 				}
-				haxe.Timer.delay(FlxG.switchState.bind(new MenuState()), 3000);
+				Timer.delay(FlxG.switchState.bind(new MenuState()), 3000);
 			}
 			else
 			{
@@ -263,25 +269,27 @@ class TutorialState extends FlxState
 		if (phase == 1 && (pressedOne || pressedTwo || pressedThree || pressedFour || pressedFive))
 		{
 			remove(selectText);
-			haxe.Timer.delay(showText.bind(typeText), 800);
-			haxe.Timer.delay(showText.bind(typeText_2, 110), 800);
+			Timer.delay(showText.bind(typeText), 800);
+			Timer.delay(showText.bind(typeText2, 110), 800);
 			phase++;
 		}
 
 		if (phase == 2 && (pressedShift || pressedTab))
 		{
 			remove(typeText);
-			remove(typeText_2);
-			haxe.Timer.delay(showText.bind(patienceText), 800);
-			haxe.Timer.delay(showText.bind(submitText, 110), 800);
+			remove(typeText2);
+			Timer.delay(showText.bind(patienceText), 800);
+			Timer.delay(showText.bind(submitText, 110), 800);
+			Timer.delay(showText.bind(submitText2, 140), 800);
 			phase++;
 		}
 
 		if (phase == 3 && pressedEnter)
 		{
 			remove(submitText);
+			remove(submitText2);
 			remove(patienceText);
-			haxe.Timer.delay(showText.bind(completeText), 800);
+			Timer.delay(showText.bind(completeText), 800);
 			phase++;
 		}
 

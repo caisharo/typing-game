@@ -212,9 +212,6 @@ class TutorialState extends FlxState
 		// Customer selection
 		var pressedOne = FlxG.keys.justPressed.ONE;
 		var pressedTwo = FlxG.keys.justPressed.TWO;
-		var pressedThree = FlxG.keys.justPressed.THREE;
-		var pressedFour = FlxG.keys.justPressed.FOUR;
-		var pressedFive = FlxG.keys.justPressed.FIVE;
 		if (pressedOne)
 		{
 			trace("customer 1 selected");
@@ -235,38 +232,8 @@ class TutorialState extends FlxState
 			currentCustomer = customers.get(2);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
-		if (pressedThree)
-		{
-			if (currentCustomer != null)
-			{
-				currentCustomer.changeNumColor(FlxColor.WHITE);
-			}
-			trace("customer 3 selected");
-			currentCustomer = customers.get(3);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-		}
-		if (pressedFour)
-		{
-			if (currentCustomer != null)
-			{
-				currentCustomer.changeNumColor(FlxColor.WHITE);
-			}
-			trace("customer 4 selected");
-			currentCustomer = customers.get(4);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-		}
-		if (pressedFive)
-		{
-			if (currentCustomer != null)
-			{
-				currentCustomer.changeNumColor(FlxColor.WHITE);
-			}
-			trace("customer 5 selected");
-			currentCustomer = customers.get(5);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-		}
 
-		if (phase == 1 && (pressedOne || pressedTwo || pressedThree || pressedFour || pressedFive))
+		if (phase == 1 && (pressedOne || pressedTwo))
 		{
 			remove(selectText);
 			Timer.delay(showText.bind(typeText), 800);

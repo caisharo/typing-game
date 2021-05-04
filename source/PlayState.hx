@@ -1,30 +1,35 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.group.FlxGroup;
+import flixel.math.FlxRandom;
 import flixel.text.FlxText;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import haxe.Timer;
+import lime.utils.Assets;
 
 class PlayState extends FlxState
 {
+	// HUD stuff
 	var hud:HUD;
 	var day:Int = 1;
 	var money:Int = 0;
-	var customers:Map<Int, Customer> = []; // map customer position (numkey) to customer
+
+	// Customer stuff
+	var displayedCustomers:Map<Int, Customer> = []; // map customer position (numkey) to customer
+	var remainingCustomers:Array<Customer> = [];
 	var currentCustomer:Customer;
+	var maxCustomersAtOnce = 3;
 
 	// Player input section
 	var yShift = 150; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
-	var labels:Array<String> = ["Name", "Order"];
-	var submitText:FlxText;
+	var labels:Array<String>; // the labels for the input fields (e.g "Name", "Order")
+	var submitText:FlxText; // just text telling player to press enter - need to access it to move it down
 
 	override public function create()
 	{
@@ -37,28 +42,10 @@ class PlayState extends FlxState
 		hud = new HUD();
 		add(hud);
 
-		// Add player input section
-		submitText = new FlxText(0, 0, 0, "PRESS ENTER TO COMPLETE ORDER", 15);
-		submitText.screenCenter();
-		submitText.y += yShift + 20;
-		add(submitText);
-
-		fields = new FlxTypedGroup<FlxUIInputText>();
-		currentField = 0;
-		for (label in labels)
-		{
-			addInputField(label);
-		}
-
-		// Add customers
-		var customer:Customer = new Customer(1, 50, ["name", "order"], 10);
-		customers.set(1, customer);
-		add(customer);
-		customer.startTimer();
-		var customer2 = new Customer(2, 200, ["bob", "latte"], 20);
-		customers.set(2, customer2);
-		add(customer2);
-		customer2.startTimer();
+		// These will need to change (maybe use values in save data??)
+		addInput(["Name", "Order"]);
+		setMaxCustomers(3);
+		addCustomers(10);
 	}
 
 	override public function update(elapsed:Float)
@@ -69,25 +56,28 @@ class PlayState extends FlxState
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
 		if (pressedTab)
 		{
+			// Go to next input field
 			trace("tab");
 			changeSelected(1);
 		}
 		if (pressedShift)
 		{
+			// Go to previous input field
 			trace("shift");
 			changeSelected(-1);
 		}
 		if (pressedEnter && currentCustomer != null)
 		{
 			trace("enter");
+			trace("displayed: " + displayedCustomers);
+			trace("remaining " + remainingCustomers);
 			var customerOrder:Array<String> = currentCustomer.getOrder();
-			var matches:Float = 0;
-
+			var matches:Int = 0;
 			// Go through each input field to validate matches
 			fields.forEach(function(item:FlxUIInputText)
 			{
 				trace(labels[item.ID] + ": " + item.text);
-				if (StringTools.trim(item.text) == customerOrder[item.ID])
+				if (StringTools.trim(item.text) == customerOrder[item.ID].toLowerCase())
 				{
 					trace(labels[item.ID] + " matches");
 					matches++;
@@ -129,13 +119,16 @@ class PlayState extends FlxState
 				Timer.delay(remove.bind(currentCustomer), 1500);
 			}
 
-			// Reset fields doesn't work properly
+			// Reset fields doesn't work 100% properly
 			resetFields();
-			currentCustomer = null;
 
-			// TODO: Still need to handle customer satisfaction + points
-			// Example image change:
-			// customer.loadGraphic(AssetPaths.angry_customer__png);
+			// Replace customer?
+			if (remainingCustomers.length > 0)
+			{
+				Timer.delay(replaceCustomer.bind(currentCustomer.getPosition()), 1500);
+			}
+
+			currentCustomer = null;
 		}
 
 		// Enable spaces in input
@@ -152,7 +145,7 @@ class PlayState extends FlxState
 			});
 		}
 
-		// Backspace "fix" - looks a bit weird/inconsistent with extra space sometimes in the beginning
+		// Backspace workaround/"fix" for now - looks a bit weird/inconsistent with extra space sometimes in the beginning
 		var pressedBackspace = FlxG.keys.justPressed.BACKSPACE;
 		if (pressedBackspace && currentField >= 0)
 		{
@@ -172,6 +165,8 @@ class PlayState extends FlxState
 		var pressedThree = FlxG.keys.justPressed.THREE;
 		var pressedFour = FlxG.keys.justPressed.FOUR;
 		var pressedFive = FlxG.keys.justPressed.FIVE;
+		// Will we have more than 5 at a time?
+
 		if (pressedOne)
 		{
 			trace("customer 1 selected");
@@ -179,7 +174,7 @@ class PlayState extends FlxState
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
-			currentCustomer = customers.get(1);
+			currentCustomer = displayedCustomers.get(1);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedTwo)
@@ -189,7 +184,7 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 2 selected");
-			currentCustomer = customers.get(2);
+			currentCustomer = displayedCustomers.get(2);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedThree)
@@ -199,7 +194,7 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 3 selected");
-			currentCustomer = customers.get(3);
+			currentCustomer = displayedCustomers.get(3);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedFour)
@@ -209,7 +204,7 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 4 selected");
-			currentCustomer = customers.get(4);
+			currentCustomer = displayedCustomers.get(4);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 		if (pressedFive)
@@ -219,31 +214,101 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 5 selected");
-			currentCustomer = customers.get(5);
+			currentCustomer = displayedCustomers.get(5);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 		}
 
-		// if a customer has run out of patience
-		for (key in customers.keys())
+		// check if a customer has run out of patience
+		for (key in displayedCustomers.keys())
 		{
-			if (!customers.get(key).hasPatience)
+			if (!displayedCustomers.get(key).hasPatience)
 			{
-				if (currentCustomer == customers.get(key))
+				if (currentCustomer == displayedCustomers.get(key))
 				{
 					currentCustomer = null;
 				}
-				var customer:Customer = customers.get(key);
+				var customer:Customer = displayedCustomers.get(key);
 				customer.changeSprite(AssetPaths.angry_customer__png);
 				money -= 5;
 				customer.showScore("-5", FlxColor.RED);
 				customer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 1500);
 				Timer.delay(remove.bind(customer), 1500);
-				customers.remove(key);
+				displayedCustomers.remove(key);
+
+				// replace customer?
+				if (remainingCustomers.length > 0)
+				{
+					replaceCustomer(key);
+				}
 			}
 		}
 
 		super.update(elapsed);
+	}
+
+	public function setMaxCustomers(maxCustomersAtOnce:Int)
+	{
+		this.maxCustomersAtOnce = maxCustomersAtOnce;
+	}
+
+	public function addCustomers(numberOfCustomers:Int)
+	{
+		// Add customers
+
+		// total # of customers on level - need to figure out a way to only show X at a time
+		for (i in 0...numberOfCustomers)
+		{
+			var position = i + 1;
+			if (position <= maxCustomersAtOnce && displayedCustomers.get(position) == null)
+			{
+				// no customer in position yet - add
+				var order:Array<String> = [];
+				for (label in labels)
+				{
+					// assumes text files are named based on label - will probably need to adjust later
+					order.push(getRandomLine("assets/data/" + label + ".txt"));
+				}
+				var random = new FlxRandom();
+				// actual customer patience timer length still to be decided
+				var customer = new Customer(position, 50 + 200 * i, order, 10 + random.float() * 100);
+				displayedCustomers.set(position, customer);
+				add(customer);
+				customer.startTimer();
+				trace("test: " + customer.getOrder());
+			}
+			else
+			{
+				// hidden customers - need to remember to add and start timer later
+				// temp position - won't know until player clears a spot
+				var order:Array<String> = [];
+				for (label in labels)
+				{
+					// assumes text files are named based on label - will probably need to adjust later
+					order.push(getRandomLine("assets/data/" + label + ".txt"));
+				}
+				var customer = new Customer(position, 50, order, 10);
+				remainingCustomers.push(customer);
+			}
+		}
+	}
+
+	public function addInput(labels:Array<String>)
+	{
+		// Add player input section
+		this.labels = labels;
+
+		submitText = new FlxText(0, 0, 0, "PRESS ENTER TO COMPLETE ORDER", 15);
+		submitText.screenCenter();
+		submitText.y += yShift + 20;
+		add(submitText);
+
+		fields = new FlxTypedGroup<FlxUIInputText>();
+		currentField = 0;
+		for (label in labels)
+		{
+			addInputField(label);
+		}
 	}
 
 	function addInputField(label:String = "Label")
@@ -319,5 +384,24 @@ class PlayState extends FlxState
 				item.backgroundColor = FlxColor.WHITE;
 			}
 		});
+	}
+
+	function getRandomLine(filePath:String):String
+	{
+		var fileContent:String = Assets.getText(filePath);
+		var lines:Array<String> = fileContent.split("\n");
+		var random = new FlxRandom();
+		return random.getObject(lines);
+	}
+
+	function replaceCustomer(position:Int)
+	{
+		// displayedCustomers.get(position).destroy();
+		remove(displayedCustomers.get(position));
+		var newCustomer:Customer = remainingCustomers.shift();
+		newCustomer.setPosition(position);
+		displayedCustomers.set(position, newCustomer);
+		add(newCustomer);
+		newCustomer.startTimer();
 	}
 }

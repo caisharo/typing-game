@@ -51,6 +51,17 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		this.order = order;
 	}
 
+	public function setPosition(position:Int)
+	{
+		this.index = position;
+		customerPosition.text = Std.string(index);
+	}
+
+	public function getPosition()
+	{
+		return this.index;
+	}
+
 	public function startTimer()
 	{
 		patience.start(time, deleteBar, 1);

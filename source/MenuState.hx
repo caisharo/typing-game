@@ -2,8 +2,6 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.effects.FlxFlicker;
-import flixel.system.FlxBGSprite;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
@@ -24,7 +22,7 @@ class MenuState extends FlxState
 		titleText.y = 64;
 		add(titleText);
 
-		var startButton = new FlxButton(0, 0, "Start", StartGame);
+		var startButton = new FlxButton(0, 0, "Start", startGame);
 		startButton.screenCenter();
 		startButton.scale.x = startButton.scale.y = 3;
 		startButton.label.size = 14;
@@ -32,7 +30,7 @@ class MenuState extends FlxState
 		startButton.y += 50;
 		add(startButton);
 
-		var tutorialButton = new FlxButton(0, 0, "Tutorial", Tutorial);
+		var tutorialButton = new FlxButton(0, 0, "Tutorial", startTutorial);
 		tutorialButton.screenCenter();
 		tutorialButton.scale.x = tutorialButton.scale.y = 3;
 		tutorialButton.label.size = 14;
@@ -43,12 +41,12 @@ class MenuState extends FlxState
 		super.create();
 	}
 
-	private function StartGame()
+	private function startGame()
 	{
 		FlxG.switchState(new PlayState());
 	}
 
-	private function Tutorial()
+	private function startTutorial()
 	{
 		FlxG.switchState(new TutorialState());
 	}

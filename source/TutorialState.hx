@@ -329,5 +329,6 @@ class TutorialState extends FlxState
 		});
 		fields.getFirstExisting().hasFocus = true;
 		fields.getFirstExisting().backgroundColor = FlxColor.YELLOW;
+		currentField = 0;
 	}
 }

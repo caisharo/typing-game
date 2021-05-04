@@ -405,6 +405,7 @@ class PlayState extends FlxState
 		});
 		fields.getFirstExisting().hasFocus = true;
 		fields.getFirstExisting().backgroundColor = FlxColor.YELLOW;
+		currentField = 0;
 	}
 
 	function replaceCustomer(position:Int)

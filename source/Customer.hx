@@ -21,15 +21,16 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	var customerPosition:FlxText;
 	var score:FlxText;
 
-	var index:Int;
+	var position:Int;
 	var time:Float;
 	var order:Array<String>;
 
 	public var hasPatience:Bool = true;
 
-	public function new(index:Int, x:Float, order:Array<String>, time:Float)
+	public function new(position:Int, order:Array<String>, time:Float)
 	{
 		super();
+		var x = 50 + (position - 1) * 200;
 		customer = new FlxSprite(x - 40, 170, AssetPaths.customer__png);
 		customer.scale.set(0.7, 0.7);
 		add(customer);
@@ -40,15 +41,33 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		}
 		textbox = new FlxText(x, 120, 200, text, 16);
 		add(textbox);
-		customerPosition = new FlxText(x, 220, 0, Std.string(index), 25);
+		customerPosition = new FlxText(x, 220, 0, Std.string(position), 25);
 		add(customerPosition);
 		patience = new FlxTimer();
 		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, 100, 10, patience, "timeLeft", 0, time);
 		add(patienceBar);
-		this.index = index;
+		this.position = position;
 		this.order = order;
 		this.time = time;
 		this.order = order;
+	}
+
+	public function setPosition(position:Int)
+	{
+		this.position = position;
+		customerPosition.text = Std.string(position);
+
+		// Move everything to proper position
+		var x = 50 + (position - 1) * 200;
+		customer.x = x - 40;
+		textbox.x = x;
+		customerPosition.x = x;
+		patienceBar.x = x;
+	}
+
+	public function getPosition()
+	{
+		return this.position;
 	}
 
 	public function startTimer()

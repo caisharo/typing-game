@@ -3,7 +3,9 @@ package;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.effects.FlxFlicker;
+import flixel.system.FlxBGSprite;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 
 class MenuState extends FlxState
@@ -22,22 +24,37 @@ class MenuState extends FlxState
 		titleText.y = 64;
 		add(titleText);
 
-		var playText = new FlxText(0, 0, 0, "PRESS ENTER", 32);
-		playText.screenCenter();
-		playText.y += 32;
-		add(playText);
-		FlxFlicker.flicker(playText, 0, .7);
+		var startButton = new FlxButton(0, 0, "Start", StartGame);
+		startButton.screenCenter();
+		startButton.scale.x = startButton.scale.y = 3;
+		startButton.label.size = 14;
+		startButton.label.alignment = FlxTextAlign.CENTER;
+		startButton.y += 50;
+		add(startButton);
+
+		var tutorialButton = new FlxButton(0, 0, "Tutorial", Tutorial);
+		tutorialButton.screenCenter();
+		tutorialButton.scale.x = tutorialButton.scale.y = 3;
+		tutorialButton.label.size = 14;
+		tutorialButton.label.alignment = FlxTextAlign.CENTER;
+		tutorialButton.y += 150;
+		add(tutorialButton);
 
 		super.create();
 	}
 
+	private function StartGame()
+	{
+		FlxG.switchState(new PlayState());
+	}
+
+	private function Tutorial()
+	{
+		FlxG.switchState(new TutorialState());
+	}
+
 	override public function update(elapsed:Float)
 	{
-		var pressedEnter = FlxG.keys.justPressed.ENTER;
-		if (pressedEnter)
-		{
-			FlxG.switchState(new PlayState());
-		}
 		super.update(elapsed);
 	}
 }

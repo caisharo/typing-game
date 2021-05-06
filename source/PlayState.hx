@@ -13,16 +13,20 @@ import lime.utils.Assets;
 
 class PlayState extends FlxState
 {
-	// HUD stuff
+	// public static variables - so we can set to different values for different "levels"
+	public static var day = 1;
+	public static var money = 0;
+	public static var maxCustomersAtOnce = 3;
+	public static var totalCustomers = 5;
+	public static var labels:Array<String> = ["Name", "Order"]; // the labels for the input fields
+
+	// HUD
 	var hud:HUD;
-	var day:Int = 1;
-	var money:Int = 0;
 
 	// Customer stuff
 	var displayedCustomers:Map<Int, Customer> = []; // map customer position (numkey) to customer
 	var remainingCustomers:Array<Customer> = [];
 	var currentCustomer:Customer;
-	var maxCustomersAtOnce = 3;
 	var possibleOrders:Map<String, Array<String>> = []; // maps label to array of possible choices (so we don't have to parse file every time)
 	var currentCustomerText:FlxText;
 
@@ -30,7 +34,6 @@ class PlayState extends FlxState
 	var yShift = 150; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
-	var labels:Array<String>; // the labels for the input fields (e.g "Name", "Order")
 
 	// the following implementation might be changed when more fields are added
 	// but temporarily used for now
@@ -42,6 +45,16 @@ class PlayState extends FlxState
 	{
 		super.create();
 
+		if (FlxG.save.data.dayCompleted != null)
+		{
+			trace("last day completed: " + FlxG.save.data.dayCompleted);
+		}
+
+		if (FlxG.save.data.playerMoney != null)
+		{
+			trace("last saved player money: " + FlxG.save.data.playerMoney);
+		}
+
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 
@@ -49,6 +62,7 @@ class PlayState extends FlxState
 
 		// Add HUD (score + day)
 		hud = new HUD();
+		hud.updateHUD(day, money);
 		add(hud);
 
 		var text = "Current customer: ";
@@ -62,20 +76,17 @@ class PlayState extends FlxState
 		currentCustomerText.x -= 300;
 		add(currentCustomerText);
 
-		// These will need to change (maybe use values in save data??)
-		// With more fields we will need more text files (with the way it is currently implemented)
-		addInput(["Name", "Order"]);
-
 		// parse files once
 		for (label in labels)
 		{
+			// assumes files are named base on label (matching case too) - might need to change
 			var fileContent:String = Assets.getText("assets/data/" + label + ".txt");
 			var lines:Array<String> = fileContent.split("\n");
 			possibleOrders.set(label, lines);
 		}
 
-		setMaxCustomers(3);
-		addCustomers(10);
+		addInput();
+		addCustomers(totalCustomers);
 	}
 
 	private function setRange()
@@ -106,17 +117,9 @@ class PlayState extends FlxState
 			changeSelected(-1);
 		}
 
-		// I don't know if we need to reset everything if the player try to submit without selecting customer
-		// If so, uncomment the following codes
-
-		// if (pressedEnter && currentCustomer == null)
-		// {
-		// 	trace("enter");
-		// 	resetFields();
-		// }
-
 		if (pressedEnter && currentCustomer != null)
 		{
+			var currentPosition = currentCustomer.getPosition();
 			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
 			var matches:Int = 0;
@@ -170,9 +173,16 @@ class PlayState extends FlxState
 			resetFields();
 
 			// Replace customer?
+			displayedCustomers.remove(currentPosition);
 			if (remainingCustomers.length > 0)
 			{
-				Timer.delay(replaceCustomer.bind(currentCustomer.getPosition()), 1500);
+				Timer.delay(replaceCustomer.bind(currentPosition), 1500);
+			}
+			else if (!displayedCustomers.keys().hasNext())
+			{
+				// no more customers - end of day
+				trace("end day");
+				endDay();
 			}
 
 			currentCustomer = null;
@@ -299,6 +309,7 @@ class PlayState extends FlxState
 				if (currentCustomer == displayedCustomers.get(key))
 				{
 					currentCustomer = null;
+					currentCustomerText.text = "Current customer: ";
 				}
 				var customer:Customer = displayedCustomers.get(key);
 				customer.changeSprite(AssetPaths.angry_customer__png);
@@ -309,14 +320,15 @@ class PlayState extends FlxState
 				Timer.delay(remove.bind(customer), 1500);
 				displayedCustomers.remove(key);
 
-				currentCustomer = null;
-				currentCustomerText.text = "Current customer: ";
-				resetFields();
-
 				// replace customer?
 				if (remainingCustomers.length > 0)
 				{
 					Timer.delay(replaceCustomer.bind(key), 1500);
+				}
+				else if (!displayedCustomers.keys().hasNext())
+				{
+					// no more customers - end of day
+					endDay();
 				}
 			}
 		}
@@ -324,12 +336,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 
-	public function setMaxCustomers(maxCustomersAtOnce:Int)
-	{
-		this.maxCustomersAtOnce = maxCustomersAtOnce;
-	}
-
-	private function randomChoose(random:FlxRandom, label:String)
+	function randomChoose(random:FlxRandom, label:String)
 	{
 		var choices = possibleOrders.get(label);
 		var size = choices.length;
@@ -340,11 +347,9 @@ class PlayState extends FlxState
 		return choices[index];
 	}
 
-	public function addCustomers(numberOfCustomers:Int)
+	function addCustomers(numberOfCustomers:Int)
 	{
-		// Add customers
-
-		// total # of customers on level - need to figure out a way to only show X at a time
+		// total # of customers on level - only show maxCustomersAtOnce at a time
 		for (i in 0...numberOfCustomers)
 		{
 			var position = i + 1;
@@ -365,7 +370,6 @@ class PlayState extends FlxState
 				add(customer);
 				customer.startTimer();
 				customer.showText(5000, 0);
-				trace("test: " + customer.getOrder());
 			}
 			else
 			{
@@ -383,11 +387,9 @@ class PlayState extends FlxState
 		}
 	}
 
-	public function addInput(labels:Array<String>)
+	function addInput()
 	{
 		// Add player input section
-		this.labels = labels;
-
 		fields = new FlxTypedGroup<FlxUIInputText>();
 		currentField = 0;
 		for (label in labels)
@@ -468,9 +470,19 @@ class PlayState extends FlxState
 	{
 		remove(displayedCustomers.get(position));
 		var newCustomer:Customer = remainingCustomers.shift();
-		newCustomer.setPosition(position);
-		displayedCustomers.set(position, newCustomer);
-		add(newCustomer);
-		newCustomer.startTimer();
+		if (newCustomer != null)
+		{
+			newCustomer.setPosition(position);
+			displayedCustomers.set(position, newCustomer);
+			add(newCustomer);
+			newCustomer.startTimer();
+		}
+	}
+
+	function endDay()
+	{
+		DayEndState.day = day;
+		DayEndState.money = money;
+		Timer.delay(FlxG.switchState.bind(new DayEndState()), 3000);
 	}
 }

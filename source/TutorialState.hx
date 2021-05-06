@@ -119,11 +119,11 @@ class TutorialState extends FlxState
 			trace("shift");
 			changeSelected(-1);
 		}
-		if (pressedEnter && currentCustomer == null)
-		{
-			trace("enter");
-			resetFields();
-		}
+		// if (pressedEnter && currentCustomer == null)
+		// {
+		// 	trace("enter");
+		// 	resetFields();
+		// }
 		if (pressedEnter && currentCustomer != null)
 		{
 			trace("enter");

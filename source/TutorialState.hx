@@ -21,6 +21,8 @@ class TutorialState extends FlxState
 	var currentCustomer:Customer;
 	var left = 0;
 
+	public static var colors:Array<String> = ["#C8D8FA", "#FFE7DA"]; // colors for input fields
+
 	// Player input section
 	var yShift = 120; // how much to move everything down by
 	var currentField = -1;
@@ -65,12 +67,7 @@ class TutorialState extends FlxState
 		currentCustomerText.x -= 300;
 		add(currentCustomerText);
 
-		fields = new FlxTypedGroup<FlxUIInputText>();
-		currentField = 0;
-		for (label in labels)
-		{
-			addInputField(label);
-		}
+		addInput();
 
 		// Add customers
 		addCustomers();
@@ -291,7 +288,18 @@ class TutorialState extends FlxState
 		super.update(elapsed);
 	}
 
-	function addInputField(label:String = "Name")
+	function addInput()
+	{
+		// Add player input section
+		fields = new FlxTypedGroup<FlxUIInputText>();
+		currentField = 0;
+		for (label in labels)
+		{
+			addInputField(label, colors[labels.indexOf(label)]);
+		}
+	}
+
+	function addInputField(label:String = "Name", color:String)
 	{
 		var newField = new FlxUIInputText(0, 0, 200, "", 15);
 		newField.filterMode = FlxInputText.ONLY_ALPHA;
@@ -305,6 +313,7 @@ class TutorialState extends FlxState
 		fieldLabel.screenCenter();
 		fieldLabel.x = newField.x - 75;
 		fieldLabel.y += yShift + (25 * fields.length);
+		fieldLabel.color = FlxColor.fromString(color);
 		add(fieldLabel);
 
 		if (fields.length == 0)

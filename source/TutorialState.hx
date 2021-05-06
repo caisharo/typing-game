@@ -246,7 +246,7 @@ class TutorialState extends FlxState
 						returnToMenuText.start(0.02, false, false, [], function()
 						{
 							FlxFlicker.flicker(returnToMenuText, 0, .5);
-							Timer.delay(FlxG.switchState.bind(new MenuState()), 3500);
+							Timer.delay(FlxG.switchState.bind(new MenuState()), 1500);
 						});
 					};
 					finishedText2.start(0.015, false, true);

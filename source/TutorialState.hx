@@ -3,10 +3,12 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.text.FlxTypeText;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.effects.FlxFlicker;
 import flixel.group.FlxGroup;
+import flixel.input.keyboard.FlxKey;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
@@ -19,32 +21,53 @@ class TutorialState extends FlxState
 	var money:Int = 0;
 	var customers:Map<Int, Customer> = []; // map customer position (numkey) to customer
 	var currentCustomer:Customer;
-	var left = 0;
 
 	// Player input section
 	var yShift = 120; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = ["Name", "Order"];
-
-	var selectText = new FlxText(0, 0, 0, "USE NUMBER KEYS TO SELECT A CUSTOMER.", 20);
-	var typeText = new FlxText(0, 0, 0, "TYPE THE TEXT ABOVE YOUR SELECTED CUSTOMER INTO THE PROPER FIELDS.", 20);
-	var typeText2 = new FlxText(0, 0, 0, "PRESS TAB OR SHIFT TO CHANGE FIELDS.", 20);
-	var patienceText = new FlxText(0, 0, 0, "DON'T LET THE GREEN PATIENCE BAR RUN OUT!", 20);
-	var submitText = new FlxText(0, 0, 0, "WHEN YOU'RE DONE TYPING, PRESS ENTER.", 20);
-	var submitText2 = new FlxText(0, 0, 0, "MAKE SURE YOU HAVE A CUSTOMER SELECTED BEFORE HITTING ENTER.", 20);
-	var completeText = new FlxText(0, 0, 0, "NOW COMPLETE THE REST OF THE TUTORIAL.", 20);
-	var finishText = new FlxText(0, 0, 0, "YOU HAVE FINISHED THE TUTORIAL, GOOD JOB!", 20);
 	var currentCustomerText:FlxText;
 
-	// var wellDone = new FlxText(0, 0, 0, "WELL DONE", 25);
-	var phase = 1;
+	var phase = 0;
+
+	var tutorialText:Array<String> = [
+		"Welcome to the tutorial!", "Look, a customer has appeared!", "Number keys are used to select customers.", "Press 1 to select this customer!",
+		"Now type the customer's name!", "Press TAB to go to the next field (SHIFT to go back).", "Now type the customer's order!",
+		"Press ENTER to submit your order!",
+		"You finished before the customer's patience (green bar) ran out! \n If a customer's patience runs out, they'll be angry and leave.",
+		"You have finished the tutorial!", "Returning you to the main menu..."
+	];
+
+	// phase 0
+	var welcomeText = new FlxTypeText(0, 0, 0, "Welcome to the tutorial!", 20);
+	var customerAppearsText = new FlxTypeText(0, 0, 0, "Look, a customer has appeared!", 20);
+
+	// phase 1 - need to press 1
+	var selectCustomerText = new FlxTypeText(0, 0, 0, "Number keys are used to select customers.", 20);
+	var selectCustomerText2 = new FlxTypeText(0, 0, 0, "Press 1 to select this customer!", 20);
+
+	// phase 2 - need to type anything
+	var typeNameText = new FlxTypeText(0, 0, 0, "Now type the customer's name!", 20);
+
+	// phase 3 - need to hit tab or shift
+	var tabText = new FlxTypeText(0, 0, 0, "Press TAB to go to the next field (SHIFT to go back).", 20);
+
+	// phase 4 - need to type anything
+	var typeOrderText = new FlxTypeText(0, 0, 0, "Now type the customer's order!", 20);
+
+	// phase 5 - need to press enter
+	var enterText = new FlxTypeText(0, 0, 0, "Press ENTER to submit your order!", 20);
+
+	// finished
+	var finishedText = new FlxTypeText(0, 0, 0,
+		"You finished before the customer's patience (green bar) ran out! \n If a customer's patience runs out, they'll be angry and leave.", 20);
+	var finishedText2 = new FlxTypeText(0, 0, 0, "You have finished the tutorial!", 20);
+	var returnToMenuText = new FlxTypeText(0, 0, 0, "Returning you to the main menu...", 20);
 
 	override public function create()
 	{
 		super.create();
-
-		// FlxG.mouse.visible = false;
 
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
@@ -54,53 +77,63 @@ class TutorialState extends FlxState
 		hud.updateHUD(day, money);
 		add(hud);
 
-		var text = "Current customer: ";
-		if (currentCustomer != null)
+		// Start with welcome text
+		welcomeText.screenCenter();
+		welcomeText.y += yShift + 80;
+		// welcomeText.x -= 120;
+		var temp = new FlxText(0, 0, 0, tutorialText[0], 20);
+		welcomeText.x = (FlxG.width - temp.width) / 2;
+		add(welcomeText);
+		welcomeText.eraseDelay = 0.018;
+		welcomeText.eraseCallback = function()
 		{
-			text += currentCustomer.getPosition();
-		}
-		currentCustomerText = new FlxText(0, 0, 0, text, 18);
-		currentCustomerText.screenCenter();
-		currentCustomerText.y += 130;
-		currentCustomerText.x -= 300;
-		add(currentCustomerText);
+			// Customer appears
+			var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
+			customers.set(1, customer);
+			add(customer);
 
-		fields = new FlxTypedGroup<FlxUIInputText>();
-		currentField = 0;
-		for (label in labels)
-		{
-			addInputField(label);
-		}
+			// Show text
+			customerAppearsText.screenCenter();
+			customerAppearsText.y += yShift + 80;
+			var temp = new FlxText(0, 0, 0, tutorialText[1], 20);
+			// customerAppearsText.x -= 150;
+			customerAppearsText.x = (FlxG.width - temp.width) / 2;
+			add(customerAppearsText);
+			customerAppearsText.eraseDelay = 0.02;
+			customerAppearsText.eraseCallback = function()
+			{
+				// Tell player to select customer
+				selectCustomerText.screenCenter();
+				selectCustomerText.y += yShift + 80;
+				// selectCustomerText.x -= 220;
+				var temp = new FlxText(0, 0, 0, tutorialText[2], 20);
+				selectCustomerText.x = (FlxG.width - temp.width) / 2;
+				add(selectCustomerText);
+				selectCustomerText.eraseDelay = 0.02;
+				selectCustomerText.eraseCallback = function()
+				{
+					selectCustomerText2.screenCenter();
+					selectCustomerText2.y += yShift + 80;
+					// selectCustomerText2.x -= 200;
+					var temp = new FlxText(0, 0, 0, tutorialText[3], 20);
+					selectCustomerText2.x = (FlxG.width - temp.width) / 2;
+					add(selectCustomerText2);
+					selectCustomerText2.start(0.02);
 
-		// Add customers
-		addCustomers();
+					// Start ticking down patience
+					Timer.delay(customer.stopPatienceBar, 24000);
+					customer.startTimer();
 
-		showText(selectText);
-	}
+					// Add current customer text
+					addCurrentCustomerText();
 
-	function showText(text:FlxText, offset:Int = 80)
-	{
-		text.screenCenter();
-		text.y += yShift + offset;
-		add(text);
-		// FlxFlicker.flicker(text, 0, .9);
-	}
-
-	function addCustomers()
-	{
-		var customer:Customer = new Customer(1, ["alice", "black"], 25);
-		customers.set(1, customer);
-		left++;
-		add(customer);
-
-		Timer.delay(customer.stopPatienceBar, 24000);
-		customer.startTimer();
-		var customer2 = new Customer(2, ["bob", "latte"], 40);
-		customers.set(2, customer2);
-		left++;
-		add(customer2);
-		Timer.delay(customer2.stopPatienceBar, 39000);
-		customer2.startTimer();
+					phase = 1;
+				};
+				selectCustomerText.start(0.02, false, true);
+			};
+			customerAppearsText.start(0.02, false, true);
+		};
+		welcomeText.start(0.02, false, true);
 	}
 
 	override public function update(elapsed:Float)
@@ -109,34 +142,24 @@ class TutorialState extends FlxState
 		var pressedTab = FlxG.keys.justPressed.TAB;
 		var pressedShift = FlxG.keys.justPressed.SHIFT;
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
-		if (pressedTab)
+		if (pressedTab && phase >= 3)
 		{
-			trace("tab");
 			changeSelected(1);
 		}
-		if (pressedShift)
+		if (pressedShift && phase >= 3)
 		{
-			trace("shift");
 			changeSelected(-1);
 		}
-		// if (pressedEnter && currentCustomer == null)
-		// {
-		// 	trace("enter");
-		// 	resetFields();
-		// }
-		if (pressedEnter && currentCustomer != null)
+		if (pressedEnter && currentCustomer != null && phase >= 5)
 		{
-			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
 			var matches:Float = 0;
 
 			// Go through each input field to validate matches
 			fields.forEach(function(item:FlxUIInputText)
 			{
-				trace(labels[item.ID] + ": " + item.text);
 				if (StringTools.trim(item.text) == customerOrder[item.ID])
 				{
-					trace(labels[item.ID] + " matches");
 					matches++;
 				}
 			});
@@ -144,7 +167,6 @@ class TutorialState extends FlxState
 			// currently doing this for matches: 100% = happy, 50%+ = satsified, <50% = angry
 			// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
 			var score = matches / labels.length;
-			trace("matches score: " + score);
 			if (score == 1)
 			{
 				currentCustomer.stopPatienceBar();
@@ -180,25 +202,45 @@ class TutorialState extends FlxState
 			currentCustomer = null;
 			currentCustomerText.text = "Current customer: ";
 
-			// TODO: Still need to handle customer satisfaction + points
-			// Example image change:
-			// customer.loadGraphic(AssetPaths.angry_customer__png);
-
-			if (left == 1)
+			// Enter was pressed so erase text and show final text before returning to main menu
+			enterText.eraseDelay = 0.02;
+			enterText.erase(0.02, false, [], function()
 			{
-				left = 0;
-				if (phase == 4)
+				finishedText.screenCenter();
+				finishedText.y += yShift + 80;
+				// finishedText.x -= 300;
+				var temp = new FlxText(0, 0, 0, tutorialText[8], 20);
+				finishedText.x = (FlxG.width - temp.width) / 2;
+				add(finishedText);
+				finishedText.eraseDelay = 0.009;
+				finishedText.eraseCallback = function()
 				{
-					remove(completeText);
-					Timer.delay(showText.bind(finishText), 500);
-				}
-				Timer.delay(FlxG.switchState.bind(new MenuState()), 3000);
-			}
-			else
-			{
-				left--;
-				currentCustomer = null;
-			}
+					finishedText2.screenCenter();
+					finishedText2.y += yShift + 80;
+					// finishedText2.x -= 120;
+					var temp = new FlxText(0, 0, 0, tutorialText[9], 20);
+					finishedText2.x = (FlxG.width - temp.width) / 2;
+					add(finishedText2);
+					finishedText2.eraseDelay = 0.015;
+					finishedText2.eraseCallback = function()
+					{
+						// Return to main menu
+						returnToMenuText.screenCenter();
+						returnToMenuText.y += yShift + 80;
+						// returnToMenuText.x -= 120;
+						var temp = new FlxText(0, 0, 0, tutorialText[10], 20);
+						returnToMenuText.x = (FlxG.width - temp.width) / 2;
+						add(returnToMenuText);
+						returnToMenuText.start(0.02, false, false, [], function()
+						{
+							FlxFlicker.flicker(returnToMenuText, 0, .5);
+							Timer.delay(FlxG.switchState.bind(new MenuState()), 3500);
+						});
+					};
+					finishedText2.start(0.015, false, true);
+				};
+				finishedText.start(0.009, false, true);
+			});
 		}
 
 		// Enable spaces in input
@@ -231,10 +273,8 @@ class TutorialState extends FlxState
 
 		// Customer selection
 		var pressedOne = FlxG.keys.justPressed.ONE;
-		var pressedTwo = FlxG.keys.justPressed.TWO;
-		if (pressedOne)
+		if (pressedOne && phase >= 1)
 		{
-			trace("customer 1 selected");
 			if (currentCustomer != null)
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
@@ -246,49 +286,86 @@ class TutorialState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
 			}
 		}
-		if (pressedTwo)
+
+		// Phase checking for tutorial
+		if (phase == 1 && pressedOne)
 		{
-			if (currentCustomer != null)
+			selectCustomerText.eraseDelay = 0.02;
+			selectCustomerText2.erase(0.02, false, [], function()
 			{
-				currentCustomer.changeNumColor(FlxColor.WHITE);
-			}
-			trace("customer 2 selected");
-			currentCustomer = customers.get(2);
-			if (currentCustomer != null)
+				addInput();
+				typeNameText.screenCenter();
+				typeNameText.y += yShift + 80;
+				// typeNameText.x -= 200;
+				var temp = new FlxText(0, 0, 0, tutorialText[4], 20);
+				typeNameText.x = (FlxG.width - temp.width) / 2;
+				add(typeNameText);
+				typeNameText.start(0.02);
+				phase = 2;
+			});
+		}
+
+		var isTyping = FlxG.keys.anyPressed([A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]);
+
+		if (phase == 2 && isTyping)
+		{
+			typeNameText.eraseDelay = 0.02;
+			typeNameText.erase(0.02, false, [], function()
 			{
-				currentCustomerText.text = "Current customer: 2";
-				currentCustomer.changeNumColor(FlxColor.YELLOW);
-			}
+				tabText.screenCenter();
+				tabText.y += yShift + 80;
+				// tabText.x -= 170;
+				var temp = new FlxText(0, 0, 0, tutorialText[5], 20);
+				tabText.x = (FlxG.width - temp.width) / 2;
+				add(tabText);
+				tabText.start(0.02);
+				phase = 3;
+			});
 		}
 
-		if (phase == 1 && (pressedOne || pressedTwo))
+		if (phase == 3 && (pressedTab || pressedShift || currentField == 1))
 		{
-			remove(selectText);
-			Timer.delay(showText.bind(typeText), 800);
-			Timer.delay(showText.bind(typeText2, 110), 800);
-			phase++;
+			tabText.eraseDelay = 0.02;
+			tabText.erase(0.02, false, [], function()
+			{
+				typeOrderText.screenCenter();
+				typeOrderText.y += yShift + 80;
+				// typeOrderText.x -= 120;
+				var temp = new FlxText(0, 0, 0, tutorialText[6], 20);
+				typeOrderText.x = (FlxG.width - temp.width) / 2;
+				add(typeOrderText);
+				typeOrderText.start(0.02);
+				phase = 4;
+			});
 		}
 
-		if (phase == 2 && (pressedShift || pressedTab))
+		if (phase == 4 && isTyping)
 		{
-			remove(typeText);
-			remove(typeText2);
-			Timer.delay(showText.bind(patienceText), 800);
-			Timer.delay(showText.bind(submitText, 110), 800);
-			Timer.delay(showText.bind(submitText2, 140), 800);
-			phase++;
-		}
-
-		if (phase == 3 && pressedEnter)
-		{
-			remove(submitText);
-			remove(submitText2);
-			remove(patienceText);
-			Timer.delay(showText.bind(completeText), 800);
-			phase++;
+			typeOrderText.eraseDelay = 0.02;
+			typeOrderText.erase(0.02, false, [], function()
+			{
+				enterText.screenCenter();
+				enterText.y += yShift + 80;
+				// enterText.x -= 120;
+				var temp = new FlxText(0, 0, 0, tutorialText[7], 20);
+				enterText.x = (FlxG.width - temp.width) / 2;
+				add(enterText);
+				enterText.start(0.02);
+				phase = 5;
+			});
 		}
 
 		super.update(elapsed);
+	}
+
+	function addInput()
+	{
+		fields = new FlxTypedGroup<FlxUIInputText>();
+		currentField = 0;
+		for (label in labels)
+		{
+			addInputField(label);
+		}
 	}
 
 	function addInputField(label:String = "Name")
@@ -315,8 +392,6 @@ class TutorialState extends FlxState
 
 		fields.add(newField);
 		add(newField);
-
-		submitText.y += 25;
 	}
 
 	function changeSelected(direction:Int = 0)
@@ -337,7 +412,6 @@ class TutorialState extends FlxState
 			{
 				item.hasFocus = true;
 				item.backgroundColor = FlxColor.YELLOW;
-				trace(item.ID + " is focused");
 			}
 			else
 			{
@@ -359,5 +433,27 @@ class TutorialState extends FlxState
 		fields.getFirstExisting().hasFocus = true;
 		fields.getFirstExisting().backgroundColor = FlxColor.YELLOW;
 		currentField = 0;
+	}
+
+	function addCurrentCustomerText()
+	{
+		var text = "Current customer: ";
+		if (currentCustomer != null)
+		{
+			text += currentCustomer.getPosition();
+		}
+		currentCustomerText = new FlxText(0, 0, 0, text, 18);
+		currentCustomerText.screenCenter();
+		currentCustomerText.y += 130;
+		currentCustomerText.x -= 300;
+		add(currentCustomerText);
+	}
+
+	function showText(text:FlxText, offset:Int = 80)
+	{
+		text.screenCenter();
+		text.y += yShift + offset;
+		add(text);
+		// FlxFlicker.flicker(text, 0, .9);
 	}
 }

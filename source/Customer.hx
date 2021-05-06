@@ -26,6 +26,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	var position:Int;
 	var time:Float;
 	var order:Array<String>;
+	var isTextShown:Bool = false;
 
 	public var hasPatience:Bool = true;
 
@@ -124,13 +125,18 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	{
 		nameText.alpha = 1;
 		orderText.alpha = 1;
-		var timer = new Timer(time);
-		timer.run = function()
+		if (!isTextShown)
 		{
-			nameText.alpha = 0;
-			orderText.alpha = 0;
+			isTextShown = true;
+			var timer = new Timer(time);
+			timer.run = function()
+			{
+				nameText.alpha = 0;
+				orderText.alpha = 0;
+				isTextShown = false;
+			}
+			patience.start(Math.max(0, patience.timeLeft - cost), deleteBar, 1);
 		}
-		patience.start(Math.max(0, patience.timeLeft - cost), deleteBar, 1);
 	}
 
 	// function so that bar gets properly deleted when time runs out (killOnEmpty doesn't seem to work)

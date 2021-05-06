@@ -20,10 +20,10 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	public function new()
 	{
 		super();
-		background = new FlxSprite().makeGraphic(FlxG.width, 30, FlxColor.fromString("#352E2C"));
-		background.drawRect(0, 29, FlxG.width, 1, FlxColor.WHITE);
-		dayCounter = new FlxText(FlxG.width - 80, 2, 0, "Day 1", 16);
-		moneyCounter = new FlxText(2, 2, 0, "$ 0", 16);
+		background = new FlxSprite().makeGraphic(FlxG.width, 40, FlxColor.fromString("#352E2C"));
+		background.drawRect(0, 39, FlxG.width, 1, FlxColor.WHITE);
+		dayCounter = new FlxText(FlxG.width - 130, 2, 0, "Day 1", 30);
+		moneyCounter = new FlxText(2, 2, 0, "$ 0", 30);
 		moneyCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		dayCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 

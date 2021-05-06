@@ -6,15 +6,5 @@ espresso
 affogato
 cappuccino
 blonde roast
-dark roast coffee
-espresso con panna
+dark roast
 flat white
-honey almondmilk flat white
-pistachio latte
-cinnamon dolce latte
-hazelnut bianco latte
-blonde vanilla latte
-caramel macchiato
-espresso macchiato
-dark chocolate mocha
-white chocolate mocha

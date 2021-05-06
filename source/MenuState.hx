@@ -41,18 +41,27 @@ class MenuState extends FlxState
 		super.create();
 	}
 
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
+	}
+
 	private function startGame()
 	{
+		// Use saved value?
+		if (FlxG.save.data.dayCompleted != null)
+		{
+			PlayState.day = FlxG.save.data.dayCompleted + 1;
+		}
+		if (FlxG.save.data.playerMoney != null)
+		{
+			PlayState.money = FlxG.save.data.playerMoney;
+		}
 		FlxG.switchState(new PlayState());
 	}
 
 	private function startTutorial()
 	{
 		FlxG.switchState(new TutorialState());
-	}
-
-	override public function update(elapsed:Float)
-	{
-		super.update(elapsed);
 	}
 }

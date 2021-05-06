@@ -54,12 +54,12 @@ class DayEndState extends FlxState
 		super.update(elapsed);
 	}
 
-	private function returnToMenu()
+	function returnToMenu()
 	{
 		FlxG.switchState(new MenuState());
 	}
 
-	private function nextLevel()
+	function nextLevel()
 	{
 		PlayState.day = day + 1;
 		FlxG.switchState(new PlayState());

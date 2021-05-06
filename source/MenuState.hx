@@ -46,7 +46,7 @@ class MenuState extends FlxState
 		super.update(elapsed);
 	}
 
-	private function startGame()
+	function startGame()
 	{
 		// Use saved value?
 		if (FlxG.save.data.dayCompleted != null)
@@ -60,7 +60,7 @@ class MenuState extends FlxState
 		FlxG.switchState(new PlayState());
 	}
 
-	private function startTutorial()
+	function startTutorial()
 	{
 		FlxG.switchState(new TutorialState());
 	}

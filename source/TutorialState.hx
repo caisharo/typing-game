@@ -78,7 +78,7 @@ class TutorialState extends FlxState
 		showText(selectText);
 	}
 
-	private function showText(text:FlxText, offset:Int = 80)
+	function showText(text:FlxText, offset:Int = 80)
 	{
 		text.screenCenter();
 		text.y += yShift + offset;
@@ -86,7 +86,7 @@ class TutorialState extends FlxState
 		// FlxFlicker.flicker(text, 0, .9);
 	}
 
-	private function addCustomers()
+	function addCustomers()
 	{
 		var customer:Customer = new Customer(1, ["alice", "black"], 25);
 		customers.set(1, customer);

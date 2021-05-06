@@ -35,6 +35,7 @@ class TutorialState extends FlxState
 	var submitText2 = new FlxText(0, 0, 0, "MAKE SURE YOU HAVE A CUSTOMER SELECTED BEFORE HITTING ENTER.", 20);
 	var completeText = new FlxText(0, 0, 0, "NOW COMPLETE THE REST OF THE TUTORIAL.", 20);
 	var finishText = new FlxText(0, 0, 0, "YOU HAVE FINISHED THE TUTORIAL, GOOD JOB!", 20);
+	var currentCustomerText:FlxText;
 
 	// var wellDone = new FlxText(0, 0, 0, "WELL DONE", 25);
 	var phase = 1;
@@ -52,6 +53,17 @@ class TutorialState extends FlxState
 		hud = new HUD();
 		hud.updateHUD(day, money);
 		add(hud);
+
+		var text = "Current customer: ";
+		if (currentCustomer != null)
+		{
+			text += currentCustomer.getPosition();
+		}
+		currentCustomerText = new FlxText(0, 0, 0, text, 18);
+		currentCustomerText.screenCenter();
+		currentCustomerText.y += 130;
+		currentCustomerText.x -= 300;
+		add(currentCustomerText);
 
 		fields = new FlxTypedGroup<FlxUIInputText>();
 		currentField = 0;
@@ -80,6 +92,7 @@ class TutorialState extends FlxState
 		customers.set(1, customer);
 		left++;
 		add(customer);
+
 		Timer.delay(customer.stopPatienceBar, 24000);
 		customer.startTimer();
 		var customer2 = new Customer(2, ["bob", "latte"], 40);
@@ -105,6 +118,11 @@ class TutorialState extends FlxState
 		{
 			trace("shift");
 			changeSelected(-1);
+		}
+		if (pressedEnter && currentCustomer == null)
+		{
+			trace("enter");
+			resetFields();
 		}
 		if (pressedEnter && currentCustomer != null)
 		{
@@ -160,6 +178,7 @@ class TutorialState extends FlxState
 
 			resetFields();
 			currentCustomer = null;
+			currentCustomerText.text = "Current customer: ";
 
 			// TODO: Still need to handle customer satisfaction + points
 			// Example image change:
@@ -221,7 +240,11 @@ class TutorialState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			currentCustomer = customers.get(1);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 1";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+			}
 		}
 		if (pressedTwo)
 		{
@@ -231,7 +254,11 @@ class TutorialState extends FlxState
 			}
 			trace("customer 2 selected");
 			currentCustomer = customers.get(2);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
+			if (currentCustomer != null)
+			{
+				currentCustomerText.text = "Current customer: 2";
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+			}
 		}
 
 		if (phase == 1 && (pressedOne || pressedTwo))

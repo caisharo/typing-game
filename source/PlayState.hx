@@ -99,6 +99,7 @@ class PlayState extends FlxState
 			trace("shift");
 			changeSelected(-1);
 		}
+
 		if (pressedEnter && currentCustomer != null)
 		{
 			var currentPosition = currentCustomer.getPosition();

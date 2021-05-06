@@ -1,20 +1,20 @@
-coffee
 latte
-americano
 mocha
+coffee
 espresso
 affogato
+americano
+flat white
 cappuccino
 blonde roast
-dark roast coffee
-espresso con panna
-flat white
-honey almondmilk flat white
 pistachio latte
-cinnamon dolce latte
-hazelnut bianco latte
-blonde vanilla latte
+dark roast coffee
 caramel macchiato
+espresso con panna
 espresso macchiato
+cinnamon dolce latte
+blonde vanilla latte
 dark chocolate mocha
+hazelnut bianco latte
 white chocolate mocha
+honey almondmilk flat white

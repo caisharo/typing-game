@@ -41,6 +41,12 @@ class PlayState extends FlxState
 	// the range of possible names being selected, scaled to 0-1
 	// the value need to checked, otherwise an error may come up
 	var range:Map<String, Array<Float>> = [];
+	var difficultyChangeStep = 5; // difficulty increases every # of days
+	var nameRangeSize = 0.1; // the length of range of name/order considered
+	var orderRangeSize = 0.1;
+	// ideally *RangeSize should be greater than or equal to *IncreaseRate so as to use all potential words
+	var nameIncreaseRate = 0.1; // how much the difficulty would increase in each # of days
+	var orderIncreaseRate = 0.1;
 
 	override public function create()
 	{
@@ -93,12 +99,12 @@ class PlayState extends FlxState
 	function setRange()
 	{
 		var nameRange:Array<Float> = [
-			Math.min(Math.max(Std.int(day / 5) * 0.05, 0), 0.95),
-			Math.min((1 + Std.int(day / 5)) * 0.05, 1)
+			Math.min(Math.max(Std.int(day / difficultyChangeStep) * nameIncreaseRate, 0), 1 - nameRangeSize),
+			Math.min(nameRangeSize + Std.int(day / difficultyChangeStep) * nameIncreaseRate, 1)
 		];
 		var orderRange:Array<Float> = [
-			Math.min(Math.max(Std.int(day / 5) * 0.1, 0), 0.5),
-			Math.min(0.2 + Std.int(day / 5) * 0.1, 1)
+			Math.min(Math.max(Std.int(day / difficultyChangeStep) * orderIncreaseRate, 0), 1 - orderRangeSize),
+			Math.min(orderRangeSize + Std.int(day / difficultyChangeStep) * orderIncreaseRate, 1)
 		];
 
 		range.set("Name", nameRange);
@@ -111,17 +117,28 @@ class PlayState extends FlxState
 		var pressedTab = FlxG.keys.justPressed.TAB;
 		var pressedShift = FlxG.keys.justPressed.SHIFT;
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
-		if (pressedTab)
+		if (pressedTab && !pressedShift)
 		{
 			// Go to next input field
 			trace("tab");
 			changeSelected(1);
 		}
-		if (pressedShift)
+		if (pressedShift && !pressedTab)
 		{
 			// Go to previous input field
 			trace("shift");
 			changeSelected(-1);
+		}
+
+		if (pressedEnter && currentCustomer == null)
+		{
+			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
+			selectReminder.screenCenter();
+			selectReminder.y += 190;
+			selectReminder.x -= 320;
+			selectReminder.color = FlxColor.RED;
+			add(selectReminder);
+			Timer.delay(remove.bind(selectReminder), 1000);
 		}
 
 		if (pressedEnter && currentCustomer != null)
@@ -178,6 +195,8 @@ class PlayState extends FlxState
 
 			// Reset fields doesn't work 100% properly
 			resetFields();
+			currentCustomer = null;
+			currentCustomerText.text = "Current customer: ";
 
 			// Replace customer?
 			displayedCustomers.remove(currentPosition);
@@ -191,9 +210,6 @@ class PlayState extends FlxState
 				trace("end day");
 				endDay();
 			}
-
-			currentCustomer = null;
-			currentCustomerText.text = "Current customer: ";
 		}
 
 		// Enable spaces in input
@@ -326,6 +342,10 @@ class PlayState extends FlxState
 				Timer.delay(hud.updateHUD.bind(day, money), 1500);
 				Timer.delay(remove.bind(customer), 1500);
 				displayedCustomers.remove(key);
+
+				resetFields();
+				currentCustomer = null;
+				currentCustomerText.text = "Current customer: ";
 
 				// replace customer?
 				if (remainingCustomers.length > 0)

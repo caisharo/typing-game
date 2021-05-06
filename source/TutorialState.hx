@@ -144,13 +144,23 @@ class TutorialState extends FlxState
 		var pressedTab = FlxG.keys.justPressed.TAB;
 		var pressedShift = FlxG.keys.justPressed.SHIFT;
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
-		if (pressedTab && phase >= 3)
+		if (pressedTab && !pressedShift && phase >= 3)
 		{
 			changeSelected(1);
 		}
-		if (pressedShift && phase >= 3)
+		if (pressedShift && !pressedTab && phase >= 3)
 		{
 			changeSelected(-1);
+		}
+		if (pressedEnter && currentCustomer == null && phase >= 5)
+		{
+			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
+			selectReminder.screenCenter();
+			selectReminder.y += 190;
+			selectReminder.x -= 320;
+			selectReminder.color = FlxColor.RED;
+			add(selectReminder);
+			Timer.delay(remove.bind(selectReminder), 1000);
 		}
 		if (pressedEnter && currentCustomer != null && phase >= 5)
 		{

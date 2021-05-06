@@ -89,10 +89,16 @@ class PlayState extends FlxState
 		addCustomers(totalCustomers);
 	}
 
-	private function setRange()
+	function setRange()
 	{
-		var nameRange:Array<Float> = [0, 1];
-		var orderRange:Array<Float> = [0, 0.5];
+		var nameRange:Array<Float> = [
+			Math.min(Math.max(Std.int(day / 5) * 0.05, 0), 0.95),
+			Math.min((1 + Std.int(day / 5)) * 0.05, 1)
+		];
+		var orderRange:Array<Float> = [
+			Math.min(Math.max(Std.int(day / 5) * 0.1, 0), 0.5),
+			Math.min(0.4 + Std.int(day / 5) * 0.1, 1)
+		];
 
 		range.set("Name", nameRange);
 		range.set("Order", orderRange);

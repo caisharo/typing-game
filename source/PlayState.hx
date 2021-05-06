@@ -32,12 +32,20 @@ class PlayState extends FlxState
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String>; // the labels for the input fields (e.g "Name", "Order")
 
+	// the following implementation might be changed when more fields are added
+	// but temporarily used for now
+	// the range of possible names being selected, scaled to 0-1
+	// the value need to checked, otherwise an error may come up
+	var range:Map<String, Array<Float>> = [];
+
 	override public function create()
 	{
 		super.create();
 
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
+
+		setRange();
 
 		// Add HUD (score + day)
 		hud = new HUD();
@@ -68,6 +76,15 @@ class PlayState extends FlxState
 
 		setMaxCustomers(3);
 		addCustomers(10);
+	}
+
+	private function setRange()
+	{
+		var nameRange:Array<Float> = [0, 1];
+		var orderRange:Array<Float> = [0, 0.5];
+
+		range.set("Name", nameRange);
+		range.set("Order", orderRange);
 	}
 
 	override public function update(elapsed:Float)
@@ -312,6 +329,17 @@ class PlayState extends FlxState
 		this.maxCustomersAtOnce = maxCustomersAtOnce;
 	}
 
+	private function randomChoose(random:FlxRandom, label:String)
+	{
+		var choices = possibleOrders.get(label);
+		var size = choices.length;
+		var start = Math.floor(size * range.get(label)[0]);
+		var end = Math.floor(size * range.get(label)[1] - 0.1);
+
+		var index = random.int(start, end);
+		return choices[index];
+	}
+
 	public function addCustomers(numberOfCustomers:Int)
 	{
 		// Add customers
@@ -329,7 +357,7 @@ class PlayState extends FlxState
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(random.getObject(possibleOrders.get(label)));
+					order.push(randomChoose(random, label));
 				}
 				// actual customer patience timer length still to be decided
 				var customer = new Customer(position, order, patience);
@@ -347,7 +375,7 @@ class PlayState extends FlxState
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(random.getObject(possibleOrders.get(label)));
+					order.push(randomChoose(random, label));
 				}
 				var customer = new Customer(position, order, patience);
 				remainingCustomers.push(customer);

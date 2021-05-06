@@ -462,12 +462,4 @@ class TutorialState extends FlxState
 		currentCustomerText.x -= 300;
 		add(currentCustomerText);
 	}
-
-	function showText(text:FlxText, offset:Int = 80)
-	{
-		text.screenCenter();
-		text.y += yShift + offset;
-		add(text);
-		// FlxFlicker.flicker(text, 0, .9);
-	}
 }

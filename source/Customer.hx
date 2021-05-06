@@ -18,13 +18,15 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	var patience:FlxTimer;
 	var patienceBar:FlxBar;
 	var customer:FlxSprite;
-	var textbox:FlxText;
+	var nameText:FlxText;
+	var orderText:FlxText;
 	var customerPosition:FlxText;
 	var score:FlxText;
 
 	var position:Int;
 	var time:Float;
 	var order:Array<String>;
+	var isTextShown:Bool = false;
 
 	public var hasPatience:Bool = true;
 
@@ -35,17 +37,21 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		customer = new FlxSprite(x - 40, 170, AssetPaths.customer__png);
 		customer.scale.set(0.7, 0.7);
 		add(customer);
-		var text:String = "";
-		for (part in order)
+		nameText = new FlxText(x, 120, 200, order[0], 16);
+		nameText.color = FlxColor.fromString("#C8D8FA");
+		add(nameText);
+		var text:String = order[1];
+		for (i in 2...order.length)
 		{
-			text += "\n" + part;
+			text += "\n" + order[i];
 		}
-		textbox = new FlxText(x, 120, 200, text, 16);
-		add(textbox);
+		orderText = new FlxText(x, 140, 200, text, 16);
+		orderText.color = FlxColor.fromString("#FFE7DA");
+		add(orderText);
 		customerPosition = new FlxText(x, 220, 0, Std.string(position), 25);
 		add(customerPosition);
 		patience = new FlxTimer();
-		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, 100, 10, patience, "timeLeft", 0, time);
+		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, Std.int(time * 1.5), 10, patience, "timeLeft", 0, time);
 		add(patienceBar);
 		this.position = position;
 		this.order = order;
@@ -61,7 +67,8 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		// Move everything to proper position
 		var x = 50 + (position - 1) * 200;
 		customer.x = x - 40;
-		textbox.x = x;
+		nameText.x = x;
+		orderText.x = x;
 		customerPosition.x = x;
 		patienceBar.x = x;
 	}
@@ -101,7 +108,8 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	{
 		FlxTween.tween(customer, {alpha: 0}, 1.5);
 		FlxTween.tween(patienceBar, {alpha: 0}, 1.5);
-		FlxTween.tween(textbox, {alpha: 0}, 1.5);
+		FlxTween.tween(nameText, {alpha: 0}, 1.5);
+		FlxTween.tween(orderText, {alpha: 0}, 1.5);
 		FlxTween.tween(customerPosition, {alpha: 0}, 1.5);
 	}
 
@@ -115,13 +123,20 @@ class Customer extends FlxTypedGroup<FlxSprite>
 
 	public function showText(time:Int, cost:Int)
 	{
-		textbox.alpha = 1;
-		var timer = new Timer(time);
-		timer.run = function()
+		nameText.alpha = 1;
+		orderText.alpha = 1;
+		if (!isTextShown)
 		{
-			textbox.alpha = 0;
+			isTextShown = true;
+			var timer = new Timer(time);
+			timer.run = function()
+			{
+				nameText.alpha = 0;
+				orderText.alpha = 0;
+				isTextShown = false;
+			}
+			patience.start(Math.max(0, patience.timeLeft - cost), deleteBar, 1);
 		}
-		patience.start(Math.max(0, patience.timeLeft - cost), deleteBar, 1);
 	}
 
 	// function so that bar gets properly deleted when time runs out (killOnEmpty doesn't seem to work)

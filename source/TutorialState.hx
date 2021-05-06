@@ -16,6 +16,8 @@ import haxe.Timer;
 
 class TutorialState extends FlxState
 {
+	static var colors:Array<String> = ["#C8D8FA", "#FFE7DA"]; // colors for input fields
+
 	var hud:HUD;
 	var day:Int = 0;
 	var money:Int = 0;
@@ -360,15 +362,16 @@ class TutorialState extends FlxState
 
 	function addInput()
 	{
+		// Add player input section
 		fields = new FlxTypedGroup<FlxUIInputText>();
 		currentField = 0;
 		for (label in labels)
 		{
-			addInputField(label);
+			addInputField(label, colors[labels.indexOf(label)]);
 		}
 	}
 
-	function addInputField(label:String = "Name")
+	function addInputField(label:String = "Name", color:String)
 	{
 		var newField = new FlxUIInputText(0, 0, 200, "", 15);
 		newField.filterMode = FlxInputText.ONLY_ALPHA;
@@ -382,6 +385,7 @@ class TutorialState extends FlxState
 		fieldLabel.screenCenter();
 		fieldLabel.x = newField.x - 75;
 		fieldLabel.y += yShift + (25 * fields.length);
+		fieldLabel.color = FlxColor.fromString(color);
 		add(fieldLabel);
 
 		if (fields.length == 0)

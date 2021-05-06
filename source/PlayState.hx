@@ -19,6 +19,7 @@ class PlayState extends FlxState
 	public static var maxCustomersAtOnce = 3;
 	public static var totalCustomers = 5;
 	public static var labels:Array<String> = ["Name", "Order"]; // the labels for the input fields
+	public static var colors:Array<String> = ["#C8D8FA", "#FFE7DA"]; // colors for input fields
 
 	// HUD
 	var hud:HUD;
@@ -89,10 +90,16 @@ class PlayState extends FlxState
 		addCustomers(totalCustomers);
 	}
 
-	private function setRange()
+	function setRange()
 	{
-		var nameRange:Array<Float> = [0, 1];
-		var orderRange:Array<Float> = [0, 0.5];
+		var nameRange:Array<Float> = [
+			Math.min(Math.max(Std.int(day / 5) * 0.05, 0), 0.95),
+			Math.min((1 + Std.int(day / 5)) * 0.05, 1)
+		];
+		var orderRange:Array<Float> = [
+			Math.min(Math.max(Std.int(day / 5) * 0.1, 0), 0.5),
+			Math.min(0.2 + Std.int(day / 5) * 0.1, 1)
+		];
 
 		range.set("Name", nameRange);
 		range.set("Order", orderRange);
@@ -355,7 +362,7 @@ class PlayState extends FlxState
 			var position = i + 1;
 			var order:Array<String> = [];
 			var random = new FlxRandom();
-			var patience = 10 + random.float() * 100 / 2;
+			var patience = 15 + random.float() * 80 / 2;
 			if (position <= maxCustomersAtOnce && displayedCustomers.get(position) == null)
 			{
 				// no customer in position yet - add
@@ -394,11 +401,11 @@ class PlayState extends FlxState
 		currentField = 0;
 		for (label in labels)
 		{
-			addInputField(label);
+			addInputField(label, colors[labels.indexOf(label)]);
 		}
 	}
 
-	function addInputField(label:String = "Name")
+	function addInputField(label:String = "Name", color:String)
 	{
 		var newField = new FlxUIInputText(0, 0, 200, "", 15);
 		newField.filterMode = FlxInputText.ONLY_ALPHA;
@@ -412,6 +419,7 @@ class PlayState extends FlxState
 		fieldLabel.screenCenter();
 		fieldLabel.x = newField.x - 75;
 		fieldLabel.y += yShift + (25 * fields.length);
+		fieldLabel.color = FlxColor.fromString(color);
 		add(fieldLabel);
 
 		if (fields.length == 0)

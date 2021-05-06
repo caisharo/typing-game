@@ -31,7 +31,6 @@ class PlayState extends FlxState
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String>; // the labels for the input fields (e.g "Name", "Order")
-	var submitText:FlxText; // just text telling player to press enter - need to access it to move it down
 
 	override public function create()
 	{
@@ -89,6 +88,16 @@ class PlayState extends FlxState
 			trace("shift");
 			changeSelected(-1);
 		}
+
+		// I don't know if we need to reset everything if the player try to submit without selecting customer
+		// If so, uncomment the following codes
+
+		// if (pressedEnter && currentCustomer == null)
+		// {
+		// 	trace("enter");
+		// 	resetFields();
+		// }
+
 		if (pressedEnter && currentCustomer != null)
 		{
 			trace("enter");
@@ -283,6 +292,10 @@ class PlayState extends FlxState
 				Timer.delay(remove.bind(customer), 1500);
 				displayedCustomers.remove(key);
 
+				currentCustomer = null;
+				currentCustomerText.text = "Current customer: ";
+				resetFields();
+
 				// replace customer?
 				if (remainingCustomers.length > 0)
 				{
@@ -347,11 +360,6 @@ class PlayState extends FlxState
 		// Add player input section
 		this.labels = labels;
 
-		submitText = new FlxText(0, 0, 0, "PRESS ENTER TO COMPLETE ORDER", 15);
-		submitText.screenCenter();
-		submitText.y += yShift + 20;
-		add(submitText);
-
 		fields = new FlxTypedGroup<FlxUIInputText>();
 		currentField = 0;
 		for (label in labels)
@@ -384,8 +392,6 @@ class PlayState extends FlxState
 
 		fields.add(newField);
 		add(newField);
-
-		submitText.y += 25;
 	}
 
 	function changeSelected(direction:Int = 0)

@@ -138,6 +138,9 @@ class TutorialState extends FlxState
 			customerAppearsText.start(0.02, false, true);
 		};
 		welcomeText.start(0.02, false, true);
+
+		// logging tutorial level start
+		Main.logger.logLevelStart(day, {day_started: day, money: money});
 	}
 
 	override public function update(elapsed:Float)
@@ -247,6 +250,9 @@ class TutorialState extends FlxState
 						add(returnToMenuText);
 						returnToMenuText.start(0.02, false, false, [], function()
 						{
+							// logging tutorial level end
+							Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+
 							FlxFlicker.flicker(returnToMenuText, 0, .5);
 							Timer.delay(FlxG.switchState.bind(new MenuState()), 1500);
 						});

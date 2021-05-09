@@ -23,13 +23,17 @@ class DayEndState extends FlxState
 			lastSavedMoney = FlxG.save.data.playerMoney;
 		}
 		FlxG.save.data.playerMoney = money;
+		var difference = money - lastSavedMoney;
+
+		// logging level end
+		Main.logger.logLevelEnd({day_completed: day, gained_money: difference, total_money: money});
 
 		var mainText = new FlxText(0, 0, 0, "END OF DAY " + day, 64);
 		mainText.screenCenter();
 		mainText.y -= 70;
 		add(mainText);
 
-		var subText = new FlxText(0, 0, 0, "Money Earned: " + (money - lastSavedMoney), 32);
+		var subText = new FlxText(0, 0, 0, "Money Earned: " + difference, 32);
 		subText.screenCenter();
 		add(subText);
 
@@ -59,11 +63,16 @@ class DayEndState extends FlxState
 
 	function returnToMenu()
 	{
+		// log it?
+		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "day_end"});
 		FlxG.switchState(new MenuState());
 	}
 
 	function nextLevel()
 	{
+		// log it?
+		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_NEXT_LEVEL, {pressed: "next", from: "day_end"});
+
 		PlayState.day = day + 1;
 		FlxG.switchState(new PlayState());
 	}

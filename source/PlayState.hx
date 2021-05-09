@@ -96,6 +96,9 @@ class PlayState extends FlxState
 
 		addInput();
 		addCustomers(totalCustomers);
+
+		// logging level start
+		Main.logger.logLevelStart(day, {day_started: day, money: money});
 	}
 
 	function setRange()
@@ -134,6 +137,9 @@ class PlayState extends FlxState
 
 		if (pressedEnter && currentCustomer == null)
 		{
+			// log it?
+			Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
+
 			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
 			selectReminder.screenCenter();
 			selectReminder.y += 190;
@@ -149,14 +155,25 @@ class PlayState extends FlxState
 			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
 			var matches:Int = 0;
+			var matchedString = "";
+			var failedString = "";
 			// Go through each input field to validate matches
 			fields.forEach(function(item:FlxUIInputText)
 			{
-				trace(labels[item.ID] + ": " + item.text);
-				if (StringTools.trim(item.text) == customerOrder[item.ID].toLowerCase())
+				var fieldName = labels[item.ID];
+				var input = StringTools.trim(item.text);
+				var expected = customerOrder[item.ID].toLowerCase();
+				trace(fieldName + ": " + input);
+				if (input == expected)
 				{
-					trace(labels[item.ID] + " matches");
+					trace(fieldName + " matches");
 					matches++;
+					matchedString += fieldName + ": " + expected + ";";
+				}
+				else
+				{
+					trace(fieldName + " does not match");
+					failedString += fieldName + ": " + expected + ", " + input + ";";
 				}
 			});
 
@@ -166,6 +183,15 @@ class PlayState extends FlxState
 			trace("matches score: " + score);
 			if (score == 1)
 			{
+				// logging
+				Main.logger.logLevelAction(LoggingActions.HAPPY_CUSTOMER, {
+					day: day,
+					customer_state: "happy",
+					percent_matched: score,
+					matched: matchedString,
+					failed: failedString
+				});
+
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.happy_customer__png);
 				money += 10;
@@ -176,6 +202,15 @@ class PlayState extends FlxState
 			}
 			else if (score >= 0.5)
 			{
+				// logging
+				Main.logger.logLevelAction(LoggingActions.SATISFIED_CUSTOMER, {
+					day: day,
+					customer_state: "satisfied",
+					percent_matched: score,
+					matched: matchedString,
+					failed: failedString
+				});
+
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
 				money += 5;
@@ -186,6 +221,15 @@ class PlayState extends FlxState
 			}
 			else
 			{
+				// logging
+				Main.logger.logLevelAction(LoggingActions.ANGRY_CUSTOMER, {
+					day: day,
+					customer_state: "angry",
+					percent_matched: score,
+					matched: matchedString,
+					failed: failedString
+				});
+
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
 				money -= 5;
@@ -337,6 +381,11 @@ class PlayState extends FlxState
 					currentCustomerText.text = "Current customer: ";
 				}
 				var customer:Customer = displayedCustomers.get(key);
+				var order = customer.getOrder();
+
+				// logging
+				Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {day: day, customer_state: "angry", order: order});
+
 				customer.changeSprite(AssetPaths.angry_customer__png);
 				money -= 5;
 				customer.showScore("-5", FlxColor.RED);

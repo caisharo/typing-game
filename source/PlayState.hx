@@ -8,6 +8,8 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxRandom;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer.FlxTimerManager;
+import flixel.util.FlxTimer;
 import haxe.Timer;
 import lime.utils.Assets;
 
@@ -119,6 +121,7 @@ class PlayState extends FlxState
 		var pressedTab = FlxG.keys.justPressed.TAB;
 		var pressedShift = FlxG.keys.justPressed.SHIFT;
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
+		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
 		if (pressedTab && !pressedShift)
 		{
 			// Go to next input field
@@ -130,6 +133,11 @@ class PlayState extends FlxState
 			// Go to previous input field
 			trace("shift");
 			changeSelected(-1);
+		}
+		if (pressedEscape)
+		{
+			FlxTimer.globalManager.forEach(function(timer) timer.active = false);
+			openSubState(new PauseSubState(FlxColor.fromString("#14100E")));
 		}
 
 		if (pressedEnter && currentCustomer == null)
@@ -262,7 +270,7 @@ class PlayState extends FlxState
 			{
 				currentCustomerText.text = "Current customer: 1";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
+				currentCustomer.showText(3, 3);
 			}
 		}
 		if (pressedTwo && maxCustomersAtOnce >= 2)
@@ -277,7 +285,7 @@ class PlayState extends FlxState
 			{
 				currentCustomerText.text = "Current customer: 2";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
+				currentCustomer.showText(3, 3);
 			}
 		}
 		if (pressedThree && maxCustomersAtOnce >= 3)
@@ -292,7 +300,7 @@ class PlayState extends FlxState
 			{
 				currentCustomerText.text = "Current customer: 3";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
+				currentCustomer.showText(3, 3);
 			}
 		}
 		if (pressedFour && maxCustomersAtOnce >= 4)
@@ -307,7 +315,7 @@ class PlayState extends FlxState
 			{
 				currentCustomerText.text = "Current customer: 4";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
+				currentCustomer.showText(3, 3);
 			}
 		}
 		if (pressedFive && maxCustomersAtOnce >= 5)
@@ -322,7 +330,7 @@ class PlayState extends FlxState
 			{
 				currentCustomerText.text = "Current customer: 5";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
+				currentCustomer.showText(3, 3);
 			}
 		}
 
@@ -398,7 +406,7 @@ class PlayState extends FlxState
 				displayedCustomers.set(position, customer);
 				add(customer);
 				customer.startTimer();
-				customer.showText(5000, 0);
+				customer.showText(5, 0);
 			}
 			else
 			{

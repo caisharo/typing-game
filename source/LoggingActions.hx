@@ -25,7 +25,7 @@ class LoggingActions
 	public static var ANGRY_NO_PATIENCE:Int = 13; // angry customer due to running out of patience - log {day: day, customer_state: "state", order: "order"}
 	//
 	public static var NO_CUSTOMER_SELECTED:Int = 20;
-	public static var SHOW_ORDER_AGAIN:Int = 21;
+	public static var SHOW_ORDER_AGAIN:Int = 21; // {day: day, customer_position: number}
 
 	public function new() {}
 }

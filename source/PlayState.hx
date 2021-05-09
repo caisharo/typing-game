@@ -312,6 +312,9 @@ class PlayState extends FlxState
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 1)
 			{
+				// log it?
+				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+
 				currentCustomer.showText(3, 3);
 			}
 			currentCustomer = displayedCustomers.get(1);
@@ -331,6 +334,9 @@ class PlayState extends FlxState
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 2)
 			{
+				// log it?
+				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+
 				currentCustomer.showText(3, 3);
 			}
 			currentCustomer = displayedCustomers.get(2);
@@ -350,6 +356,9 @@ class PlayState extends FlxState
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 3)
 			{
+				// log it?
+				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 3});
+
 				currentCustomer.showText(3, 3);
 			}
 			currentCustomer = displayedCustomers.get(3);
@@ -369,6 +378,9 @@ class PlayState extends FlxState
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 4)
 			{
+				// log it?
+				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 4});
+
 				currentCustomer.showText(3, 3);
 			}
 			currentCustomer = displayedCustomers.get(4);
@@ -388,6 +400,9 @@ class PlayState extends FlxState
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 5)
 			{
+				// log it?
+				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 5});
+
 				currentCustomer.showText(3, 3);
 			}
 			currentCustomer = displayedCustomers.get(5);

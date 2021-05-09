@@ -88,7 +88,7 @@ class TutorialState extends FlxState
 		var temp = new FlxText(0, 0, 0, tutorialText[0], 20);
 		welcomeText.x = (FlxG.width - temp.width) / 2;
 		add(welcomeText);
-		welcomeText.eraseDelay = 0.018;
+		welcomeText.eraseDelay = 0.02;
 		welcomeText.eraseCallback = function()
 		{
 			// Customer appears
@@ -122,7 +122,7 @@ class TutorialState extends FlxState
 					var temp = new FlxText(0, 0, 0, tutorialText[3], 20);
 					selectCustomerText2.x = (FlxG.width - temp.width) / 2;
 					add(selectCustomerText2);
-					selectCustomerText2.start(0.02);
+					selectCustomerText2.start(0.04);
 
 					// Start ticking down patience
 					Timer.delay(customer.stopPatienceBar, 24000);
@@ -133,11 +133,11 @@ class TutorialState extends FlxState
 
 					phase = 1;
 				};
-				selectCustomerText.start(0.02, false, true);
+				selectCustomerText.start(0.04, false, true);
 			};
-			customerAppearsText.start(0.02, false, true);
+			customerAppearsText.start(0.04, false, true);
 		};
-		welcomeText.start(0.02, false, true);
+		welcomeText.start(0.04, false, true);
 
 		// logging tutorial level start
 		Main.logger.logLevelStart(day, {day_started: day, money: money});
@@ -238,7 +238,7 @@ class TutorialState extends FlxState
 					var temp = new FlxText(0, 0, 0, tutorialText[9], 20);
 					finishedText2.x = (FlxG.width - temp.width) / 2;
 					add(finishedText2);
-					finishedText2.eraseDelay = 0.015;
+					finishedText2.eraseDelay = 0.02;
 					finishedText2.eraseCallback = function()
 					{
 						// Return to main menu
@@ -248,7 +248,7 @@ class TutorialState extends FlxState
 						var temp = new FlxText(0, 0, 0, tutorialText[10], 20);
 						returnToMenuText.x = (FlxG.width - temp.width) / 2;
 						add(returnToMenuText);
-						returnToMenuText.start(0.02, false, false, [], function()
+						returnToMenuText.start(0.04, false, false, [], function()
 						{
 							// logging tutorial level end
 							Main.logger.logLevelEnd({tutorial_completed: true, money: money});
@@ -257,13 +257,13 @@ class TutorialState extends FlxState
 							FlxG.save.data.clearedTutorial = true;
 							FlxG.save.flush(); // save data
 
-							FlxFlicker.flicker(returnToMenuText, 0, .5);
+							// FlxFlicker.flicker(returnToMenuText, 0, .5);
 							Timer.delay(FlxG.switchState.bind(new MenuState()), 1500);
 						});
 					};
-					finishedText2.start(0.015, false, true);
+					finishedText2.start(0.02, false, true);
 				};
-				finishedText.start(0.009, false, true);
+				finishedText.start(0.02, false, true);
 			});
 		}
 
@@ -324,7 +324,7 @@ class TutorialState extends FlxState
 				var temp = new FlxText(0, 0, 0, tutorialText[4], 20);
 				typeNameText.x = (FlxG.width - temp.width) / 2;
 				add(typeNameText);
-				typeNameText.start(0.02);
+				typeNameText.start(0.04);
 				phase = 2;
 			});
 		}
@@ -342,7 +342,7 @@ class TutorialState extends FlxState
 				var temp = new FlxText(0, 0, 0, tutorialText[5], 20);
 				tabText.x = (FlxG.width - temp.width) / 2;
 				add(tabText);
-				tabText.start(0.02);
+				tabText.start(0.04);
 				phase = 3;
 			});
 		}
@@ -358,7 +358,7 @@ class TutorialState extends FlxState
 				var temp = new FlxText(0, 0, 0, tutorialText[6], 20);
 				typeOrderText.x = (FlxG.width - temp.width) / 2;
 				add(typeOrderText);
-				typeOrderText.start(0.02);
+				typeOrderText.start(0.04);
 				phase = 4;
 			});
 		}
@@ -374,7 +374,7 @@ class TutorialState extends FlxState
 				var temp = new FlxText(0, 0, 0, tutorialText[7], 20);
 				enterText.x = (FlxG.width - temp.width) / 2;
 				add(enterText);
-				enterText.start(0.02);
+				enterText.start(0.04);
 				phase = 5;
 			});
 		}

@@ -12,7 +12,7 @@ class MenuState extends FlxState
 	{
 		// Will probably disable mouse since we want our controls to be keyboard-based
 		// Currently not disabled just to make testing a bit easier
-		// FlxG.mouse.visible = false;
+		FlxG.mouse.visible = true;
 
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");

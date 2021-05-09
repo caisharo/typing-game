@@ -71,6 +71,8 @@ class TutorialState extends FlxState
 	{
 		super.create();
 
+		FlxG.mouse.visible = false;
+
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 

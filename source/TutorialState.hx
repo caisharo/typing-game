@@ -253,6 +253,10 @@ class TutorialState extends FlxState
 							// logging tutorial level end
 							Main.logger.logLevelEnd({tutorial_completed: true, money: money});
 
+							// save that player cleared tutorial?
+							FlxG.save.data.clearedTutorial = true;
+							FlxG.save.flush(); // save data
+
 							FlxFlicker.flicker(returnToMenuText, 0, .5);
 							Timer.delay(FlxG.switchState.bind(new MenuState()), 1500);
 						});

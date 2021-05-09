@@ -24,6 +24,7 @@ class DayEndState extends FlxState
 		}
 		FlxG.save.data.playerMoney = money;
 		var difference = money - lastSavedMoney;
+		FlxG.save.flush(); // save data
 
 		// logging level end
 		Main.logger.logLevelEnd({day_completed: day, gained_money: difference, total_money: money});

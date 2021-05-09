@@ -14,6 +14,11 @@ class MenuState extends FlxState
 		// Currently not disabled just to make testing a bit easier
 		FlxG.mouse.visible = true;
 
+		if (FlxG.save.data.clearedTutorial != null)
+		{
+			trace("tutorial completed: " + FlxG.save.data.clearedTutorial);
+		}
+
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 

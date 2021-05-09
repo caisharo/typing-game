@@ -365,7 +365,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 
-	function randomChoose(random:FlxRandom, label:String)
+	function randomChoose(random:FlxRandom, label:String):String
 	{
 		var choices = possibleOrders.get(label);
 		var size = choices.length;
@@ -391,7 +391,7 @@ class PlayState extends FlxState
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(randomChoose(random, label));
+					order.push(randomChoose(random, label).toLowerCase());
 				}
 				// actual customer patience timer length still to be decided
 				var customer = new Customer(position, order, patience);

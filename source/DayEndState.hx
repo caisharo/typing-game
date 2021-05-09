@@ -37,12 +37,17 @@ class DayEndState extends FlxState
 		subText.screenCenter();
 		add(subText);
 
+		var subText2 = new FlxText(0, 0, 0, "Total: " + money, 32);
+		subText2.screenCenter();
+		subText2.y += 40;
+		add(subText2);
+
 		var nextButton = new FlxButton(0, 0, "Continue", nextLevel);
 		nextButton.screenCenter();
 		nextButton.scale.x = nextButton.scale.y = 3;
 		nextButton.label.size = 14;
 		nextButton.label.alignment = FlxTextAlign.CENTER;
-		nextButton.y += 100;
+		nextButton.y += 120;
 		add(nextButton);
 
 		var menuButton = new FlxButton(0, 0, "Menu", returnToMenu);

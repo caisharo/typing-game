@@ -128,13 +128,11 @@ class PlayState extends FlxState
 		if (pressedTab && !pressedShift)
 		{
 			// Go to next input field
-			trace("tab");
 			changeSelected(1);
 		}
 		if (pressedShift && !pressedTab)
 		{
 			// Go to previous input field
-			trace("shift");
 			changeSelected(-1);
 		}
 		if (pressedEscape)
@@ -160,7 +158,6 @@ class PlayState extends FlxState
 		if (pressedEnter && currentCustomer != null)
 		{
 			var currentPosition = currentCustomer.getPosition();
-			trace("enter");
 			var customerOrder:Array<String> = currentCustomer.getOrder();
 			var matches:Int = 0;
 			var matchedString = "";
@@ -261,7 +258,6 @@ class PlayState extends FlxState
 			else if (!displayedCustomers.keys().hasNext())
 			{
 				// no more customers - end of day
-				trace("end day");
 				endDay();
 			}
 		}
@@ -304,7 +300,6 @@ class PlayState extends FlxState
 
 		if (pressedOne && maxCustomersAtOnce >= 1)
 		{
-			trace("customer 1 selected");
 			if (currentCustomer != null)
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
@@ -330,7 +325,6 @@ class PlayState extends FlxState
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
-			trace("customer 2 selected");
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 2)
 			{
@@ -352,7 +346,6 @@ class PlayState extends FlxState
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
-			trace("customer 3 selected");
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 3)
 			{
@@ -374,7 +367,6 @@ class PlayState extends FlxState
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
-			trace("customer 4 selected");
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 4)
 			{
@@ -396,7 +388,6 @@ class PlayState extends FlxState
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
-			trace("customer 5 selected");
 			// only show text again if customer is already selected
 			if (currentCustomer != null && currentCustomer.getPosition() == 5)
 			{
@@ -564,7 +555,6 @@ class PlayState extends FlxState
 			{
 				item.hasFocus = true;
 				item.backgroundColor = FlxColor.YELLOW;
-				trace(item.ID + " is focused");
 			}
 			else
 			{

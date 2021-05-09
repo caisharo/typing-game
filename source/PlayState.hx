@@ -179,8 +179,8 @@ class PlayState extends FlxState
 				money += 10;
 				currentCustomer.showScore("+10", FlxColor.GREEN);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 			else if (score >= 0.5)
 			{
@@ -189,8 +189,8 @@ class PlayState extends FlxState
 				money += 5;
 				currentCustomer.showScore("+5", FlxColor.YELLOW);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 			else
 			{
@@ -199,8 +199,8 @@ class PlayState extends FlxState
 				money -= 5;
 				currentCustomer.showScore("-5", FlxColor.RED);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 
 			// Reset fields doesn't work 100% properly
@@ -212,7 +212,7 @@ class PlayState extends FlxState
 			displayedCustomers.remove(currentPosition);
 			if (remainingCustomers.length > 0)
 			{
-				Timer.delay(replaceCustomer.bind(currentPosition), 1500);
+				Timer.delay(replaceCustomer.bind(currentPosition), 2000);
 			}
 			else if (!displayedCustomers.keys().hasNext())
 			{
@@ -349,8 +349,8 @@ class PlayState extends FlxState
 				money -= 5;
 				customer.showScore("-5", FlxColor.RED);
 				customer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(customer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(customer), 2000);
 				displayedCustomers.remove(key);
 
 				resetFields();
@@ -360,7 +360,7 @@ class PlayState extends FlxState
 				// replace customer?
 				if (remainingCustomers.length > 0)
 				{
-					Timer.delay(replaceCustomer.bind(key), 1500);
+					Timer.delay(replaceCustomer.bind(key), 2000);
 				}
 				else if (!displayedCustomers.keys().hasNext())
 				{

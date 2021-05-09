@@ -106,11 +106,11 @@ class Customer extends FlxTypedGroup<FlxSprite>
 
 	public function fadeAway()
 	{
-		FlxTween.tween(customer, {alpha: 0}, 1.5);
-		FlxTween.tween(patienceBar, {alpha: 0}, 1.5);
-		FlxTween.tween(nameText, {alpha: 0}, 1.5);
-		FlxTween.tween(orderText, {alpha: 0}, 1.5);
-		FlxTween.tween(customerPosition, {alpha: 0}, 1.5);
+		FlxTween.tween(customer, {alpha: 0}, 2);
+		FlxTween.tween(patienceBar, {alpha: 0}, 2);
+		FlxTween.tween(nameText, {alpha: 0}, 2);
+		FlxTween.tween(orderText, {alpha: 0}, 2);
+		FlxTween.tween(customerPosition, {alpha: 0}, 2);
 	}
 
 	public function showScore(string:String, color:FlxColor)
@@ -118,7 +118,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		score = new FlxText(customer.x, customer.y, 0, string, 30);
 		score.color = color;
 		add(score);
-		FlxTween.tween(score, {x: 10, y: 10}, 1.5);
+		FlxTween.tween(score, {x: 10, y: 10}, 2);
 	}
 
 	public function showText(time:Int, cost:Int)

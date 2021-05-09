@@ -419,7 +419,7 @@ class PlayState extends FlxState
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(randomChoose(random, label).toLowerCase());
+					order.push(randomChoose(random, label));
 				}
 				// actual customer patience timer length still to be decided
 				var customer = new Customer(position, order, patience);

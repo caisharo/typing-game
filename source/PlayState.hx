@@ -534,6 +534,7 @@ class PlayState extends FlxState
 			displayedCustomers.set(position, newCustomer);
 			add(newCustomer);
 			newCustomer.startTimer();
+			newCustomer.showText(5, 0);
 		}
 	}
 

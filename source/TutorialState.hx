@@ -191,8 +191,8 @@ class TutorialState extends FlxState
 				money += 10;
 				currentCustomer.showScore("+10", FlxColor.GREEN);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 			else if (score >= 0.5)
 			{
@@ -201,8 +201,8 @@ class TutorialState extends FlxState
 				money += 5;
 				currentCustomer.showScore("+5", FlxColor.YELLOW);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 			else
 			{
@@ -211,8 +211,8 @@ class TutorialState extends FlxState
 				money -= 5;
 				currentCustomer.showScore("-5", FlxColor.RED);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 
 			resetFields();

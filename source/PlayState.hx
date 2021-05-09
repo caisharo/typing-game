@@ -8,6 +8,8 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxRandom;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer.FlxTimerManager;
+import flixel.util.FlxTimer;
 import haxe.Timer;
 import lime.utils.Assets;
 
@@ -122,6 +124,7 @@ class PlayState extends FlxState
 		var pressedTab = FlxG.keys.justPressed.TAB;
 		var pressedShift = FlxG.keys.justPressed.SHIFT;
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
+		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
 		if (pressedTab && !pressedShift)
 		{
 			// Go to next input field
@@ -133,6 +136,11 @@ class PlayState extends FlxState
 			// Go to previous input field
 			trace("shift");
 			changeSelected(-1);
+		}
+		if (pressedEscape)
+		{
+			FlxTimer.globalManager.forEach(function(timer) timer.active = false);
+			openSubState(new PauseSubState(FlxColor.fromString("#14100E")));
 		}
 
 		if (pressedEnter && currentCustomer == null)
@@ -197,8 +205,8 @@ class PlayState extends FlxState
 				money += 10;
 				currentCustomer.showScore("+10", FlxColor.GREEN);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 			else if (score >= 0.5)
 			{
@@ -216,8 +224,8 @@ class PlayState extends FlxState
 				money += 5;
 				currentCustomer.showScore("+5", FlxColor.YELLOW);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 			else
 			{
@@ -235,8 +243,8 @@ class PlayState extends FlxState
 				money -= 5;
 				currentCustomer.showScore("-5", FlxColor.RED);
 				currentCustomer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(currentCustomer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(currentCustomer), 2000);
 			}
 
 			// Reset fields doesn't work 100% properly
@@ -248,7 +256,7 @@ class PlayState extends FlxState
 			displayedCustomers.remove(currentPosition);
 			if (remainingCustomers.length > 0)
 			{
-				Timer.delay(replaceCustomer.bind(currentPosition), 1500);
+				Timer.delay(replaceCustomer.bind(currentPosition), 2000);
 			}
 			else if (!displayedCustomers.keys().hasNext())
 			{
@@ -301,12 +309,16 @@ class PlayState extends FlxState
 			{
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
+			// only show text again if customer is already selected
+			if (currentCustomer != null && currentCustomer.getPosition() == 1)
+			{
+				currentCustomer.showText(3, 3);
+			}
 			currentCustomer = displayedCustomers.get(1);
 			if (currentCustomer != null)
 			{
 				currentCustomerText.text = "Current customer: 1";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
 			}
 		}
 		if (pressedTwo && maxCustomersAtOnce >= 2)
@@ -316,12 +328,16 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 2 selected");
+			// only show text again if customer is already selected
+			if (currentCustomer != null && currentCustomer.getPosition() == 2)
+			{
+				currentCustomer.showText(3, 3);
+			}
 			currentCustomer = displayedCustomers.get(2);
 			if (currentCustomer != null)
 			{
 				currentCustomerText.text = "Current customer: 2";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
 			}
 		}
 		if (pressedThree && maxCustomersAtOnce >= 3)
@@ -331,12 +347,16 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 3 selected");
+			// only show text again if customer is already selected
+			if (currentCustomer != null && currentCustomer.getPosition() == 3)
+			{
+				currentCustomer.showText(3, 3);
+			}
 			currentCustomer = displayedCustomers.get(3);
 			if (currentCustomer != null)
 			{
 				currentCustomerText.text = "Current customer: 3";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
 			}
 		}
 		if (pressedFour && maxCustomersAtOnce >= 4)
@@ -346,12 +366,16 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 4 selected");
+			// only show text again if customer is already selected
+			if (currentCustomer != null && currentCustomer.getPosition() == 4)
+			{
+				currentCustomer.showText(3, 3);
+			}
 			currentCustomer = displayedCustomers.get(4);
 			if (currentCustomer != null)
 			{
 				currentCustomerText.text = "Current customer: 4";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
 			}
 		}
 		if (pressedFive && maxCustomersAtOnce >= 5)
@@ -361,12 +385,16 @@ class PlayState extends FlxState
 				currentCustomer.changeNumColor(FlxColor.WHITE);
 			}
 			trace("customer 5 selected");
+			// only show text again if customer is already selected
+			if (currentCustomer != null && currentCustomer.getPosition() == 5)
+			{
+				currentCustomer.showText(3, 3);
+			}
 			currentCustomer = displayedCustomers.get(5);
 			if (currentCustomer != null)
 			{
 				currentCustomerText.text = "Current customer: 5";
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
-				currentCustomer.showText(3000, 3);
 			}
 		}
 
@@ -390,8 +418,8 @@ class PlayState extends FlxState
 				money -= 5;
 				customer.showScore("-5", FlxColor.RED);
 				customer.fadeAway();
-				Timer.delay(hud.updateHUD.bind(day, money), 1500);
-				Timer.delay(remove.bind(customer), 1500);
+				Timer.delay(hud.updateHUD.bind(day, money), 2000);
+				Timer.delay(remove.bind(customer), 2000);
 				displayedCustomers.remove(key);
 
 				resetFields();
@@ -401,7 +429,7 @@ class PlayState extends FlxState
 				// replace customer?
 				if (remainingCustomers.length > 0)
 				{
-					Timer.delay(replaceCustomer.bind(key), 1500);
+					Timer.delay(replaceCustomer.bind(key), 2000);
 				}
 				else if (!displayedCustomers.keys().hasNext())
 				{
@@ -440,14 +468,14 @@ class PlayState extends FlxState
 				for (label in labels)
 				{
 					// assumes text files are named based on label - will probably need to adjust later
-					order.push(randomChoose(random, label).toLowerCase());
+					order.push(randomChoose(random, label));
 				}
 				// actual customer patience timer length still to be decided
 				var customer = new Customer(position, order, patience);
 				displayedCustomers.set(position, customer);
 				add(customer);
 				customer.startTimer();
-				customer.showText(5000, 0);
+				customer.showText(5, 0);
 			}
 			else
 			{
@@ -555,6 +583,7 @@ class PlayState extends FlxState
 			displayedCustomers.set(position, newCustomer);
 			add(newCustomer);
 			newCustomer.startTimer();
+			newCustomer.showText(5, 0);
 		}
 	}
 

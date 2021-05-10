@@ -73,6 +73,6 @@ class MenuState extends FlxState
 		// log it?
 		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "main_menu"});
 
-		FlxG.switchState(new TutorialState());
+		FlxG.switchState(new TutorialMenuState());
 	}
 }

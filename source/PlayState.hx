@@ -192,12 +192,12 @@ class PlayState extends FlxState
 				{
 					trace(fieldName + " matches");
 					matches++;
-					matchedString += fieldName + ": " + expected + ";";
+					matchedString += fieldName + ": " + expected + "; ";
 				}
 				else
 				{
 					trace(fieldName + " does not match");
-					failedString += fieldName + ": " + expected + ", " + input + ";";
+					failedString += fieldName + ": " + expected + ", " + input + "; ";
 				}
 			});
 

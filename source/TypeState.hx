@@ -265,12 +265,12 @@ class TypeState extends FlxState
 					{
 						trace(fieldName + " matches");
 						matches++;
-						matchedString += fieldName + ": " + expected + ";";
+						matchedString += fieldName + ": " + expected + "; ";
 					}
 					else
 					{
 						trace(fieldName + " does not match");
-						failedString += fieldName + ": " + expected + ", " + input + ";";
+						failedString += fieldName + ": " + expected + ", " + input + "; ";
 					}
 				});
 				// currently doing this for matches: 100% = happy, 50%+ = satsified, <50% = angry

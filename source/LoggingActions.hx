@@ -22,7 +22,7 @@ class LoggingActions
 	//
 	// logLevelAction
 	//
-	// Customer satisfaction - log {day: day, customer_state: "state", percent_matched: percent, matched: "field: expected;", failed: "field: expected, actual;"}
+	// Customer satisfaction - log {day: day, customer_state: "state", percent_matched: percent, matched: "field: expected; ", failed: "field: expected, actual; "}
 	public static var HAPPY_CUSTOMER:Int = 10;
 	public static var SATISFIED_CUSTOMER:Int = 11;
 	public static var ANGRY_CUSTOMER:Int = 12; // only from incorrect matching

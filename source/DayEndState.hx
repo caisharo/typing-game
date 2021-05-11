@@ -27,7 +27,10 @@ class DayEndState extends FlxState
 		FlxG.save.flush(); // save data
 
 		// logging level end
-		Main.logger.logLevelEnd({day_completed: day, gained_money: difference, total_money: money});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelEnd({day_completed: day, gained_money: difference, total_money: money});
+		}
 
 		var mainText = new FlxText(0, 0, 0, "END OF DAY " + day, 64);
 		mainText.screenCenter();
@@ -70,14 +73,20 @@ class DayEndState extends FlxState
 	function returnToMenu()
 	{
 		// log it?
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "day_end"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "day_end"});
+		}
 		FlxG.switchState(new MenuState());
 	}
 
 	function nextLevel()
 	{
 		// log it?
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_NEXT_LEVEL, {pressed: "next", from: "day_end"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_NEXT_LEVEL, {pressed: "next", from: "day_end"});
+		}
 
 		PlayState.day = day + 1;
 		FlxG.switchState(new PlayState());

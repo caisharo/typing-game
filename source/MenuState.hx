@@ -54,7 +54,10 @@ class MenuState extends FlxState
 	function startGame()
 	{
 		// log it?
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_START, {pressed: "start", from: "main_menu"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_START, {pressed: "start", from: "main_menu"});
+		}
 
 		// Use saved value?
 		if (FlxG.save.data.dayCompleted != null)
@@ -71,7 +74,10 @@ class MenuState extends FlxState
 	function startTutorial()
 	{
 		// log it?
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "main_menu"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "main_menu"});
+		}
 
 		FlxG.switchState(new TutorialMenuState());
 	}

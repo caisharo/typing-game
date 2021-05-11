@@ -140,7 +140,10 @@ class TutorialState extends FlxState
 		welcomeText.start(0.04, false, true);
 
 		// logging tutorial level start
-		Main.logger.logLevelStart(day, {day_started: day, money: money});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelStart(day, {day_started: day, money: money});
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -251,7 +254,10 @@ class TutorialState extends FlxState
 						returnToMenuText.start(0.04, false, false, [], function()
 						{
 							// logging tutorial level end
-							Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+							if (Main.isLogging)
+							{
+								Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+							}
 
 							// save that player cleared tutorial?
 							FlxG.save.data.clearedTutorial = true;

@@ -68,26 +68,38 @@ class TutorialMenuState extends FlxState
 	function startIntro()
 	{
 		// log it?
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_INTRO, {pressed: "intro", from: "tutorial_menu"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_INTRO, {pressed: "intro", from: "tutorial_menu"});
+		}
 
 		FlxG.switchState(new IntroState());
 	}
 
 	function startSelect()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SELECT, {pressed: "select", from: "tutorial_menu"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SELECT, {pressed: "select", from: "tutorial_menu"});
+		}
 		FlxG.switchState(new SelectState());
 	}
 
 	function startType()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "type", from: "tutorial_menu"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "type", from: "tutorial_menu"});
+		}
 		FlxG.switchState(new TypeState());
 	}
 
 	function startMenu()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "Menu", from: "tutorial_menu"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "Menu", from: "tutorial_menu"});
+		}
 		FlxG.switchState(new MenuState());
 	}
 }

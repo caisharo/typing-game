@@ -18,7 +18,10 @@ class SelectEndState extends FlxState
 
 		FlxG.mouse.visible = true;
 
-		Main.logger.logLevelEnd({day_completed: -2, gained_money: 0, total_money: 0});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelEnd({day_completed: -2, gained_money: 0, total_money: 0});
+		}
 
 		var nextButton = new FlxButton(0, 0, "Next", nextTutorial);
 		nextButton.screenCenter();
@@ -44,13 +47,19 @@ class SelectEndState extends FlxState
 
 	function nextTutorial()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "next", from: "select_end"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "next", from: "select_end"});
+		}
 		FlxG.switchState(new TypeState());
 	}
 
 	function returnToTutorial()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "select_end"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "select_end"});
+		}
 		FlxG.switchState(new TutorialMenuState());
 	}
 }

@@ -150,6 +150,8 @@ class TypeState extends FlxState
 																remove(allText);
 																Timer.delay(function()
 																{
+																	var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
+																	var newCustomer:Customer = new Customer(2, ["bob", "latte"], 20);
 																	add(customer);
 																	add(newCustomer);
 																	temp = new FlxText(0, 0, 0, tutorialText[7], 20);
@@ -167,6 +169,9 @@ class TypeState extends FlxState
 																	currentCustomerText.y += 160;
 																	currentCustomerText.x -= 300;
 																	customer.startTimer();
+																	newCustomer.startTimer();
+																	customer.showText(5, 0);
+																	newCustomer.showText(5, 0);
 																	add(currentCustomerText);
 																	stageDone = true;
 																}, 300);

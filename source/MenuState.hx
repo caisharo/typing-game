@@ -23,7 +23,7 @@ class MenuState extends BasicMenuState
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 
-		var titleText = new FlxText(0, 0, 0, "Typing Game", 64);
+		var titleText = new FlxText(0, 0, 0, "Type a Latte", 64);
 		titleText.screenCenter();
 		titleText.y = 64;
 		add(titleText);

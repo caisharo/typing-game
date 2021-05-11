@@ -17,7 +17,7 @@ class Main extends Sprite
 		var gameId:Int = 202105;
 		var gameName:String = "typing";
 		var gameKey:String = "79a131f53a8376e7c93e04af79a0b81c";
-		var categoryId:Int = 4;
+		var categoryId:Int = 1;
 		// categoryId: A number you assign to help categorize data from different releases for your game.
 		// debugging = 1
 		// release to family/friends = 2,

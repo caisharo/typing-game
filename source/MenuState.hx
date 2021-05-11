@@ -11,7 +11,9 @@ class MenuState extends BasicMenuState
 	{
 		// Will probably disable mouse since we want our controls to be keyboard-based
 		// Currently not disabled just to make testing a bit easier
-		FlxG.mouse.visible = true;
+		#if (!FLX_NO_MOUSE)
+		FlxG.mouse.visible = false;
+		#end
 
 		if (FlxG.save.data.clearedTutorial != null)
 		{

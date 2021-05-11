@@ -14,8 +14,6 @@ class TypeEndState extends BasicMenuState
 	{
 		super.create();
 
-		FlxG.mouse.visible = true;
-
 		Main.logger.logLevelEnd({day_completed: -3, gained_money: 0, total_money: 0});
 
 		menuItems = new FlxTypedGroup<FlxText>();

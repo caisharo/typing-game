@@ -54,8 +54,6 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		FlxG.mouse.visible = false;
-
 		if (FlxG.save.data.dayCompleted != null)
 		{
 			trace("last day completed: " + FlxG.save.data.dayCompleted);

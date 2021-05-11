@@ -14,8 +14,6 @@ class SelectEndState extends BasicMenuState
 	{
 		super.create();
 
-		FlxG.mouse.visible = true;
-
 		if (Main.isLogging)
 		{
 			Main.logger.logLevelEnd({day_completed: -2, gained_money: 0, total_money: 0});

@@ -13,8 +13,6 @@ class PauseSubState extends BasicMenuSubState
 	{
 		super.create();
 
-		FlxG.mouse.visible = true;
-
 		var mainText = new FlxText(0, 0, 0, "PAUSED", 64);
 		mainText.screenCenter();
 		mainText.y -= 70;

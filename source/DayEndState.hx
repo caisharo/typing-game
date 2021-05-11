@@ -11,9 +11,6 @@ class DayEndState extends BasicMenuState
 
 	override public function create()
 	{
-		// Mouse has to be visible for now since we use buttons
-		FlxG.mouse.visible = true;
-
 		// save day and money
 		FlxG.save.data.dayCompleted = day;
 		var lastSavedMoney = 0;

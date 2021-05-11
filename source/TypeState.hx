@@ -33,26 +33,26 @@ class TypeState extends FlxState
 	var currentCustomerText:FlxText;
 
 	var tutorialText:Array<String> = [
-		"There are some last information to share before you get started.",
-		"First, you are always welcomed to switch between customers.",
-		"Second, the content of name and order will \n be automatically hidden after some time.",
-		"Third, if you want to reveal those content, press the number key again.",
-		"Note that such an action will cost you some patience.",
-		"Lastly, your award will be account on your correctness.",
-		"That's all information you need, now let's get start it!",
+		"Here are some final tips before you get started.",
+		"First, you can always switch between the customers using the number keys.",
+		"Second, the text (name and order) will be automatically hidden after some time.",
+		"Third, if you want to see the text again, press the same number key again.",
+		"However, showing the text again will cost you some patience.",
+		"Lastly, your score will be dependent on if you get the name and/or order correct.",
+		"That's all the information you need, now let's get started!",
 		"Use TAB or SHIFT to choose fields, press ENTER to submit.",
-		"You have finished all tutorials. Have fun in the actual game!"
+		"You have finished all the tutorials. Have fun in the actual game!"
 	];
 
-	var lastText = new FlxTypeText(0, 0, 0, "There are some last information to share before you get started.", 20);
-	var firstText = new FlxTypeText(0, 0, 0, "First, you are always welcomed to switch between customers.", 20);
-	var secondText = new FlxTypeText(0, 0, 0, "Second, the content of name and order will \n be automatically hidden after some time.", 20);
-	var thirdText = new FlxTypeText(0, 0, 0, "Third, if you want to reveal those content, press the number key again.", 20);
-	var noteText = new FlxTypeText(0, 0, 0, "Note that such an action will cost you some patience.", 20);
-	var awardText = new FlxTypeText(0, 0, 0, "Lastly, your award will be account on your correctness.", 20);
-	var allText = new FlxTypeText(0, 0, 0, "That's all information you need, now let's get start it!", 20);
+	var lastText = new FlxTypeText(0, 0, 0, "Here are some final tips before you get started.", 20);
+	var firstText = new FlxTypeText(0, 0, 0, "First, you can always switch between the customers using the number keys.", 20);
+	var secondText = new FlxTypeText(0, 0, 0, "Second, the text (name and order) will be automatically hidden after some time.", 20);
+	var thirdText = new FlxTypeText(0, 0, 0, "Third, if you want to see the text again, press the same number key again.", 20);
+	var noteText = new FlxTypeText(0, 0, 0, "However, showing the text again will cost you some patience.", 20);
+	var awardText = new FlxTypeText(0, 0, 0, "Lastly, your score will be dependent on if you get the name and/or order correct.", 20);
+	var allText = new FlxTypeText(0, 0, 0, "That's all the information you need, now let's get started!", 20);
 	var submitText = new FlxTypeText(0, 0, 0, "Use TAB or SHIFT to choose fields, press ENTER to submit.", 20);
-	var funText = new FlxTypeText(0, 0, 0, "You have finished all tutorials. Have fun in the actual game!", 20);
+	var funText = new FlxTypeText(0, 0, 0, "You have finished all the tutorials. Have fun in the actual game!", 20);
 
 	var temp:FlxText;
 

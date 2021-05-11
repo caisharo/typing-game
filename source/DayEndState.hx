@@ -43,6 +43,7 @@ class DayEndState extends BasicMenuState
 		add(subText2);
 
 		menuItems = new FlxTypedGroup<FlxText>();
+		yShift = 500;
 		addMenuItem("Continue", nextLevel);
 		addMenuItem("Menu", returnToMenu);
 

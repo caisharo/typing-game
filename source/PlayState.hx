@@ -94,6 +94,17 @@ class PlayState extends FlxState
 			possibleOrders.set(label, lines);
 		}
 
+		// Adjust some things based on day - will probably need to change later
+		if (day > 10)
+		{
+			maxCustomersAtOnce = 5;
+		}
+		else if (day > 5)
+		{
+			maxCustomersAtOnce = 4;
+		}
+		totalCustomers = (day + 3) > 20 ? 20 : day + 3;
+
 		addInput();
 		addCustomers(totalCustomers);
 

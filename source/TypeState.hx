@@ -150,8 +150,8 @@ class TypeState extends FlxState
 																remove(allText);
 																Timer.delay(function()
 																{
-																	var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
-																	var newCustomer:Customer = new Customer(2, ["bob", "latte"], 20);
+																	var customer:Customer = new Customer(1, ["alice", "coffee"], 40);
+																	var newCustomer:Customer = new Customer(2, ["bob", "latte"], 35);
 																	add(customer);
 																	add(newCustomer);
 																	temp = new FlxText(0, 0, 0, tutorialText[7], 20);
@@ -168,6 +168,11 @@ class TypeState extends FlxState
 																	currentCustomerText.screenCenter();
 																	currentCustomerText.y += 160;
 																	currentCustomerText.x -= 300;
+																	// try to prevent player from failing - stop patience bar before time runs out
+																	// however doesn't account for time loss due to player showing text again...
+																	// currently just giving customers extra time, and stopping with 7 seconds left (which should give them 2 show text again attempts)
+																	Timer.delay(customer.stopPatienceBar, 33000);
+																	Timer.delay(newCustomer.stopPatienceBar, 28000);
 																	customer.startTimer();
 																	newCustomer.startTimer();
 																	customer.showText(5, 0);

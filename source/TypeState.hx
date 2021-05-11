@@ -191,7 +191,10 @@ class TypeState extends FlxState
 		});
 
 		// logging tutorial level start
-		Main.logger.logLevelStart(-3, {day_started: day, money: money});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelStart(-3, {day_started: day, money: money});
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -226,7 +229,10 @@ class TypeState extends FlxState
 			if (pressedEnter && currentCustomer == null)
 			{
 				// log it?
-				Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
+				}
 				var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
 				selectReminder.screenCenter();
 				selectReminder.y += 190;
@@ -268,13 +274,16 @@ class TypeState extends FlxState
 				if (score == 1)
 				{
 					// logging
-					Main.logger.logLevelAction(LoggingActions.HAPPY_CUSTOMER, {
-						day: day,
-						customer_state: "happy",
-						percent_matched: score,
-						matched: matchedString,
-						failed: failedString
-					});
+					if (Main.isLogging)
+					{
+						Main.logger.logLevelAction(LoggingActions.HAPPY_CUSTOMER, {
+							day: day,
+							customer_state: "happy",
+							percent_matched: score,
+							matched: matchedString,
+							failed: failedString
+						});
+					}
 					currentCustomer.stopPatienceBar();
 					currentCustomer.changeSprite(AssetPaths.happy_customer__png);
 					money += 10;
@@ -286,13 +295,16 @@ class TypeState extends FlxState
 				else if (score >= 0.5)
 				{
 					// logging
-					Main.logger.logLevelAction(LoggingActions.SATISFIED_CUSTOMER, {
-						day: day,
-						customer_state: "satisfied",
-						percent_matched: score,
-						matched: matchedString,
-						failed: failedString
-					});
+					if (Main.isLogging)
+					{
+						Main.logger.logLevelAction(LoggingActions.SATISFIED_CUSTOMER, {
+							day: day,
+							customer_state: "satisfied",
+							percent_matched: score,
+							matched: matchedString,
+							failed: failedString
+						});
+					}
 					currentCustomer.stopPatienceBar();
 					currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
 					money += 5;
@@ -304,13 +316,16 @@ class TypeState extends FlxState
 				else
 				{
 					// logging
-					Main.logger.logLevelAction(LoggingActions.ANGRY_CUSTOMER, {
-						day: day,
-						customer_state: "angry",
-						percent_matched: score,
-						matched: matchedString,
-						failed: failedString
-					});
+					if (Main.isLogging)
+					{
+						Main.logger.logLevelAction(LoggingActions.ANGRY_CUSTOMER, {
+							day: day,
+							customer_state: "angry",
+							percent_matched: score,
+							matched: matchedString,
+							failed: failedString
+						});
+					}
 					currentCustomer.stopPatienceBar();
 					currentCustomer.changeSprite(AssetPaths.angry_customer__png);
 					money -= 5;
@@ -370,7 +385,10 @@ class TypeState extends FlxState
 				if (currentCustomer != null && currentCustomer.getPosition() == 1)
 				{
 					// log it?
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+					if (Main.isLogging)
+					{
+						Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+					}
 					currentCustomer.showText(3, 3);
 				}
 				currentCustomer = customers.get(1);
@@ -390,7 +408,10 @@ class TypeState extends FlxState
 				if (currentCustomer != null && currentCustomer.getPosition() == 2)
 				{
 					// log it?
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+					if (Main.isLogging)
+					{
+						Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+					}
 					currentCustomer.showText(3, 3);
 				}
 				currentCustomer = customers.get(2);
@@ -412,7 +433,10 @@ class TypeState extends FlxState
 					var customer:Customer = customers.get(key);
 					var order = customer.getOrder();
 					// logging
-					Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {day: day, customer_state: "angry", order: order});
+					if (Main.isLogging)
+					{
+						Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {day: day, customer_state: "angry", order: order});
+					}
 					customer.changeSprite(AssetPaths.angry_customer__png);
 					money -= 5;
 					customer.showScore("-5", FlxColor.RED);
@@ -438,7 +462,10 @@ class TypeState extends FlxState
 	function end()
 	{
 		remove(submitText);
-		Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+		}
 		// save that player cleared tutorial?
 		FlxG.save.data.clearedTutorial = true;
 		FlxG.save.flush(); // save data

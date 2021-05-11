@@ -125,7 +125,10 @@ class SelectState extends FlxState
 		});
 
 		// logging tutorial level start
-		Main.logger.logLevelStart(-2, {day_started: day, money: money});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelStart(-2, {day_started: day, money: money});
+		}
 	}
 
 	override public function update(elapsed:Float)

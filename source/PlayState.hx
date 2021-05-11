@@ -100,7 +100,10 @@ class PlayState extends FlxState
 		addCustomers(totalCustomers);
 
 		// logging level start
-		Main.logger.logLevelStart(day, {day_started: day, money: money});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelStart(day, {day_started: day, money: money});
+		}
 	}
 
 	function setRange()
@@ -144,7 +147,10 @@ class PlayState extends FlxState
 		if (pressedEnter && currentCustomer == null)
 		{
 			// log it?
-			Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
+			if (Main.isLogging)
+			{
+				Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
+			}
 
 			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
 			selectReminder.screenCenter();
@@ -189,13 +195,16 @@ class PlayState extends FlxState
 			if (score == 1)
 			{
 				// logging
-				Main.logger.logLevelAction(LoggingActions.HAPPY_CUSTOMER, {
-					day: day,
-					customer_state: "happy",
-					percent_matched: score,
-					matched: matchedString,
-					failed: failedString
-				});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.HAPPY_CUSTOMER, {
+						day: day,
+						customer_state: "happy",
+						percent_matched: score,
+						matched: matchedString,
+						failed: failedString
+					});
+				}
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.happy_customer__png);
@@ -208,13 +217,16 @@ class PlayState extends FlxState
 			else if (score >= 0.5)
 			{
 				// logging
-				Main.logger.logLevelAction(LoggingActions.SATISFIED_CUSTOMER, {
-					day: day,
-					customer_state: "satisfied",
-					percent_matched: score,
-					matched: matchedString,
-					failed: failedString
-				});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.SATISFIED_CUSTOMER, {
+						day: day,
+						customer_state: "satisfied",
+						percent_matched: score,
+						matched: matchedString,
+						failed: failedString
+					});
+				}
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
@@ -227,13 +239,16 @@ class PlayState extends FlxState
 			else
 			{
 				// logging
-				Main.logger.logLevelAction(LoggingActions.ANGRY_CUSTOMER, {
-					day: day,
-					customer_state: "angry",
-					percent_matched: score,
-					matched: matchedString,
-					failed: failedString
-				});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.ANGRY_CUSTOMER, {
+						day: day,
+						customer_state: "angry",
+						percent_matched: score,
+						matched: matchedString,
+						failed: failedString
+					});
+				}
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
@@ -308,7 +323,10 @@ class PlayState extends FlxState
 			if (currentCustomer != null && currentCustomer.getPosition() == 1)
 			{
 				// log it?
-				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+				}
 
 				currentCustomer.showText(3, 3);
 			}
@@ -329,7 +347,10 @@ class PlayState extends FlxState
 			if (currentCustomer != null && currentCustomer.getPosition() == 2)
 			{
 				// log it?
-				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+				}
 
 				currentCustomer.showText(3, 3);
 			}
@@ -350,7 +371,10 @@ class PlayState extends FlxState
 			if (currentCustomer != null && currentCustomer.getPosition() == 3)
 			{
 				// log it?
-				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 3});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 3});
+				}
 
 				currentCustomer.showText(3, 3);
 			}
@@ -371,7 +395,10 @@ class PlayState extends FlxState
 			if (currentCustomer != null && currentCustomer.getPosition() == 4)
 			{
 				// log it?
-				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 4});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 4});
+				}
 
 				currentCustomer.showText(3, 3);
 			}
@@ -392,7 +419,10 @@ class PlayState extends FlxState
 			if (currentCustomer != null && currentCustomer.getPosition() == 5)
 			{
 				// log it?
-				Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 5});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 5});
+				}
 
 				currentCustomer.showText(3, 3);
 			}
@@ -419,7 +449,10 @@ class PlayState extends FlxState
 				var order = customer.getOrder();
 
 				// logging
-				Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {day: day, customer_state: "angry", order: order});
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {day: day, customer_state: "angry", order: order});
+				}
 
 				customer.changeSprite(AssetPaths.angry_customer__png);
 				money -= 5;

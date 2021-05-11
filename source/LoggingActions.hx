@@ -11,13 +11,13 @@ class LoggingActions
 	public static var PRESS_TUTORIAL:Int = 2;
 	public static var PRESS_NEXT_LEVEL:Int = 3;
 	public static var PRESS_RETURN_TO_MENU:Int = 4;
+	public static var PRESS_PAUSE:Int = 5;
+	// public static var PRESS_OPTIONS:Int = 6;
+	//
+	// Tutorial related menus
 	public static var PRESS_INTRO:Int = -1;
 	public static var PRESS_SELECT:Int = -2;
 	public static var PRESS_TYPE:Int = -3;
-	// public static var PRESS_PAUSE:Int = 5;
-	// public static var PRESS_OPTIONS:Int = 6;
-	//
-	// Skipping some numbers in case we add more menus
 	//
 	// logLevelAction
 	//

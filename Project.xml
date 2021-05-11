@@ -64,7 +64,7 @@
 	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
 
 	<!-- Disable mouse control for our game (keyboard only) - you can still see normal browser cursor over game though :/ -->
-	<haxedef name="FLX_NO_MOUSE"></haxedef>
+	<!-- <haxedef name="FLX_NO_MOUSE"></haxedef> -->
 
 	<!--Disable the Flixel core sound tray-->
 	<!--<haxedef name="FLX_NO_SOUND_TRAY" />-->

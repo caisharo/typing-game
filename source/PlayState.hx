@@ -140,6 +140,10 @@ class PlayState extends FlxState
 		}
 		if (pressedEscape)
 		{
+			if (Main.isLogging)
+			{
+				Main.logger.logLevelAction(LoggingActions.PRESS_PAUSE, {pressed: "pause", from: "play_state"});
+			}
 			FlxTimer.globalManager.forEach(function(timer) timer.active = false);
 			openSubState(new PauseSubState(FlxColor.fromString("#14100E")));
 		}

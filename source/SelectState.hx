@@ -135,6 +135,10 @@ class SelectState extends FlxState
 	{
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
+			if (Main.isLogging)
+			{
+				Main.logger.logLevelAction(LoggingActions.PRESS_TUTORIAL_PAUSE, {pressed: "tutorial_pause", from: "select_state"});
+			}
 			FlxTimer.globalManager.forEach(function(timer) timer.active = false);
 			openSubState(new TutorialPauseSubState(FlxColor.fromString("#14100E")));
 		}

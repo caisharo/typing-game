@@ -201,6 +201,10 @@ class TypeState extends FlxState
 	{
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
+			if (Main.isLogging)
+			{
+				Main.logger.logLevelAction(LoggingActions.PRESS_TUTORIAL_PAUSE, {pressed: "tutorial_pause", from: "type_state"});
+			}
 			FlxTimer.globalManager.forEach(function(timer) timer.active = false);
 			openSubState(new TutorialPauseSubState(FlxColor.fromString("#14100E")));
 		}
@@ -223,6 +227,10 @@ class TypeState extends FlxState
 			}
 			if (pressedEscape)
 			{
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelAction(LoggingActions.PRESS_PAUSE, {pressed: "pause", from: "type_state"});
+				}
 				FlxTimer.globalManager.forEach(function(timer) timer.active = false);
 				openSubState(new PauseSubState(FlxColor.fromString("#14100E")));
 			}

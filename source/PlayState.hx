@@ -411,6 +411,7 @@ class PlayState extends FlxState
 			{
 				if (currentCustomer == displayedCustomers.get(key))
 				{
+					resetFields();
 					currentCustomer = null;
 					currentCustomerText.text = "Current customer: ";
 				}
@@ -427,10 +428,6 @@ class PlayState extends FlxState
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
 				Timer.delay(remove.bind(customer), 2000);
 				displayedCustomers.remove(key);
-
-				resetFields();
-				currentCustomer = null;
-				currentCustomerText.text = "Current customer: ";
 
 				// replace customer?
 				if (remainingCustomers.length > 0)

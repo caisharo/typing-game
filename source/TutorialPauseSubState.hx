@@ -1,16 +1,12 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxSubState;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-class TutorialPauseSubState extends FlxSubState
+class TutorialPauseSubState extends BasicMenuSubState
 {
-	public var isPersistent:Bool = false;
-
 	public var displayedCustomers:Map<Int, Customer> = [];
 
 	override public function create()
@@ -24,21 +20,9 @@ class TutorialPauseSubState extends FlxSubState
 		mainText.y -= 70;
 		add(mainText);
 
-		var returnButton = new FlxButton(0, 0, "Return", returnToGame);
-		returnButton.screenCenter();
-		returnButton.scale.x = returnButton.scale.y = 3;
-		returnButton.label.size = 14;
-		returnButton.label.alignment = FlxTextAlign.CENTER;
-		returnButton.y += 100;
-		add(returnButton);
-
-		var tutorialButton = new FlxButton(0, 0, "Tutorial", returnToTutorial);
-		tutorialButton.screenCenter();
-		tutorialButton.scale.x = tutorialButton.scale.y = 3;
-		tutorialButton.label.size = 14;
-		tutorialButton.label.alignment = FlxTextAlign.CENTER;
-		tutorialButton.y += 200;
-		add(tutorialButton);
+		menuItems = new FlxTypedGroup<FlxText>();
+		addMenuItem("Return", returnToGame);
+		addMenuItem("Menu", returnToTutorial);
 	}
 
 	override public function update(elapsed:Float)

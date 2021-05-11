@@ -1,15 +1,11 @@
 package;
 
-import cse481d.logging.CapstoneLogger;
 import flixel.FlxG;
-import flixel.FlxState;
-import flixel.input.FlxAccelerometer;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import flixel.util.helpers.FlxRange;
 
-class TutorialMenuState extends FlxState
+class TutorialMenuState extends BasicMenuState
 {
 	override public function create()
 	{
@@ -25,37 +21,12 @@ class TutorialMenuState extends FlxState
 		titleText.y = 64;
 		add(titleText);
 
-		var introButton = new FlxButton(0, 0, "Concept", startIntro);
-		introButton.screenCenter();
-		introButton.scale.x = introButton.scale.y = 3;
-		introButton.label.size = 14;
-		introButton.label.alignment = FlxTextAlign.CENTER;
-		introButton.y -= 30;
-		add(introButton);
-
-		var selectButton = new FlxButton(0, 0, "Select", startSelect);
-		selectButton.screenCenter();
-		selectButton.scale.x = selectButton.scale.y = 3;
-		selectButton.label.size = 14;
-		selectButton.label.alignment = FlxTextAlign.CENTER;
-		selectButton.y += 45;
-		add(selectButton);
-
-		var typeButton = new FlxButton(0, 0, "Submit", startType);
-		typeButton.screenCenter();
-		typeButton.scale.x = typeButton.scale.y = 3;
-		typeButton.label.size = 14;
-		typeButton.label.alignment = FlxTextAlign.CENTER;
-		typeButton.y += 120;
-		add(typeButton);
-
-		var menuButton = new FlxButton(0, 0, "Menu", startMenu);
-		menuButton.screenCenter();
-		menuButton.scale.x = menuButton.scale.y = 3;
-		menuButton.label.size = 14;
-		menuButton.label.alignment = FlxTextAlign.CENTER;
-		menuButton.y += 210;
-		add(menuButton);
+		yShift = 300;
+		menuItems = new FlxTypedGroup<FlxText>();
+		addMenuItem("Concept", startIntro);
+		addMenuItem("Select", startSelect);
+		addMenuItem("Submit", startType);
+		addMenuItem("Menu", startMenu);
 
 		super.create();
 	}

@@ -1,12 +1,10 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import js.html.SelectElement;
 
-class TypeEndState extends FlxState
+class TypeEndState extends BasicMenuState
 {
 	public var isPersistent:Bool = false;
 
@@ -20,21 +18,9 @@ class TypeEndState extends FlxState
 
 		Main.logger.logLevelEnd({day_completed: -3, gained_money: 0, total_money: 0});
 
-		var tutorialButton = new FlxButton(0, 0, "Tutorial", returnToTutorial);
-		tutorialButton.screenCenter();
-		tutorialButton.scale.x = tutorialButton.scale.y = 3;
-		tutorialButton.label.size = 14;
-		tutorialButton.label.alignment = FlxTextAlign.CENTER;
-		tutorialButton.y += 100;
-		add(tutorialButton);
-
-		var menuButton = new FlxButton(0, 0, "Menu", returnToMenu);
-		menuButton.screenCenter();
-		menuButton.scale.x = menuButton.scale.y = 3;
-		menuButton.label.size = 14;
-		menuButton.label.alignment = FlxTextAlign.CENTER;
-		menuButton.y += 200;
-		add(menuButton);
+		menuItems = new FlxTypedGroup<FlxText>();
+		addMenuItem("Tutorial", returnToTutorial);
+		addMenuItem("Menu", returnToMenu);
 	}
 
 	override public function update(elapsed:Float)

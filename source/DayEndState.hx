@@ -1,11 +1,10 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 
-class DayEndState extends FlxState
+class DayEndState extends BasicMenuState
 {
 	public static var day = 0;
 	public static var money = 0;
@@ -46,21 +45,9 @@ class DayEndState extends FlxState
 		subText2.y += 40;
 		add(subText2);
 
-		var nextButton = new FlxButton(0, 0, "Continue", nextLevel);
-		nextButton.screenCenter();
-		nextButton.scale.x = nextButton.scale.y = 3;
-		nextButton.label.size = 14;
-		nextButton.label.alignment = FlxTextAlign.CENTER;
-		nextButton.y += 120;
-		add(nextButton);
-
-		var menuButton = new FlxButton(0, 0, "Menu", returnToMenu);
-		menuButton.screenCenter();
-		menuButton.scale.x = menuButton.scale.y = 3;
-		menuButton.label.size = 14;
-		menuButton.label.alignment = FlxTextAlign.CENTER;
-		menuButton.y += 200;
-		add(menuButton);
+		menuItems = new FlxTypedGroup<FlxText>();
+		addMenuItem("Continue", nextLevel);
+		addMenuItem("Menu", returnToMenu);
 
 		super.create();
 	}

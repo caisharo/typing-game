@@ -78,9 +78,20 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		return this.position;
 	}
 
-	public function startTimer()
+	public function startTimer(tutorial:Bool = false)
 	{
-		patience.start(time, deleteBar, 1);
+		// prevent player from failing in tutorial
+		if (tutorial)
+		{
+			patience.start(time, function(timer:FlxTimer)
+			{
+				patience.active = false;
+			}, 1);
+		}
+		else
+		{
+			patience.start(time, deleteBar, 1);
+		}
 	}
 
 	public function getOrder()
@@ -121,7 +132,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		FlxTween.tween(score, {x: 10, y: 10}, 2);
 	}
 
-	public function showText(time:Int, cost:Int)
+	public function showText(time:Int, cost:Int, tutorial:Bool = false)
 	{
 		nameText.alpha = 1;
 		orderText.alpha = 1;
@@ -131,6 +142,15 @@ class Customer extends FlxTypedGroup<FlxSprite>
 			var timer = new FlxTimer();
 			timer.start(time, hideText, 1);
 			patience.start(Math.max(0, patience.timeLeft - cost), deleteBar, 1);
+			// prevent player from failing in tutorial
+			if (tutorial)
+			{
+				Timer.delay(function()
+				{
+					stopPatienceBar();
+					patience.active = false;
+				}, Std.int((patience.timeLeft - 1) * 1000));
+			}
 		}
 	}
 

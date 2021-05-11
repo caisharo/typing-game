@@ -20,7 +20,7 @@ class TypeState extends FlxState
 	static var colors:Array<String> = ["#C8D8FA", "#FFE7DA"]; // colors for input fields
 
 	var hud:HUD;
-	var day:Int = 0;
+	var day:Int = -3;
 	var money:Int = 0;
 	var customers:Map<Int, Customer> = []; // map customer position (numkey) to customer
 	var currentCustomer:Customer;

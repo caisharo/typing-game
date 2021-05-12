@@ -50,6 +50,10 @@ class PlayState extends FlxState
 	var nameIncreaseRate = 0.02; // how much the difficulty would increase in each # of days
 	var orderIncreaseRate = 0.02;
 
+	var remaining = "Remaining customers: ";
+	var timer:FlxText;
+	var totalLeft:Int;
+
 	override public function create()
 	{
 		super.create();
@@ -109,11 +113,24 @@ class PlayState extends FlxState
 		addInput();
 		addCustomers(totalCustomers);
 
+		totalLeft = totalCustomers;
+		getRemaining();
+
 		// logging level start
 		if (Main.isLogging)
 		{
 			Main.logger.logLevelStart(day, {day_started: day, money: money});
 		}
+	}
+
+	function getRemaining()
+	{
+		var temp = remaining + totalLeft;
+		timer = new FlxText(0, 0, 0, temp, 30);
+		timer.setFormat("assets/fonts/Kaorigelbold.ttf", 30);
+		timer.screenCenter();
+		timer.y = 2;
+		add(timer);
 	}
 
 	function setRange()
@@ -174,6 +191,7 @@ class PlayState extends FlxState
 			selectReminder.y += 190;
 			selectReminder.x -= 320;
 			selectReminder.color = FlxColor.RED;
+			// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 18);
 			add(selectReminder);
 			Timer.delay(remove.bind(selectReminder), 1000);
 		}
@@ -280,6 +298,9 @@ class PlayState extends FlxState
 			resetFields();
 			currentCustomer = null;
 			currentCustomerText.text = "Current customer: ";
+			remove(timer);
+			totalLeft--;
+			getRemaining();
 
 			// Replace customer?
 			displayedCustomers.remove(currentPosition);
@@ -478,6 +499,9 @@ class PlayState extends FlxState
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
 				Timer.delay(remove.bind(customer), 2000);
 				displayedCustomers.remove(key);
+				remove(timer);
+				totalLeft--;
+				getRemaining();
 
 				// replace customer?
 				if (remainingCustomers.length > 0)

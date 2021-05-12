@@ -355,7 +355,7 @@ class TypeState extends FlxState
 				selectReminder.screenCenter();
 				selectReminder.y += 190;
 				selectReminder.x -= 320;
-				// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
+				// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 18);
 				add(selectReminder);
 				Timer.delay(remove.bind(selectReminder), 1000);
 			}

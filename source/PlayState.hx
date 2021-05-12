@@ -80,6 +80,7 @@ class PlayState extends FlxState
 			text += currentCustomer.getPosition();
 		}
 		currentCustomerText = new FlxText(0, 0, 0, text, 18);
+		currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 		currentCustomerText.screenCenter();
 		currentCustomerText.y += 160;
 		currentCustomerText.x -= 300;
@@ -165,7 +166,8 @@ class PlayState extends FlxState
 				Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
 			}
 
-			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
+			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 18);
+			// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 			selectReminder.screenCenter();
 			selectReminder.y += 190;
 			selectReminder.x -= 320;
@@ -564,6 +566,7 @@ class PlayState extends FlxState
 		newField.y += yShift + (25 * fields.length);
 
 		var fieldLabel = new FlxText(0, 0, 0, label, 15);
+		fieldLabel.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
 		fieldLabel.screenCenter();
 		fieldLabel.x = newField.x - 75;
 		fieldLabel.y += yShift + (25 * fields.length);

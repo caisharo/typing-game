@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 
 class DayEndState extends BasicMenuState
 {
@@ -29,15 +30,18 @@ class DayEndState extends BasicMenuState
 		}
 
 		var mainText = new FlxText(0, 0, 0, "END OF DAY " + day, 64);
+		mainText.setFormat("assets/fonts/Kaorigelbold.ttf", 64, FlxColor.fromString("#FAF4E9"));
 		mainText.screenCenter();
 		mainText.y -= 70;
 		add(mainText);
 
 		var subText = new FlxText(0, 0, 0, "Money Earned: " + difference, 32);
+		subText.setFormat("assets/fonts/Kaorigel.ttf", 32);
 		subText.screenCenter();
 		add(subText);
 
 		var subText2 = new FlxText(0, 0, 0, "Total: " + money, 32);
+		subText2.setFormat("assets/fonts/Kaorigel.ttf", 32);
 		subText2.screenCenter();
 		subText2.y += 40;
 		add(subText2);

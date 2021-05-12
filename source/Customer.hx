@@ -38,6 +38,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		customer.scale.set(0.7, 0.7);
 		add(customer);
 		nameText = new FlxText(x, 120, 200, order[0], 16);
+		nameText.setFormat("assets/fonts/Kaorigelbold.ttf", 21);
 		nameText.color = FlxColor.fromString("#C8D8FA");
 		add(nameText);
 		var text:String = order[1];
@@ -45,10 +46,12 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		{
 			text += "\n" + order[i];
 		}
-		orderText = new FlxText(x, 140, 200, text, 16);
+		orderText = new FlxText(x, 145, 200, text, 16);
+		orderText.setFormat("assets/fonts/Kaorigelbold.ttf", 21);
 		orderText.color = FlxColor.fromString("#FFE7DA");
 		add(orderText);
 		customerPosition = new FlxText(x, 220, 0, Std.string(position), 25);
+		customerPosition.setFormat("assets/fonts/Kaorigelbold.ttf", 30);
 		add(customerPosition);
 		patience = new FlxTimer();
 		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, Std.int(time * 1.5), 10, patience, "timeLeft", 0, time);

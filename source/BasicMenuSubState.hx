@@ -16,8 +16,8 @@ class BasicMenuSubState extends FlxSubState
 {
 	// Stuff for menu "buttons"
 	var yShift = 400; // how much to move everything down by
-	var yGap = 50; // gap between menu items
-	var fontSize = 30;
+	var yGap = 60; // gap between menu items
+	var fontSize = 42;
 	var currentMenuItem = 0;
 	var menuItems:FlxTypedGroup<FlxText>;
 	var menuFunctions:Array<Void->Void> = [];
@@ -55,6 +55,7 @@ class BasicMenuSubState extends FlxSubState
 	function addMenuItem(name:String = "Option", menuFunction:Void->Void)
 	{
 		var newMenuItem = new FlxText(0, 0, 0, name, fontSize);
+		newMenuItem.setFormat("assets/fonts/Kaorigelbold.ttf", fontSize);
 		newMenuItem.ID = menuItems.length;
 		newMenuItem.screenCenter();
 		newMenuItem.y = yShift + (yGap * menuItems.length);

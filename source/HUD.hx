@@ -23,7 +23,9 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		background = new FlxSprite().makeGraphic(FlxG.width, 40, FlxColor.fromString("#352E2C"));
 		background.drawRect(0, 39, FlxG.width, 1, FlxColor.WHITE);
 		dayCounter = new FlxText(FlxG.width - 130, 2, 0, "Day 1", 30);
+		dayCounter.setFormat("assets/fonts/Kaorigelbold.ttf", 30);
 		moneyCounter = new FlxText(2, 2, 0, "$ 0", 30);
+		moneyCounter.setFormat("assets/fonts/Kaorigelbold.ttf", 30);
 		moneyCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		dayCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 

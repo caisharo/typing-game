@@ -26,7 +26,7 @@ class TypeState extends FlxState
 	var currentCustomer:Customer;
 
 	// Player input section
-	var yShift = 120; // how much to move everything down by
+	var yShift = 140; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = ["Name", "Order"];
@@ -47,7 +47,9 @@ class TypeState extends FlxState
 	var lastText = new FlxTypeText(0, 0, 0, "Here are some final tips before you get started.", 20);
 	var firstText = new FlxTypeText(0, 0, 0, "First, you can always switch between the customers using the number keys.", 20);
 	var secondText = new FlxTypeText(0, 0, 0, "Second, the text (name and order) will be automatically hidden after some time.", 20);
-	var thirdText = new FlxTypeText(0, 0, 0, "Third, if you want to see the text again, press the same number key again.", 20);
+	var thirdText = new FlxTypeText(0, 0, FlxG.width - 400,
+		"Third, if you want to see the text again, select the customer and press the same number key again (or just press the number key again if the customer is already selected).",
+		20);
 	var noteText = new FlxTypeText(0, 0, 0, "However, showing the text again will cost you some patience.", 20);
 	var awardText = new FlxTypeText(0, 0, 0, "Lastly, your score will be dependent on if you get the name and/or order correct.", 20);
 	var allText = new FlxTypeText(0, 0, 0, "That's all the information you need, now let's get started!", 20);
@@ -92,6 +94,7 @@ class TypeState extends FlxState
 		lastText.screenCenter();
 		lastText.y += 80;
 		lastText.x = (FlxG.width - temp.width) / 2;
+		lastText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 		add(lastText);
 		lastText.start(0.04, false, false, skipInput, function()
 		{
@@ -169,6 +172,7 @@ class TypeState extends FlxState
 				firstText.screenCenter();
 				firstText.y += 80;
 				firstText.x = (FlxG.width - temp.width) / 2;
+				firstText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(firstText);
 				firstText.start(0.04, false, false, skipInput, function()
 				{
@@ -188,6 +192,7 @@ class TypeState extends FlxState
 				secondText.screenCenter();
 				secondText.y += 80;
 				secondText.x = (FlxG.width - temp.width) / 2;
+				secondText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(secondText);
 				secondText.start(0.04, false, false, skipInput, function()
 				{
@@ -206,7 +211,8 @@ class TypeState extends FlxState
 				temp = new FlxText(0, 0, 0, tutorialText[3], 20);
 				thirdText.screenCenter();
 				thirdText.y += 80;
-				thirdText.x = (FlxG.width - temp.width) / 2;
+				thirdText.x = (FlxG.width - thirdText.width) / 2;
+				thirdText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(thirdText);
 				thirdText.start(0.04, false, false, skipInput, function()
 				{
@@ -226,6 +232,7 @@ class TypeState extends FlxState
 				noteText.screenCenter();
 				noteText.y += 80;
 				noteText.x = (FlxG.width - temp.width) / 2;
+				noteText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(noteText);
 				noteText.start(0.04, false, false, skipInput, function()
 				{
@@ -245,6 +252,7 @@ class TypeState extends FlxState
 				awardText.screenCenter();
 				awardText.y += 80;
 				awardText.x = (FlxG.width - temp.width) / 2;
+				awardText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(awardText);
 				awardText.start(0.04, false, false, skipInput, function()
 				{
@@ -264,6 +272,7 @@ class TypeState extends FlxState
 				allText.screenCenter();
 				allText.y += 80;
 				allText.x = (FlxG.width - temp.width) / 2;
+				allText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(allText);
 				allText.start(0.04, false, false, skipInput, function()
 				{
@@ -287,6 +296,7 @@ class TypeState extends FlxState
 				submitText.screenCenter();
 				submitText.y += yShift + 80;
 				submitText.x = (FlxG.width - temp.width) / 2;
+				submitText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(submitText);
 				submitText.start(0.04, false, false);
 				customers.set(1, customer);
@@ -301,6 +311,7 @@ class TypeState extends FlxState
 				newCustomer.startTimer(true);
 				customer.showText(5, 0, true);
 				newCustomer.showText(5, 0, true);
+				currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 				add(currentCustomerText);
 				stageDone = true;
 			}, 100);
@@ -339,11 +350,12 @@ class TypeState extends FlxState
 				{
 					Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
 				}
-				var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 20);
+				var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 18);
+				selectReminder.color = FlxColor.RED;
 				selectReminder.screenCenter();
 				selectReminder.y += 190;
 				selectReminder.x -= 320;
-				selectReminder.color = FlxColor.RED;
+				// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 				add(selectReminder);
 				Timer.delay(remove.bind(selectReminder), 1000);
 			}
@@ -591,6 +603,7 @@ class TypeState extends FlxState
 		funText.screenCenter();
 		funText.y += yShift + 80;
 		funText.x = (FlxG.width - temp.width) / 2;
+		funText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 		add(funText);
 		funText.start(0.04, false, false, [], function()
 		{

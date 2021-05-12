@@ -34,23 +34,23 @@ class IntroState extends FlxState
 
 	var tutorialText:Array<String> = [
 		"Welcome to the introduction!",
-		"You will learn basic concepts here.",
+		"You will learn the basic concepts here.",
 		"This is a customer.",
 		"The blue text above the customer's head is the name.",
-		"The white text below the name is the order.",
-		"The green bar beneath is the customer's patience bar, it will decrease over time.",
-		"In the actual game, you will need to type the name and order in \n the corresponding fields before the patience runs out, but not for now.",
+		"The text below the name is the order.",
+		"The green bar is the customer's patience bar, and it will decrease over time.",
+		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.",
 		"Now let's go to the next tutorial."
 	];
 
 	var welcomeText = new FlxTypeText(0, 0, 0, "Welcome to the introduction!", 20);
-	var conceptText = new FlxTypeText(0, 0, 0, "You will learn basic concepts here.", 20);
+	var conceptText = new FlxTypeText(0, 0, 0, "You will learn the basic concepts here.", 20);
 	var customerText = new FlxTypeText(0, 0, 0, "This is a customer.", 20);
 	var nameText = new FlxTypeText(0, 0, 0, "The blue text above the customer's head is the name.", 20);
-	var orderText = new FlxTypeText(0, 0, 0, "The white text below the name is the order.", 20);
-	var patienceText = new FlxTypeText(0, 0, 0, "The green bar beneath is the customer's patience bar, it will decrease over time.", 20);
-	var actualText = new FlxTypeText(0, 0, 0,
-		"In the actual game, you will need to type the name and order in \n the corresponding fields before the patience runs out, but not for now.", 20);
+	var orderText = new FlxTypeText(0, 0, 0, "The text below the name is the order.", 20);
+	var patienceText = new FlxTypeText(0, 0, 0, "The green bar is the customer's patience bar, and it will decrease over time.", 20);
+	var actualText = new FlxTypeText(0, 0, FlxG.width - 400,
+		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.", 20);
 	var nextText = new FlxTypeText(0, 0, 0, "Now let's go to the next tutorial.", 20);
 
 	var welcomeDone = false;
@@ -84,6 +84,7 @@ class IntroState extends FlxState
 		welcomeText.screenCenter();
 		welcomeText.y += yShift + 80;
 		welcomeText.x = (FlxG.width - temp.width) / 2;
+		welcomeText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 		add(welcomeText);
 		welcomeText.start(0.04, false, false, skipInput, function()
 		{
@@ -120,6 +121,7 @@ class IntroState extends FlxState
 				conceptText.screenCenter();
 				conceptText.y += yShift + 80;
 				conceptText.x = (FlxG.width - temp.width) / 2;
+				conceptText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(conceptText);
 				conceptText.start(0.04, false, false, skipInput, function()
 				{
@@ -143,6 +145,7 @@ class IntroState extends FlxState
 				customerText.screenCenter();
 				customerText.y += yShift + 80;
 				customerText.x = (FlxG.width - temp.width) / 2;
+				customerText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(customerText);
 				customerText.start(0.04, false, false, skipInput, function()
 				{
@@ -162,6 +165,7 @@ class IntroState extends FlxState
 				nameText.screenCenter();
 				nameText.y += yShift + 80;
 				nameText.x = (FlxG.width - temp.width) / 2;
+				nameText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(nameText);
 				nameText.start(0.04, false, false, skipInput, function()
 				{
@@ -181,6 +185,7 @@ class IntroState extends FlxState
 				orderText.screenCenter();
 				orderText.y += yShift + 80;
 				orderText.x = (FlxG.width - temp.width) / 2;
+				orderText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(orderText);
 				orderText.start(0.04, false, false, skipInput, function()
 				{
@@ -200,6 +205,7 @@ class IntroState extends FlxState
 				patienceText.screenCenter();
 				patienceText.y += yShift + 80;
 				patienceText.x = (FlxG.width - temp.width) / 2;
+				patienceText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(patienceText);
 				patienceText.start(0.04, false, false, skipInput, function()
 				{
@@ -218,7 +224,8 @@ class IntroState extends FlxState
 				temp = new FlxText(0, 0, 0, tutorialText[6], 20);
 				actualText.screenCenter();
 				actualText.y += yShift + 80;
-				actualText.x = (FlxG.width - temp.width) / 2;
+				actualText.x = (FlxG.width - actualText.width) / 2;
+				actualText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(actualText);
 				actualText.start(0.04, false, false, skipInput, function()
 				{
@@ -239,6 +246,7 @@ class IntroState extends FlxState
 				nextText.screenCenter();
 				nextText.y += yShift + 80;
 				nextText.x = (FlxG.width - temp.width) / 2;
+				nextText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(nextText);
 				nextText.start(0.04, false, false, skipInput, function()
 				{

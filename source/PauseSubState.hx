@@ -14,6 +14,7 @@ class PauseSubState extends BasicMenuSubState
 		super.create();
 
 		var mainText = new FlxText(0, 0, 0, "PAUSED", 64);
+		mainText.setFormat("assets/fonts/Kaorigelbold.ttf", 64);
 		mainText.screenCenter();
 		mainText.y -= 70;
 		add(mainText);

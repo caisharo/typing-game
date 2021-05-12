@@ -26,7 +26,7 @@ class SelectState extends FlxState
 	var currentCustomer:Customer;
 
 	// Player input section
-	var yShift = 120; // how much to move everything down by
+	var yShift = 140; // how much to move everything down by
 	var currentField = -1;
 	var fields:FlxTypedGroup<FlxUIInputText>;
 	var labels:Array<String> = ["Name", "Order"];
@@ -46,13 +46,14 @@ class SelectState extends FlxState
 	var numberDone = false;
 
 	var tutorialTextTwo:Array<String> = [
-		"Both the yellow color and the text on the screen \n show the current selected customer. Be aware of these.",
+		"Both the yellow color and the text on the screen show the current selected customer. Be aware of these.",
 		"Now we try to switch between customers.",
 		"Here's Bob.",
 		"Press 2 to select him."
 	];
 
-	var awareText = new FlxTypeText(0, 0, 0, "Both the yellow color and the text on the screen \n show the current selected customer. Be aware of these.", 20);
+	var awareText = new FlxTypeText(0, 0, FlxG.width - 400,
+		"Both the yellow color and the text on the screen show the current selected customer. Be aware of these.", 20);
 	var tryText = new FlxTypeText(0, 0, 0, "Now we try to switch between customers.", 20);
 	var bobText = new FlxTypeText(0, 0, 0, "Here's Bob.", 20);
 	var twoText = new FlxTypeText(0, 0, 0, "Press 2 to select him.", 20);
@@ -93,6 +94,7 @@ class SelectState extends FlxState
 		aliceText.screenCenter();
 		aliceText.y += yShift + 80;
 		aliceText.x = (FlxG.width - temp.width) / 2;
+		aliceText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 		add(aliceText);
 		// var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
 		customers.set(1, customer);
@@ -103,6 +105,7 @@ class SelectState extends FlxState
 		currentCustomerText.screenCenter();
 		currentCustomerText.y += 160;
 		currentCustomerText.x -= 300;
+		currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 		add(currentCustomerText);
 		aliceText.start(0.04, false, false, skipInput, function()
 		{
@@ -139,6 +142,7 @@ class SelectState extends FlxState
 				numberText.screenCenter();
 				numberText.y += yShift + 80;
 				numberText.x = (FlxG.width - temp.width) / 2;
+				numberText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(numberText);
 				numberText.start(0.04, false, false, skipInput, function()
 				{
@@ -158,6 +162,7 @@ class SelectState extends FlxState
 				pressText.screenCenter();
 				pressText.y += yShift + 80;
 				pressText.x = (FlxG.width - temp.width) / 2;
+				pressText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(pressText);
 				pressText.start(0.04, false, false, skipInput, function()
 				{
@@ -177,13 +182,15 @@ class SelectState extends FlxState
 			currentCustomerText.screenCenter();
 			currentCustomerText.y += 160;
 			currentCustomerText.x -= 300;
+			currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 			add(currentCustomerText);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 
 			temp = new FlxText(0, 0, 0, tutorialTextTwo[0], 20);
 			awareText.screenCenter();
 			awareText.y += yShift + 80;
-			awareText.x = (FlxG.width - temp.width) / 2;
+			awareText.x = (FlxG.width - awareText.width) / 2;
+			awareText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 			add(awareText);
 			awareText.start(0.04, false, false, skipInput, function()
 			{
@@ -200,6 +207,7 @@ class SelectState extends FlxState
 			tryText.screenCenter();
 			tryText.y += yShift + 80;
 			tryText.x = (FlxG.width - temp.width) / 2;
+			tryText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 			add(tryText);
 			tryText.start(0.04, false, false, skipInput, function()
 			{
@@ -219,6 +227,7 @@ class SelectState extends FlxState
 			bobText.screenCenter();
 			bobText.y += yShift + 80;
 			bobText.x = (FlxG.width - temp.width) / 2;
+			bobText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 			add(bobText);
 			bobText.start(0.04, false, false, skipInput, function()
 			{
@@ -235,6 +244,7 @@ class SelectState extends FlxState
 			twoText.screenCenter();
 			twoText.y += yShift + 80;
 			twoText.x = (FlxG.width - temp.width) / 2;
+			twoText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 			add(twoText);
 			twoText.start(0.04, false, false, skipInput, function()
 			{
@@ -254,6 +264,7 @@ class SelectState extends FlxState
 			currentCustomerText.screenCenter();
 			currentCustomerText.y += 160;
 			currentCustomerText.x -= 300;
+			currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 			add(currentCustomerText);
 			currentCustomer.changeNumColor(FlxColor.YELLOW);
 
@@ -261,6 +272,7 @@ class SelectState extends FlxState
 			moreText.screenCenter();
 			moreText.y += yShift + 80;
 			moreText.x = (FlxG.width - temp.width) / 2;
+			moreText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 			add(moreText);
 			moreText.start(0.04, false, false, skipInput, function()
 			{

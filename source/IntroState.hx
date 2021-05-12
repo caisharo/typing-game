@@ -53,6 +53,18 @@ class IntroState extends FlxState
 		"In the actual game, you will need to type the name and order in \n the corresponding fields before the patience runs out, but not for now.", 20);
 	var nextText = new FlxTypeText(0, 0, 0, "Now let's go to the next tutorial.", 20);
 
+	var welcomeDone = false;
+	var conceptDone = false;
+	var customerDone = false;
+	var nameDone = false;
+	var orderDone = false;
+	var patienceDone = false;
+	var actualDone = false;
+
+	var skipInput:Array<FlxKey> = [FlxKey.ENTER];
+	var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
+	var text = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
+
 	var temp:FlxText;
 
 	override public function create()
@@ -73,102 +85,10 @@ class IntroState extends FlxState
 		welcomeText.y += yShift + 80;
 		welcomeText.x = (FlxG.width - temp.width) / 2;
 		add(welcomeText);
-		welcomeText.start(0.04, false, false, [], function()
+		welcomeText.start(0.04, false, false, skipInput, function()
 		{
-			Timer.delay(function()
-			{
-				remove(welcomeText);
-				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
-				conceptText.screenCenter();
-				conceptText.y += yShift + 80;
-				conceptText.x = (FlxG.width - temp.width) / 2;
-				add(conceptText);
-				conceptText.start(0.04, false, false, [], function()
-				{
-					Timer.delay(function()
-					{
-						remove(conceptText);
-						var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
-						customers.set(1, customer);
-						add(customer);
-
-						temp = new FlxText(0, 0, 0, tutorialText[2], 20);
-						customerText.screenCenter();
-						customerText.y += yShift + 80;
-						customerText.x = (FlxG.width - temp.width) / 2;
-						add(customerText);
-						customerText.start(0.04, false, false, [], function()
-						{
-							Timer.delay(function()
-							{
-								remove(customerText);
-								temp = new FlxText(0, 0, 0, tutorialText[3], 20);
-								nameText.screenCenter();
-								nameText.y += yShift + 80;
-								nameText.x = (FlxG.width - temp.width) / 2;
-								add(nameText);
-								nameText.start(0.04, false, false, [], function()
-								{
-									Timer.delay(function()
-									{
-										remove(nameText);
-										temp = new FlxText(0, 0, 0, tutorialText[4], 20);
-										orderText.screenCenter();
-										orderText.y += yShift + 80;
-										orderText.x = (FlxG.width - temp.width) / 2;
-										add(orderText);
-										orderText.start(0.04, false, false, [], function()
-										{
-											Timer.delay(function()
-											{
-												remove(orderText);
-												temp = new FlxText(0, 0, 0, tutorialText[5], 20);
-												patienceText.screenCenter();
-												patienceText.y += yShift + 80;
-												patienceText.x = (FlxG.width - temp.width) / 2;
-												add(patienceText);
-												patienceText.start(0.04, false, false, [], function()
-												{
-													Timer.delay(function()
-													{
-														remove(patienceText);
-														temp = new FlxText(0, 0, 0, tutorialText[6], 20);
-														actualText.screenCenter();
-														actualText.y += yShift + 80;
-														actualText.x = (FlxG.width - temp.width) / 2;
-														add(actualText);
-														addInput();
-														actualText.start(0.04, false, false, [], function()
-														{
-															Timer.delay(function()
-															{
-																remove(actualText);
-																temp = new FlxText(0, 0, 0, tutorialText[7], 20);
-																nextText.screenCenter();
-																nextText.y += yShift + 80;
-																nextText.x = (FlxG.width - temp.width) / 2;
-																add(nextText);
-																nextText.start(0.04, false, false, [], function()
-																{
-																	Timer.delay(function()
-																	{
-																		FlxG.switchState(new IntroEndState());
-																	}, 1500);
-																});
-															}, 6000);
-														});
-													}, 3000);
-													customer.startTimer();
-												});
-											}, 2000);
-										});
-									}, 2000);
-								});
-							}, 1500);
-						});
-					}, 1500);
-				});
-			}, 1500);
+			welcomeDone = true;
+			enterToContinue();
 		});
 
 		// logging tutorial level start
@@ -190,7 +110,159 @@ class IntroState extends FlxState
 			openSubState(new TutorialPauseSubState(FlxColor.fromString("#14100E")));
 		}
 
+		if (welcomeDone && !conceptDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(welcomeText);
+				remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
+				conceptText.screenCenter();
+				conceptText.y += yShift + 80;
+				conceptText.x = (FlxG.width - temp.width) / 2;
+				add(conceptText);
+				conceptText.start(0.04, false, false, skipInput, function()
+				{
+					conceptDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (conceptDone && !customerDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(conceptText);
+				// remove(enterText);
+				var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
+				customers.set(1, customer);
+				add(customer);
+
+				temp = new FlxText(0, 0, 0, tutorialText[2], 20);
+				customerText.screenCenter();
+				customerText.y += yShift + 80;
+				customerText.x = (FlxG.width - temp.width) / 2;
+				add(customerText);
+				customerText.start(0.04, false, false, skipInput, function()
+				{
+					customerDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (customerDone && !nameDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(customerText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[3], 20);
+				nameText.screenCenter();
+				nameText.y += yShift + 80;
+				nameText.x = (FlxG.width - temp.width) / 2;
+				add(nameText);
+				nameText.start(0.04, false, false, skipInput, function()
+				{
+					nameDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (nameDone && !orderDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(nameText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[4], 20);
+				orderText.screenCenter();
+				orderText.y += yShift + 80;
+				orderText.x = (FlxG.width - temp.width) / 2;
+				add(orderText);
+				orderText.start(0.04, false, false, skipInput, function()
+				{
+					orderDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (orderDone && !patienceDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(orderText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[5], 20);
+				patienceText.screenCenter();
+				patienceText.y += yShift + 80;
+				patienceText.x = (FlxG.width - temp.width) / 2;
+				add(patienceText);
+				patienceText.start(0.04, false, false, skipInput, function()
+				{
+					patienceDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (patienceDone && !actualDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(patienceText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[6], 20);
+				actualText.screenCenter();
+				actualText.y += yShift + 80;
+				actualText.x = (FlxG.width - temp.width) / 2;
+				add(actualText);
+				actualText.start(0.04, false, false, skipInput, function()
+				{
+					actualDone = true;
+					// enterToContinue();
+				});
+				addInput();
+			}, 100);
+		}
+
+		if (actualDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(actualText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[7], 20);
+				nextText.screenCenter();
+				nextText.y += yShift + 80;
+				nextText.x = (FlxG.width - temp.width) / 2;
+				add(nextText);
+				nextText.start(0.04, false, false, skipInput, function()
+				{
+					Timer.delay(function()
+					{
+						FlxG.switchState(new IntroEndState());
+					}, 1500);
+				});
+			}, 100);
+		}
+
 		super.update(elapsed);
+	}
+
+	function enterToContinue()
+	{
+		Timer.delay(function()
+		{
+			enterText.screenCenter();
+			enterText.y += yShift + 130;
+			enterText.x = (FlxG.width - text.width) / 2 + 150;
+			add(enterText);
+			FlxFlicker.flicker(enterText, 0, 0.8);
+		}, 400);
 	}
 
 	function addInput()

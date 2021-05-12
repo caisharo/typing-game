@@ -42,6 +42,9 @@ class SelectState extends FlxState
 	var numberText = new FlxTypeText(0, 0, 0, "She is assigned with number 1, as you can see next to her.", 20);
 	var pressText = new FlxTypeText(0, 0, 0, "Press 1 to select her.", 20);
 
+	var aliceDone = false;
+	var numberDone = false;
+
 	var tutorialTextTwo:Array<String> = [
 		"Both the yellow color and the text on the screen \n show the current selected customer. Be aware of these.",
 		"Now we try to switch between customers.",
@@ -54,6 +57,10 @@ class SelectState extends FlxState
 	var bobText = new FlxTypeText(0, 0, 0, "Here's Bob.", 20);
 	var twoText = new FlxTypeText(0, 0, 0, "Press 2 to select him.", 20);
 
+	var awareDone = false;
+	var tryDone = false;
+	var bobDone = false;
+
 	var tutorialTextThree:Array<String> = ["Great! It's time to learn more things."];
 
 	var moreText = new FlxTypeText(0, 0, 0, "Great! It's time to learn more things.", 20);
@@ -64,6 +71,10 @@ class SelectState extends FlxState
 
 	var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
 	var newCustomer:Customer = new Customer(2, ["bob", "latte"], 20);
+
+	var skipInput:Array<FlxKey> = [FlxKey.ENTER];
+	var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
+	var text = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
 
 	override public function create()
 	{
@@ -93,33 +104,10 @@ class SelectState extends FlxState
 		currentCustomerText.y += 160;
 		currentCustomerText.x -= 300;
 		add(currentCustomerText);
-		aliceText.start(0.04, false, false, [], function()
+		aliceText.start(0.04, false, false, skipInput, function()
 		{
-			Timer.delay(function()
-			{
-				remove(aliceText);
-				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
-				numberText.screenCenter();
-				numberText.y += yShift + 80;
-				numberText.x = (FlxG.width - temp.width) / 2;
-				add(numberText);
-				numberText.start(0.04, false, false, [], function()
-				{
-					Timer.delay(function()
-					{
-						remove(numberText);
-						temp = new FlxText(0, 0, 0, tutorialText[2], 20);
-						pressText.screenCenter();
-						pressText.y += yShift + 80;
-						pressText.x = (FlxG.width - temp.width) / 2;
-						add(pressText);
-						pressText.start(0.04, false, false, [], function()
-						{
-							stageOneDone = true;
-						});
-					}, 1500);
-				});
-			}, 1500);
+			aliceDone = true;
+			enterToContinue();
 		});
 
 		// logging tutorial level start
@@ -141,7 +129,44 @@ class SelectState extends FlxState
 			openSubState(new TutorialPauseSubState(FlxColor.fromString("#14100E")));
 		}
 
-		if (stageOneDone && FlxG.keys.justPressed.ONE)
+		if (aliceDone && !numberDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(aliceText);
+				remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
+				numberText.screenCenter();
+				numberText.y += yShift + 80;
+				numberText.x = (FlxG.width - temp.width) / 2;
+				add(numberText);
+				numberText.start(0.04, false, false, skipInput, function()
+				{
+					numberDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (numberDone && !stageOneDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(numberText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[2], 20);
+				pressText.screenCenter();
+				pressText.y += yShift + 80;
+				pressText.x = (FlxG.width - temp.width) / 2;
+				add(pressText);
+				pressText.start(0.04, false, false, skipInput, function()
+				{
+					stageOneDone = true;
+				});
+			}, 100);
+		}
+
+		if (stageOneDone && !awareDone && FlxG.keys.justPressed.ONE)
 		{
 			remove(pressText);
 			remove(currentCustomerText);
@@ -160,48 +185,60 @@ class SelectState extends FlxState
 			awareText.y += yShift + 80;
 			awareText.x = (FlxG.width - temp.width) / 2;
 			add(awareText);
-			awareText.start(0.04, false, false, [], function()
+			awareText.start(0.04, false, false, skipInput, function()
 			{
-				Timer.delay(function()
-				{
-					remove(awareText);
-					temp = new FlxText(0, 0, 0, tutorialTextTwo[1], 20);
-					tryText.screenCenter();
-					tryText.y += yShift + 80;
-					tryText.x = (FlxG.width - temp.width) / 2;
-					add(tryText);
-					tryText.start(0.04, false, false, [], function()
-					{
-						Timer.delay(function()
-						{
-							remove(tryText);
-							customers.set(2, newCustomer);
-							add(newCustomer);
+				awareDone = true;
+				// enterToContinue();
+			});
+		}
 
-							temp = new FlxText(0, 0, 0, tutorialTextTwo[2], 20);
-							bobText.screenCenter();
-							bobText.y += yShift + 80;
-							bobText.x = (FlxG.width - temp.width) / 2;
-							add(bobText);
-							bobText.start(0.04, false, false, [], function()
-							{
-								Timer.delay(function()
-								{
-									remove(bobText);
-									temp = new FlxText(0, 0, 0, tutorialTextTwo[3], 20);
-									twoText.screenCenter();
-									twoText.y += yShift + 80;
-									twoText.x = (FlxG.width - temp.width) / 2;
-									add(twoText);
-									twoText.start(0.04, false, false, [], function()
-									{
-										stageTwoDone = true;
-									});
-								}, 1500);
-							});
-						}, 1500);
-					});
-				}, 2500);
+		if (awareDone && !tryDone && FlxG.keys.justPressed.ENTER)
+		{
+			remove(awareText);
+			// remove(enterText);
+			temp = new FlxText(0, 0, 0, tutorialTextTwo[1], 20);
+			tryText.screenCenter();
+			tryText.y += yShift + 80;
+			tryText.x = (FlxG.width - temp.width) / 2;
+			add(tryText);
+			tryText.start(0.04, false, false, skipInput, function()
+			{
+				tryDone = true;
+				// enterToContinue();
+			});
+		}
+
+		if (tryDone && !bobDone && FlxG.keys.justPressed.ENTER)
+		{
+			remove(tryText);
+			// remove(enterText);
+			customers.set(2, newCustomer);
+			add(newCustomer);
+
+			temp = new FlxText(0, 0, 0, tutorialTextTwo[2], 20);
+			bobText.screenCenter();
+			bobText.y += yShift + 80;
+			bobText.x = (FlxG.width - temp.width) / 2;
+			add(bobText);
+			bobText.start(0.04, false, false, skipInput, function()
+			{
+				bobDone = true;
+				// enterToContinue();
+			});
+		}
+
+		if (bobDone && !stageTwoDone && FlxG.keys.justPressed.ENTER)
+		{
+			remove(bobText);
+			// remove(enterText);
+			temp = new FlxText(0, 0, 0, tutorialTextTwo[3], 20);
+			twoText.screenCenter();
+			twoText.y += yShift + 80;
+			twoText.x = (FlxG.width - temp.width) / 2;
+			add(twoText);
+			twoText.start(0.04, false, false, skipInput, function()
+			{
+				stageTwoDone = true;
 			});
 		}
 
@@ -225,7 +262,7 @@ class SelectState extends FlxState
 			moreText.y += yShift + 80;
 			moreText.x = (FlxG.width - temp.width) / 2;
 			add(moreText);
-			moreText.start(0.04, false, false, [], function()
+			moreText.start(0.04, false, false, skipInput, function()
 			{
 				Timer.delay(function()
 				{
@@ -235,6 +272,18 @@ class SelectState extends FlxState
 		}
 
 		super.update(elapsed);
+	}
+
+	function enterToContinue()
+	{
+		Timer.delay(function()
+		{
+			enterText.screenCenter();
+			enterText.y += yShift + 130;
+			enterText.x = (FlxG.width - text.width) / 2 + 150;
+			add(enterText);
+			FlxFlicker.flicker(enterText, 0, 0.8);
+		}, 400);
 	}
 
 	function addInput()

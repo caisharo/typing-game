@@ -54,6 +54,14 @@ class TypeState extends FlxState
 	var submitText = new FlxTypeText(0, 0, 0, "Use TAB or SHIFT to choose fields, press ENTER to submit.", 20);
 	var funText = new FlxTypeText(0, 0, 0, "You have finished all the tutorials. Have fun in the actual game!", 20);
 
+	var lastDone = false;
+	var firstDone = false;
+	var secondDone = false;
+	var thirdDone = false;
+	var noteDone = false;
+	var awardDone = false;
+	var allDone = false;
+
 	var temp:FlxText;
 
 	var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
@@ -62,6 +70,10 @@ class TypeState extends FlxState
 	var stageDone = false;
 
 	var total = 2;
+
+	var skipInput:Array<FlxKey> = [FlxKey.ENTER];
+	var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
+	var text = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
 
 	override public function create()
 	{
@@ -81,111 +93,51 @@ class TypeState extends FlxState
 		lastText.y += 80;
 		lastText.x = (FlxG.width - temp.width) / 2;
 		add(lastText);
-		lastText.start(0.04, false, false, [], function()
+		lastText.start(0.04, false, false, skipInput, function()
 		{
-			Timer.delay(function()
-			{
-				remove(lastText);
-				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
-				firstText.screenCenter();
-				firstText.y += 80;
-				firstText.x = (FlxG.width - temp.width) / 2;
-				add(firstText);
-				firstText.start(0.04, false, false, [], function()
+			/*Timer.delay(function()
 				{
-					Timer.delay(function()
+					
 					{
-						remove(firstText);
-						temp = new FlxText(0, 0, 0, tutorialText[2], 20);
-						secondText.screenCenter();
-						secondText.y += 80;
-						secondText.x = (FlxG.width - temp.width) / 2;
-						add(secondText);
-						secondText.start(0.04, false, false, [], function()
+						Timer.delay(function()
 						{
-							Timer.delay(function()
+							
 							{
-								remove(secondText);
-								temp = new FlxText(0, 0, 0, tutorialText[3], 20);
-								thirdText.screenCenter();
-								thirdText.y += 80;
-								thirdText.x = (FlxG.width - temp.width) / 2;
-								add(thirdText);
-								thirdText.start(0.04, false, false, [], function()
+								Timer.delay(function()
 								{
-									Timer.delay(function()
+									
 									{
-										remove(thirdText);
-										temp = new FlxText(0, 0, 0, tutorialText[4], 20);
-										noteText.screenCenter();
-										noteText.y += 80;
-										noteText.x = (FlxG.width - temp.width) / 2;
-										add(noteText);
-										noteText.start(0.04, false, false, [], function()
+										Timer.delay(function()
 										{
-											Timer.delay(function()
+											
 											{
-												remove(noteText);
-												temp = new FlxText(0, 0, 0, tutorialText[5], 20);
-												awardText.screenCenter();
-												awardText.y += 80;
-												awardText.x = (FlxG.width - temp.width) / 2;
-												add(awardText);
-												awardText.start(0.04, false, false, [], function()
+												Timer.delay(function()
 												{
-													Timer.delay(function()
+													
 													{
-														remove(awardText);
-														temp = new FlxText(0, 0, 0, tutorialText[6], 20);
-														allText.screenCenter();
-														allText.y += 80;
-														allText.x = (FlxG.width - temp.width) / 2;
-														add(allText);
-														allText.start(0.04, false, false, [], function()
+														Timer.delay(function()
 														{
-															Timer.delay(function()
+															
 															{
-																remove(allText);
 																Timer.delay(function()
 																{
-																	var customer:Customer = new Customer(1, ["alice", "coffee"], 30);
-																	var newCustomer:Customer = new Customer(2, ["bob", "latte"], 25);
-																	add(customer);
-																	add(newCustomer);
-																	temp = new FlxText(0, 0, 0, tutorialText[7], 20);
-																	submitText.screenCenter();
-																	submitText.y += yShift + 80;
-																	submitText.x = (FlxG.width - temp.width) / 2;
-																	add(submitText);
-																	submitText.start(0.04, false, false);
-																	customers.set(1, customer);
-																	customers.set(2, newCustomer);
-																	addInput();
-																	var text = "Current customer: ";
-																	currentCustomerText = new FlxText(0, 0, 0, text, 18);
-																	currentCustomerText.screenCenter();
-																	currentCustomerText.y += 160;
-																	currentCustomerText.x -= 300;
-																	customer.startTimer(true);
-																	newCustomer.startTimer(true);
-																	customer.showText(5, 0, true);
-																	newCustomer.showText(5, 0, true);
-																	add(currentCustomerText);
-																	stageDone = true;
-																}, 300);
-															}, 1500);
-														});
-													}, 1500);
-												});
-											}, 2000);
-										});
-									}, 2000);
-								});
-							}, 2000);
-						});
-					}, 2000);
-				});
-			}, 1500);
+																	
+																}, 1500);
+															});
+														}, 1500);
+													});
+												}, 2000);
+											});
+										}, 2000);
+									});
+								}, 2000);
+							});
+						}, 2000);
+					});
+			}, 1500);*/
+
+			lastDone = true;
+			enterToContinue();
 		});
 
 		// logging tutorial level start
@@ -206,6 +158,154 @@ class TypeState extends FlxState
 			FlxTimer.globalManager.forEach(function(timer) timer.active = false);
 			openSubState(new TutorialPauseSubState(FlxColor.fromString("#14100E")));
 		}
+
+		if (lastDone && !firstDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(lastText);
+				remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
+				firstText.screenCenter();
+				firstText.y += 80;
+				firstText.x = (FlxG.width - temp.width) / 2;
+				add(firstText);
+				firstText.start(0.04, false, false, skipInput, function()
+				{
+					firstDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (firstDone && !secondDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(firstText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[2], 20);
+				secondText.screenCenter();
+				secondText.y += 80;
+				secondText.x = (FlxG.width - temp.width) / 2;
+				add(secondText);
+				secondText.start(0.04, false, false, skipInput, function()
+				{
+					secondDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (secondDone && !thirdDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(secondText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[3], 20);
+				thirdText.screenCenter();
+				thirdText.y += 80;
+				thirdText.x = (FlxG.width - temp.width) / 2;
+				add(thirdText);
+				thirdText.start(0.04, false, false, skipInput, function()
+				{
+					thirdDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (thirdDone && !noteDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(thirdText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[4], 20);
+				noteText.screenCenter();
+				noteText.y += 80;
+				noteText.x = (FlxG.width - temp.width) / 2;
+				add(noteText);
+				noteText.start(0.04, false, false, skipInput, function()
+				{
+					noteDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (noteDone && !awardDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(noteText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[5], 20);
+				awardText.screenCenter();
+				awardText.y += 80;
+				awardText.x = (FlxG.width - temp.width) / 2;
+				add(awardText);
+				awardText.start(0.04, false, false, skipInput, function()
+				{
+					awardDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (awardDone && !allDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(awardText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialText[6], 20);
+				allText.screenCenter();
+				allText.y += 80;
+				allText.x = (FlxG.width - temp.width) / 2;
+				add(allText);
+				allText.start(0.04, false, false, skipInput, function()
+				{
+					allDone = true;
+					// enterToContinue();
+				});
+			}, 100);
+		}
+
+		if (allDone && !stageDone && FlxG.keys.justPressed.ENTER)
+		{
+			Timer.delay(function()
+			{
+				remove(allText);
+				// remove(enterText);
+				var customer:Customer = new Customer(1, ["alice", "coffee"], 30);
+				var newCustomer:Customer = new Customer(2, ["bob", "latte"], 25);
+				add(customer);
+				add(newCustomer);
+				temp = new FlxText(0, 0, 0, tutorialText[7], 20);
+				submitText.screenCenter();
+				submitText.y += yShift + 80;
+				submitText.x = (FlxG.width - temp.width) / 2;
+				add(submitText);
+				submitText.start(0.04, false, false);
+				customers.set(1, customer);
+				customers.set(2, newCustomer);
+				addInput();
+				var text = "Current customer: ";
+				currentCustomerText = new FlxText(0, 0, 0, text, 18);
+				currentCustomerText.screenCenter();
+				currentCustomerText.y += 160;
+				currentCustomerText.x -= 300;
+				customer.startTimer(true);
+				newCustomer.startTimer(true);
+				customer.showText(5, 0, true);
+				newCustomer.showText(5, 0, true);
+				add(currentCustomerText);
+				stageDone = true;
+			}, 100);
+		}
+
 		if (stageDone)
 		{
 			// Player typing input
@@ -463,6 +563,18 @@ class TypeState extends FlxState
 			}
 		}
 		super.update(elapsed);
+	}
+
+	function enterToContinue()
+	{
+		Timer.delay(function()
+		{
+			enterText.screenCenter();
+			enterText.y += yShift + 130;
+			enterText.x = (FlxG.width - text.width) / 2 + 150;
+			add(enterText);
+			FlxFlicker.flicker(enterText, 0, 0.8);
+		}, 400);
 	}
 
 	function end()

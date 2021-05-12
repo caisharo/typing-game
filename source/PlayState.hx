@@ -43,12 +43,12 @@ class PlayState extends FlxState
 	// the range of possible names being selected, scaled to 0-1
 	// the value need to checked, otherwise an error may come up
 	var range:Map<String, Array<Float>> = [];
-	var difficultyChangeStep = 5; // difficulty increases every # of days
-	var nameRangeSize = 0.1; // the length of range of name/order considered
+	var difficultyChangeStep = 2; // difficulty increases every # of days
+	var nameRangeSize = 0.01; // the length of range of name/order considered
 	var orderRangeSize = 0.1;
 	// ideally *RangeSize should be greater than or equal to *IncreaseRate so as to use all potential words
-	var nameIncreaseRate = 0.1; // how much the difficulty would increase in each # of days
-	var orderIncreaseRate = 0.1;
+	var nameIncreaseRate = 0.02; // how much the difficulty would increase in each # of days
+	var orderIncreaseRate = 0.02;
 
 	override public function create()
 	{
@@ -118,11 +118,13 @@ class PlayState extends FlxState
 	function setRange()
 	{
 		var nameRange:Array<Float> = [
-			Math.min(Math.max(Std.int(day / difficultyChangeStep) * nameIncreaseRate, 0), 1 - nameRangeSize),
+			// Math.min(Math.max(Std.int(day / difficultyChangeStep) * nameIncreaseRate, 0), 1 - nameRangeSize),
+			0,
 			Math.min(nameRangeSize + Std.int(day / difficultyChangeStep) * nameIncreaseRate, 1)
 		];
 		var orderRange:Array<Float> = [
-			Math.min(Math.max(Std.int(day / difficultyChangeStep) * orderIncreaseRate, 0), 1 - orderRangeSize),
+			// Math.min(Math.max(Std.int(day / difficultyChangeStep) * orderIncreaseRate, 0), 1 - orderRangeSize),
+			0,
 			Math.min(orderRangeSize + Std.int(day / difficultyChangeStep) * orderIncreaseRate, 1)
 		];
 

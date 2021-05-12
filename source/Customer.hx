@@ -130,6 +130,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	public function showScore(string:String, color:FlxColor)
 	{
 		score = new FlxText(customer.x, customer.y, 0, string, 30);
+		score.setFormat("assets/fonts/Kaorigelbold.ttf", 30);
 		score.color = color;
 		add(score);
 		FlxTween.tween(score, {x: 10, y: 10}, 2);

@@ -29,17 +29,19 @@ class BasicMenuState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		var pressedUp = FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W;
-		var pressedDown = FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S;
-		if (pressedDown && !pressedUp)
-		{
-			// Go to next input field
-			changeSelected(1);
-		}
-		if (pressedUp && !pressedDown)
+		var pressedPrevious = FlxG.keys.justPressed.UP
+			|| FlxG.keys.justPressed.W
+			|| (FlxG.keys.justPressed.TAB && FlxG.keys.pressed.SHIFT);
+		var pressedNext = FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S || FlxG.keys.justPressed.TAB;
+		if (pressedPrevious)
 		{
 			// Go to previous input field
 			changeSelected(-1);
+		}
+		else if (pressedNext)
+		{
+			// Go to next input field
+			changeSelected(1);
 		}
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
 		if (pressedEnter)

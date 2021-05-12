@@ -40,7 +40,7 @@ class TypeState extends FlxState
 		"However, showing the text again will cost you some patience.",
 		"Lastly, your score will be dependent on if you get the name and/or order correct.",
 		"That's all the information you need, now let's get started!",
-		"Use TAB or SHIFT to choose fields, press ENTER to submit.",
+		"Use TAB to choose fields and press ENTER to submit.",
 		"You have finished all the tutorials. Have fun in the actual game!"
 	];
 
@@ -53,7 +53,7 @@ class TypeState extends FlxState
 	var noteText = new FlxTypeText(0, 0, 0, "However, showing the text again will cost you some patience.", 20);
 	var awardText = new FlxTypeText(0, 0, 0, "Lastly, your score will be dependent on if you get the name and/or order correct.", 20);
 	var allText = new FlxTypeText(0, 0, 0, "That's all the information you need, now let's get started!", 20);
-	var submitText = new FlxTypeText(0, 0, 0, "Use TAB or SHIFT to choose fields, press ENTER to submit.", 20);
+	var submitText = new FlxTypeText(0, 0, 0, "Use TAB to choose fields and press ENTER to submit.", 20);
 	var funText = new FlxTypeText(0, 0, 0, "You have finished all the tutorials. Have fun in the actual game!", 20);
 
 	var lastDone = false;

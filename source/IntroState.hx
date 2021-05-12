@@ -38,7 +38,7 @@ class IntroState extends FlxState
 		"This is a customer.",
 		"The blue text above the customer's head is the name.",
 		"The text below the name is the order.",
-		"The green bar is the customer's patience bar, and it will decrease over time.",
+		"The bar is the customer's patience bar, and it will decrease over time.",
 		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.",
 		"Now let's go to the next tutorial."
 	];
@@ -48,7 +48,7 @@ class IntroState extends FlxState
 	var customerText = new FlxTypeText(0, 0, 0, "This is a customer.", 20);
 	var nameText = new FlxTypeText(0, 0, 0, "The blue text above the customer's head is the name.", 20);
 	var orderText = new FlxTypeText(0, 0, 0, "The text below the name is the order.", 20);
-	var patienceText = new FlxTypeText(0, 0, 0, "The green bar is the customer's patience bar, and it will decrease over time.", 20);
+	var patienceText = new FlxTypeText(0, 0, 0, "The bar is the customer's patience bar, and it will decrease over time.", 20);
 	var actualText = new FlxTypeText(0, 0, FlxG.width - 400,
 		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.", 20);
 	var nextText = new FlxTypeText(0, 0, 0, "Now let's go to the next tutorial.", 20);

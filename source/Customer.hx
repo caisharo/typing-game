@@ -55,6 +55,18 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		add(customerPosition);
 		patience = new FlxTimer();
 		patienceBar = new FlxBar(x, 200, LEFT_TO_RIGHT, Std.int(time * 1.5), 10, patience, "timeLeft", 0, time);
+		var barColor:FlxColor = FlxColor.LIME;
+		if (time <= 40)
+		{
+			barColor = FlxColor.YELLOW;
+		}
+		if (time <= 25)
+		{
+			barColor = FlxColor.ORANGE;
+		}
+		var barBG = barColor;
+		barBG.alpha = 50;
+		patienceBar.createFilledBar(barBG, barColor);
 		add(patienceBar);
 		this.position = position;
 		this.order = order;

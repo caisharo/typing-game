@@ -154,7 +154,7 @@ class PlayState extends FlxState
 	{
 		// Player typing input
 		var pressedTab = FlxG.keys.justPressed.TAB;
-		var pressedShift = FlxG.keys.justPressed.SHIFT;
+		var pressedShift = FlxG.keys.pressed.SHIFT;
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
 		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
 		if (pressedTab && !pressedShift)
@@ -162,7 +162,7 @@ class PlayState extends FlxState
 			// Go to next input field
 			changeSelected(1);
 		}
-		if (pressedShift && !pressedTab)
+		else if (pressedShift && pressedTab)
 		{
 			// Go to previous input field
 			changeSelected(-1);

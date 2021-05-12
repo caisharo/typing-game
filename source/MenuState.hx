@@ -32,6 +32,7 @@ class MenuState extends BasicMenuState
 		menuItems = new FlxTypedGroup<FlxText>();
 		addMenuItem("Start", startGame);
 		addMenuItem("Tutorial", startTutorial);
+		addMenuItem("Shop", openShop);
 
 		super.create();
 	}
@@ -70,5 +71,10 @@ class MenuState extends BasicMenuState
 		}
 
 		FlxG.switchState(new TutorialMenuState());
+	}
+
+	function openShop()
+	{
+		FlxG.switchState(new ShopState());
 	}
 }

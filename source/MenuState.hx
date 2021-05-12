@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.effects.FlxFlicker;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
@@ -23,16 +24,31 @@ class MenuState extends BasicMenuState
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 
+		yShift = 350;
+
 		var titleText = new FlxText(0, 0, 0, "type a latte", 150);
 		titleText.setFormat("assets/fonts/SuperSimpleBrushScript.ttf", 150, FlxColor.fromString("#FAF4E9"));
 		titleText.screenCenter();
-		titleText.y = 64;
+		titleText.y = 80;
 		add(titleText);
 
 		menuItems = new FlxTypedGroup<FlxText>();
 		addMenuItem("Start", startGame);
 		addMenuItem("Tutorial", startTutorial);
 		addMenuItem("Shop", openShop);
+
+		var keyboardOnlyText = new FlxText(0, 0, 0, "This is a keyboard only game.", 20);
+		keyboardOnlyText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
+		keyboardOnlyText.screenCenter();
+		keyboardOnlyText.y = 630;
+		var menuControlText = new FlxText(0, 0, 0, "Use UP/DOWN, W/S, or TAB to navigate menus.", 20);
+		menuControlText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
+		menuControlText.screenCenter();
+		menuControlText.y = 660;
+		add(keyboardOnlyText);
+		FlxFlicker.flicker(keyboardOnlyText, 0, 0.9);
+		add(menuControlText);
+		FlxFlicker.flicker(menuControlText, 0, 0.9);
 
 		super.create();
 	}

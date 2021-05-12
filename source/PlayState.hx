@@ -58,12 +58,12 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		if (FlxG.save.data.dayCompleted != null)
+		if (Main.isDebugging && FlxG.save.data.dayCompleted != null)
 		{
 			trace("last day completed: " + FlxG.save.data.dayCompleted);
 		}
 
-		if (FlxG.save.data.playerMoney != null)
+		if (Main.isDebugging && FlxG.save.data.playerMoney != null)
 		{
 			trace("last saved player money: " + FlxG.save.data.playerMoney);
 		}
@@ -209,16 +209,25 @@ class PlayState extends FlxState
 				var fieldName = labels[item.ID];
 				var input = StringTools.trim(item.text);
 				var expected = customerOrder[item.ID].toLowerCase();
-				trace(fieldName + ": " + input);
+				if (Main.isDebugging)
+				{
+					trace(fieldName + ": " + input);
+				}
 				if (input == expected)
 				{
-					trace(fieldName + " matches");
+					if (Main.isDebugging)
+					{
+						trace(fieldName + " matches");
+					}
 					matches++;
 					matchedString += fieldName + ": " + expected + "; ";
 				}
 				else
 				{
-					trace(fieldName + " does not match");
+					if (Main.isDebugging)
+					{
+						trace(fieldName + " does not match");
+					}
 					failedString += fieldName + ": " + expected + ", " + input + "; ";
 				}
 			});
@@ -226,7 +235,10 @@ class PlayState extends FlxState
 			// currently doing this for matches: 100% = happy, 50%+ = satsified, <50% = angry
 			// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
 			var score = matches / labels.length;
-			trace("matches score: " + score);
+			if (Main.isDebugging)
+			{
+				trace("matches score: " + score);
+			}
 			if (score == 1)
 			{
 				// logging

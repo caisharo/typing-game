@@ -372,23 +372,19 @@ class TypeState extends FlxState
 					var fieldName = labels[item.ID];
 					var input = StringTools.trim(item.text);
 					var expected = customerOrder[item.ID].toLowerCase();
-					trace(fieldName + ": " + input);
 					if (input == expected)
 					{
-						trace(fieldName + " matches");
 						matches++;
 						matchedString += fieldName + ": " + expected + "; ";
 					}
 					else
 					{
-						trace(fieldName + " does not match");
 						failedString += fieldName + ": " + expected + ", " + input + "; ";
 					}
 				});
 				// currently doing this for matches: 100% = happy, 50%+ = satsified, <50% = angry
 				// we could do something more intense like how correct each match is (# of characters??) but that's more complex, esp if we have long strings
 				var score = matches / labels.length;
-				trace("matches score: " + score);
 				if (score == 1)
 				{
 					// logging

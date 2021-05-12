@@ -15,7 +15,7 @@ class MenuState extends BasicMenuState
 		FlxG.mouse.visible = false;
 		#end
 
-		if (FlxG.save.data.clearedTutorial != null)
+		if (Main.isDebugging && FlxG.save.data.clearedTutorial != null)
 		{
 			trace("tutorial completed: " + FlxG.save.data.clearedTutorial);
 		}

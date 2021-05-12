@@ -23,6 +23,12 @@ class PlayState extends FlxState
 	public static var labels:Array<String> = ["Name", "Order"]; // the labels for the input fields
 	public static var colors:Array<String> = ["#C8D8FA", "#FFE7DA"]; // colors for input fields
 
+	// Buffs (from shop items)
+	public static var basePatienceIncrease = 0;
+	public static var angryCustomerIncrease = 0;
+	public static var satisfiedCustomerIncrease = 0;
+	public static var happyCustomerIncrease = 0;
+
 	// HUD
 	var hud:HUD;
 
@@ -255,7 +261,7 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.happy_customer__png);
-				money += 10;
+				money += 10 + happyCustomerIncrease;
 				currentCustomer.showScore("+10", FlxColor.GREEN);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
@@ -277,7 +283,7 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
-				money += 5;
+				money += 5 + satisfiedCustomerIncrease;
 				currentCustomer.showScore("+5", FlxColor.YELLOW);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
@@ -299,7 +305,7 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
-				money -= 5;
+				money -= 5 - angryCustomerIncrease;
 				currentCustomer.showScore("-5", FlxColor.RED);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
@@ -550,7 +556,7 @@ class PlayState extends FlxState
 			var position = i + 1;
 			var order:Array<String> = [];
 			var random = new FlxRandom();
-			var patience = 15 + random.float() * 80 / 2;
+			var patience = 15 + random.float() * 80 / 2 + basePatienceIncrease;
 			if (position <= maxCustomersAtOnce && displayedCustomers.get(position) == null)
 			{
 				// no customer in position yet - add

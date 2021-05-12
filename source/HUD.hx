@@ -17,7 +17,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	// for if/when we eventually add money icon
 	var moneyIcon:FlxSprite;
 
-	public function new()
+	public function new(includeDay:Bool = true)
 	{
 		super();
 		background = new FlxSprite().makeGraphic(FlxG.width, 40, FlxColor.fromString("#352E2C"));
@@ -30,8 +30,12 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		dayCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 
 		add(background);
-		add(dayCounter);
 		add(moneyCounter);
+
+		if (includeDay)
+		{
+			add(dayCounter);
+		}
 
 		forEach(function(sprite) sprite.scrollFactor.set(0, 0));
 	}

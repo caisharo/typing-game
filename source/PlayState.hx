@@ -24,10 +24,10 @@ class PlayState extends FlxState
 	public static var colors:Array<String> = ["#C8D8FA", "#FFE7DA"]; // colors for input fields
 
 	// Buffs (from shop items)
-	public static var basePatienceIncrease = 0;
-	public static var angryCustomerIncrease = 0;
-	public static var satisfiedCustomerIncrease = 0;
-	public static var happyCustomerIncrease = 0;
+	var basePatienceIncrease = 0;
+	var angryCustomerIncrease = 0;
+	var satisfiedCustomerIncrease = 0;
+	var happyCustomerIncrease = 0;
 
 	// HUD
 	var hud:HUD;
@@ -72,6 +72,43 @@ class PlayState extends FlxState
 		if (Main.isDebugging && FlxG.save.data.playerMoney != null)
 		{
 			trace("last saved player money: " + FlxG.save.data.playerMoney);
+		}
+
+		// Get the buffs from saved data (if any)
+		if (FlxG.save.data.basePatienceIncrease != null)
+		{
+			this.basePatienceIncrease = FlxG.save.data.basePatienceIncrease;
+			if (Main.isDebugging)
+			{
+				trace("patience increase " + this.basePatienceIncrease);
+			}
+		}
+
+		if (FlxG.save.data.angryCustomerIncrease != null)
+		{
+			this.angryCustomerIncrease = FlxG.save.data.angryCustomerIncrease;
+			if (Main.isDebugging)
+			{
+				trace("angry increase " + this.angryCustomerIncrease);
+			}
+		}
+
+		if (FlxG.save.data.satisfiedCustomerIncrease != null)
+		{
+			this.satisfiedCustomerIncrease = FlxG.save.data.satisfiedCustomerIncrease;
+			if (Main.isDebugging)
+			{
+				trace("satisfied increase " + this.satisfiedCustomerIncrease);
+			}
+		}
+
+		if (FlxG.save.data.happyCustomerIncrease != null)
+		{
+			this.happyCustomerIncrease = FlxG.save.data.happyCustomerIncrease;
+			if (Main.isDebugging)
+			{
+				trace("happy increase " + this.happyCustomerIncrease);
+			}
 		}
 
 		// background color
@@ -261,8 +298,9 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.happy_customer__png);
-				money += 10 + happyCustomerIncrease;
-				currentCustomer.showScore("+10", FlxColor.GREEN);
+				var scoreChange = 10 + happyCustomerIncrease;
+				money += scoreChange;
+				currentCustomer.showScore("+" + scoreChange, FlxColor.GREEN);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
 				Timer.delay(remove.bind(currentCustomer), 2000);
@@ -283,8 +321,9 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.satisfied_customer__png);
-				money += 5 + satisfiedCustomerIncrease;
-				currentCustomer.showScore("+5", FlxColor.YELLOW);
+				var scoreChange = 5 + satisfiedCustomerIncrease;
+				money += scoreChange;
+				currentCustomer.showScore("+" + scoreChange, FlxColor.YELLOW);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
 				Timer.delay(remove.bind(currentCustomer), 2000);
@@ -305,6 +344,7 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
+				// TODO: Change later when adding back angry customer item
 				money -= 5 - angryCustomerIncrease;
 				currentCustomer.showScore("-5", FlxColor.RED);
 				currentCustomer.fadeAway();

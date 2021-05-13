@@ -8,24 +8,44 @@ import flixel.util.FlxColor;
 
 class ShopState extends FlxState
 {
-	var hud:HUD;
-	var money = 0;
+	// Lets ShopConfirmSubState modify
+	public static var hud:HUD;
+	public static var money = 0;
 
-	var shopItems:FlxTypedGroup<FlxTypedGroup<FlxText>>;
-	var numOwned:Array<Int> = [];
-	var shopPrices:Array<Int> = [];
-	var currentItem = 0;
-	var yGap = 75; // gap between items
+	// Need to let ShopConfirmSubState update # owned
+	// Items owned is stored as saved data FlxG.save.data.itemsOwned (map of name => # owned)
+	public static var shopItems:FlxTypedGroup<FlxTypedGroup<FlxText>>;
+	public static var currentItem = 0;
+
+	var itemNames:Array<String> = [];
+	var itemPrices:Array<Int> = [];
+
+	var yGap = 50; // gap between items
 
 	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, true, false, FlxColor.BLACK);
 	var unselectedTextFormat = new FlxTextFormat(FlxColor.GRAY, false, false);
 
 	override public function create()
 	{
+		// Get player money to set up HUD
 		if (FlxG.save.data.playerMoney != null)
 		{
 			money = FlxG.save.data.playerMoney;
 		}
+		else
+		{
+			money = 0;
+		}
+
+		// Create empty map for save data if it doesn't already exist
+		if (FlxG.save.data.itemsOwned == null)
+		{
+			FlxG.save.data.itemsOwned = new Map<String, Int>();
+			FlxG.save.flush();
+		}
+
+		currentItem = 0;
+
 		hud = new HUD(false);
 		hud.updateHUD(0, money);
 		add(hud);
@@ -36,9 +56,12 @@ class ShopState extends FlxState
 		mainText.y -= 200;
 		add(mainText);
 
+		// TODO: add little message saying press ESC to return to MENU
+
+		// Set up headers
 		var y = 250;
-		var itemHeader = new FlxText(100, y, 250, "Name", 20);
-		var descriptionHeader = new FlxText(370, y, 440, "Description", 20);
+		var itemHeader = new FlxText(100, y, 240, "Name", 20);
+		var descriptionHeader = new FlxText(360, y, 440, "Description", 20);
 		var priceHeader = new FlxText(880, y, 140, "Price", 20);
 		var ownedHeader = new FlxText(1040, y, 140, "# Owned", 20);
 		itemHeader.setFormat("assets/fonts/Kaorigelbold.ttf", 30);
@@ -50,11 +73,15 @@ class ShopState extends FlxState
 		add(priceHeader);
 		add(ownedHeader);
 
+		// Add shop items
 		shopItems = new FlxTypedGroup<FlxTypedGroup<FlxText>>();
-		addItem("Marvelous Milk", "Satisfied customers will now tip $2 extra.", 20);
-		addItem("Better Beans", "Happy customers will now tip $3 extra.", 50);
-		addItem("Comfy Chair", "Increases customer's base patience by 1.", 60);
-		addItem("Soft Sofa", "Increases customer's base patience by 10.", 500);
+		// Not adding this item for now - will need to implement an item cap or else player can end up just earning infinitely from failing
+		// addItem("Soothing Syrup", "Lose $1 less from angry customers.", 120);
+		addItem("Marvelous Milk", "Earn $1 more from satisfied customers.", 60);
+		addItem("Better Beans", "Earn $1 more from happy customers.", 80);
+		addItem("Comfy Chair", "Increase customer base patience by 1.", 60);
+		addItem("Soft Sofa", "Increase customer base patience by 10.", 500);
+
 		super.create();
 	}
 
@@ -72,37 +99,84 @@ class ShopState extends FlxState
 			// Go to previous input field
 			changeSelected(-1);
 		}
+
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
 		if (pressedEnter)
 		{
-			// Deduct cost from player (and save)
-			// Increase # owned
-			// Apply effects to PlayState (and save)
+			// TODO: check if player has enough money first
+
+			// pop up confirmation message
+			ShopConfirmSubState.itemName = itemNames[currentItem];
+			ShopConfirmSubState.itemPrice = itemPrices[currentItem];
+			openSubState(new ShopConfirmSubState());
+		}
+
+		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
+		if (pressedEscape)
+		{
+			FlxG.switchState(new MenuState());
 		}
 
 		super.update(elapsed);
 	}
 
+	public static function updateOwned()
+	{
+		shopItems.forEach(function(itemGroup:FlxTypedGroup<FlxText>)
+		{
+			if (itemGroup.ID == currentItem)
+			{
+				itemGroup.forEach(function(item:FlxText)
+				{
+					if (item.ID == 3)
+					{
+						item.text = "" + (Std.parseInt(item.text) + 1);
+					}
+				});
+			}
+		});
+	}
+
 	function addItem(name:String = "Item", description:String = "An item...", price:Int = 0)
 	{
-		// could probably add item images later
+		// could probably add item images later?
+
+		// Get number owned from saved data (if saved)
+		var numOwned = 0;
+		if (FlxG.save.data.itemsOwned.get(name) != null)
+		{
+			numOwned = FlxG.save.data.itemsOwned.get(name);
+		}
+		else
+		{
+			// If no save data for item, add it
+			FlxG.save.data.itemsOwned.set(name, 0);
+			FlxG.save.flush();
+		}
+
 		var newItem = new FlxTypedGroup<FlxText>();
 		newItem.ID = shopItems.length;
 		var y = 300 + (yGap * shopItems.length);
 		var newItemName = new FlxText(100, y, 250, name, 20);
-		var newItemDescription = new FlxText(370, y, 440, description, 20);
+		var newItemDescription = new FlxText(370, y, 490, description, 20);
 		var newItemPrice = new FlxText(880, y, 140, "$" + price, 20);
-		var newItemOwned = new FlxText(1040, y, 140, "0", 20);
+		var newItemOwned = new FlxText(1040, y, 140, "" + numOwned, 20);
 		newItemName.setFormat("assets/fonts/Kaorigel.ttf", 25);
 		newItemDescription.setFormat("assets/fonts/Kaorigel.ttf", 25);
 		newItemPrice.setFormat("assets/fonts/Kaorigel.ttf", 25);
 		newItemOwned.setFormat("assets/fonts/Kaorigel.ttf", 25);
+		newItemName.ID = 0;
+		newItemDescription.ID = 1;
+		newItemPrice.ID = 2;
+		newItemOwned.ID = 3; // setting IDs so we can change text easier later
 		newItem.add(newItemName);
 		newItem.add(newItemDescription);
 		newItem.add(newItemPrice);
 		newItem.add(newItemOwned);
 
-		shopPrices.push(price);
+		// Add to arrays
+		itemNames.push(name);
+		itemPrices.push(price);
 
 		if (shopItems.length == 0)
 		{

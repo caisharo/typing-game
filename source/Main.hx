@@ -9,7 +9,7 @@ class Main extends Sprite
 {
 	public static var logger:CapstoneLogger;
 	public static var isLogging = true; // just in case we don't want to log when we're debugging or something?
-	public static var isDebugging = false;
+	public static var isDebugging = true; // for traces
 
 	public function new()
 	{

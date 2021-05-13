@@ -56,7 +56,10 @@ class ShopState extends FlxState
 		mainText.y -= 200;
 		add(mainText);
 
-		// TODO: add little message saying press ESC to return to MENU
+		var returnText = new FlxText(810, 50, 0, "Note: Press ESC to return to the main menu.", 20);
+		returnText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
+		returnText.addFormat(unselectedTextFormat);
+		add(returnText);
 
 		// Set up headers
 		var y = 250;

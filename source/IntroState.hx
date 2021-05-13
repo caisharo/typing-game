@@ -253,7 +253,7 @@ class IntroState extends FlxState
 					Timer.delay(function()
 					{
 						FlxG.switchState(new IntroEndState());
-					}, 1500);
+					}, 1000);
 				});
 			}, 100);
 		}

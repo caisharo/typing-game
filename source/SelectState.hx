@@ -173,114 +173,129 @@ class SelectState extends FlxState
 
 		if (stageOneDone && !awareDone && FlxG.keys.justPressed.ONE)
 		{
-			remove(pressText);
-			remove(currentCustomerText);
-
-			var text = "Current customer: 1";
-			currentCustomer = customer;
-			currentCustomerText = new FlxText(0, 0, 0, text, 18);
-			currentCustomerText.screenCenter();
-			currentCustomerText.y += 160;
-			currentCustomerText.x -= 300;
-			currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
-			add(currentCustomerText);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-
-			temp = new FlxText(0, 0, 0, tutorialTextTwo[0], 20);
-			awareText.screenCenter();
-			awareText.y += yShift + 80;
-			awareText.x = (FlxG.width - awareText.width) / 2;
-			awareText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-			add(awareText);
-			awareText.start(0.04, false, false, skipInput, function()
+			Timer.delay(function()
 			{
-				awareDone = true;
-				// enterToContinue();
-			});
+				remove(pressText);
+				remove(currentCustomerText);
+
+				var text = "Current customer: 1";
+				currentCustomer = customer;
+				currentCustomerText = new FlxText(0, 0, 0, text, 18);
+				currentCustomerText.screenCenter();
+				currentCustomerText.y += 160;
+				currentCustomerText.x -= 300;
+				currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
+				add(currentCustomerText);
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+
+				temp = new FlxText(0, 0, 0, tutorialTextTwo[0], 20);
+				awareText.screenCenter();
+				awareText.y += yShift + 80;
+				awareText.x = (FlxG.width - awareText.width) / 2;
+				awareText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+				add(awareText);
+				awareText.start(0.04, false, false, skipInput, function()
+				{
+					awareDone = true;
+					// enterToContinue();
+				});
+			}, 100);
 		}
 
 		if (awareDone && !tryDone && FlxG.keys.justPressed.ENTER)
 		{
-			remove(awareText);
-			// remove(enterText);
-			temp = new FlxText(0, 0, 0, tutorialTextTwo[1], 20);
-			tryText.screenCenter();
-			tryText.y += yShift + 80;
-			tryText.x = (FlxG.width - temp.width) / 2;
-			tryText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-			add(tryText);
-			tryText.start(0.04, false, false, skipInput, function()
+			Timer.delay(function()
 			{
-				tryDone = true;
-				// enterToContinue();
-			});
+				remove(awareText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialTextTwo[1], 20);
+				tryText.screenCenter();
+				tryText.y += yShift + 80;
+				tryText.x = (FlxG.width - temp.width) / 2;
+				tryText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+				add(tryText);
+				tryText.start(0.04, false, false, skipInput, function()
+				{
+					tryDone = true;
+					// enterToContinue();
+				});
+			}, 100);
 		}
 
 		if (tryDone && !bobDone && FlxG.keys.justPressed.ENTER)
 		{
-			remove(tryText);
-			// remove(enterText);
-			customers.set(2, newCustomer);
-			add(newCustomer);
-
-			temp = new FlxText(0, 0, 0, tutorialTextTwo[2], 20);
-			bobText.screenCenter();
-			bobText.y += yShift + 80;
-			bobText.x = (FlxG.width - temp.width) / 2;
-			bobText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-			add(bobText);
-			bobText.start(0.04, false, false, skipInput, function()
+			Timer.delay(function()
 			{
-				bobDone = true;
-				// enterToContinue();
-			});
+				remove(tryText);
+				// remove(enterText);
+				customers.set(2, newCustomer);
+				add(newCustomer);
+
+				temp = new FlxText(0, 0, 0, tutorialTextTwo[2], 20);
+				bobText.screenCenter();
+				bobText.y += yShift + 80;
+				bobText.x = (FlxG.width - temp.width) / 2;
+				bobText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+				add(bobText);
+				bobText.start(0.04, false, false, skipInput, function()
+				{
+					bobDone = true;
+					// enterToContinue();
+				});
+			}, 100);
 		}
 
 		if (bobDone && !stageTwoDone && FlxG.keys.justPressed.ENTER)
 		{
-			remove(bobText);
-			// remove(enterText);
-			temp = new FlxText(0, 0, 0, tutorialTextTwo[3], 20);
-			twoText.screenCenter();
-			twoText.y += yShift + 80;
-			twoText.x = (FlxG.width - temp.width) / 2;
-			twoText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-			add(twoText);
-			twoText.start(0.04, false, false, skipInput, function()
+			Timer.delay(function()
 			{
-				stageTwoDone = true;
-			});
+				remove(bobText);
+				// remove(enterText);
+				temp = new FlxText(0, 0, 0, tutorialTextTwo[3], 20);
+				twoText.screenCenter();
+				twoText.y += yShift + 80;
+				twoText.x = (FlxG.width - temp.width) / 2;
+				twoText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+				add(twoText);
+				twoText.start(0.04, false, false, skipInput, function()
+				{
+					stageTwoDone = true;
+				});
+			}, 100);
 		}
 
 		if (stageTwoDone && FlxG.keys.justPressed.TWO)
 		{
-			remove(twoText);
-			remove(currentCustomerText);
-			currentCustomer.changeNumColor(FlxColor.WHITE);
-
-			var text = "Current customer: 2";
-			currentCustomer = newCustomer;
-			currentCustomerText = new FlxText(0, 0, 0, text, 18);
-			currentCustomerText.screenCenter();
-			currentCustomerText.y += 160;
-			currentCustomerText.x -= 300;
-			currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
-			add(currentCustomerText);
-			currentCustomer.changeNumColor(FlxColor.YELLOW);
-
-			temp = new FlxText(0, 0, 0, tutorialTextThree[0], 20);
-			moreText.screenCenter();
-			moreText.y += yShift + 80;
-			moreText.x = (FlxG.width - temp.width) / 2;
-			moreText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-			add(moreText);
-			moreText.start(0.04, false, false, skipInput, function()
+			Timer.delay(function()
 			{
-				Timer.delay(function()
+				remove(twoText);
+				remove(currentCustomerText);
+				currentCustomer.changeNumColor(FlxColor.WHITE);
+
+				var text = "Current customer: 2";
+				currentCustomer = newCustomer;
+				currentCustomerText = new FlxText(0, 0, 0, text, 18);
+				currentCustomerText.screenCenter();
+				currentCustomerText.y += 160;
+				currentCustomerText.x -= 300;
+				currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
+				add(currentCustomerText);
+				currentCustomer.changeNumColor(FlxColor.YELLOW);
+
+				temp = new FlxText(0, 0, 0, tutorialTextThree[0], 20);
+				moreText.screenCenter();
+				moreText.y += yShift + 80;
+				moreText.x = (FlxG.width - temp.width) / 2;
+				moreText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+				add(moreText);
+				moreText.start(0.04, false, false, skipInput, function()
 				{
-					FlxG.switchState(new SelectEndState());
-				}, 1500);
-			});
+					Timer.delay(function()
+					{
+						FlxG.switchState(new SelectEndState());
+					}, 1000);
+				});
+			}, 100);
 		}
 
 		super.update(elapsed);

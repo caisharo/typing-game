@@ -50,7 +50,13 @@ class ShopConfirmSubState extends BasicMenuSubState
 		var totalOwned = FlxG.save.data.itemsOwned.get(itemName) + 1;
 		if (Main.isLogging)
 		{
+			var dayCompleted = 0;
+			if (FlxG.save.data.dayCompleted != null)
+			{
+				dayCompleted = FlxG.save.data.dayCompleted;
+			}
 			Main.logger.logActionWithNoLevel(LoggingActions.BOUGHT_ITEM, {
+				day_completed: dayCompleted,
 				previous_balance: ShopState.money,
 				item_name: itemName,
 				item_price: itemPrice,

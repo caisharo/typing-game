@@ -91,6 +91,10 @@ class MenuState extends BasicMenuState
 
 	function openShop()
 	{
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SHOP, {pressed: "shop", from: "main_menu"});
+		}
 		FlxG.switchState(new ShopState());
 	}
 }

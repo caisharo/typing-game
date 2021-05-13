@@ -117,6 +117,10 @@ class ShopState extends FlxState
 		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
 		if (pressedEscape)
 		{
+			if (Main.isLogging)
+			{
+				Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "shop"});
+			}
 			FlxG.switchState(new MenuState());
 		}
 

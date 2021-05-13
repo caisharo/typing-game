@@ -5,6 +5,7 @@ import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import haxe.Timer;
 
 class ShopState extends FlxState
 {
@@ -19,7 +20,6 @@ class ShopState extends FlxState
 
 	var itemNames:Array<String> = [];
 	var itemPrices:Array<Int> = [];
-
 	var yGap = 50; // gap between items
 
 	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, true, false, FlxColor.BLACK);
@@ -90,28 +90,42 @@ class ShopState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		var pressedUp = FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W;
-		var pressedDown = FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S;
-		if (pressedDown && !pressedUp)
-		{
-			// Go to next input field
-			changeSelected(1);
-		}
-		if (pressedUp && !pressedDown)
+		var pressedPrevious = FlxG.keys.justPressed.UP
+			|| FlxG.keys.justPressed.W
+			|| (FlxG.keys.justPressed.TAB && FlxG.keys.pressed.SHIFT);
+		var pressedNext = FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S || FlxG.keys.justPressed.TAB;
+		if (pressedPrevious)
 		{
 			// Go to previous input field
 			changeSelected(-1);
+		}
+		else if (pressedNext)
+		{
+			// Go to next input field
+			changeSelected(1);
 		}
 
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
 		if (pressedEnter)
 		{
-			// TODO: check if player has enough money first
-
-			// pop up confirmation message
-			ShopConfirmSubState.itemName = itemNames[currentItem];
-			ShopConfirmSubState.itemPrice = itemPrices[currentItem];
-			openSubState(new ShopConfirmSubState());
+			// check if player has enough money first
+			if (money < itemPrices[currentItem])
+			{
+				var notEnoughMoneyText = new FlxText(0, 0, 0, "You don't have enough money!", 18);
+				notEnoughMoneyText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
+				notEnoughMoneyText.screenCenter();
+				notEnoughMoneyText.y += 250;
+				notEnoughMoneyText.color = FlxColor.RED;
+				add(notEnoughMoneyText);
+				Timer.delay(remove.bind(notEnoughMoneyText), 1000);
+			}
+			else
+			{
+				// pop up confirmation message
+				ShopConfirmSubState.itemName = itemNames[currentItem];
+				ShopConfirmSubState.itemPrice = itemPrices[currentItem];
+				openSubState(new ShopConfirmSubState());
+			}
 		}
 
 		var pressedEscape = FlxG.keys.justPressed.ESCAPE;

@@ -19,6 +19,7 @@ class BasicMenuState extends FlxState
 	var currentMenuItem = 0;
 	var menuItems:FlxTypedGroup<FlxText>;
 	var menuFunctions:Array<Void->Void> = [];
+
 	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, false, false);
 	var unselectedTextFormat = new FlxTextFormat(FlxColor.GRAY, false, false);
 

@@ -22,7 +22,7 @@ class ShopState extends FlxState
 	var itemPrices:Array<Int> = [];
 	var yGap = 50; // gap between items
 
-	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, true, false, FlxColor.BLACK);
+	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, false, false);
 	var unselectedTextFormat = new FlxTextFormat(FlxColor.GRAY, false, false);
 
 	override public function create()
@@ -226,13 +226,10 @@ class ShopState extends FlxState
 
 		shopItems.forEach(function(itemGroup:FlxTypedGroup<FlxText>)
 		{
+			formatAllText(itemGroup, unselectedTextFormat);
 			if (itemGroup.ID == currentItem)
 			{
 				formatAllText(itemGroup, selectedTextFormat);
-			}
-			else
-			{
-				formatAllText(itemGroup, unselectedTextFormat);
 			}
 		});
 	}
@@ -241,6 +238,7 @@ class ShopState extends FlxState
 	{
 		textGroup.forEach(function(item:FlxText)
 		{
+			item.clearFormats();
 			item.addFormat(format);
 		});
 	}

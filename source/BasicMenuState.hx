@@ -19,7 +19,7 @@ class BasicMenuState extends FlxState
 	var currentMenuItem = 0;
 	var menuItems:FlxTypedGroup<FlxText>;
 	var menuFunctions:Array<Void->Void> = [];
-	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, true, false, FlxColor.BLACK);
+	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, false, false);
 	var unselectedTextFormat = new FlxTextFormat(FlxColor.GRAY, false, false);
 
 	override public function create()
@@ -57,23 +57,20 @@ class BasicMenuState extends FlxState
 		var newMenuItem = new FlxText(0, 0, 0, name, fontSize);
 		newMenuItem.setFormat("assets/fonts/Kaorigelbold.ttf", fontSize);
 		newMenuItem.ID = menuItems.length;
+		if (Main.isDebugging)
+		{
+			trace(name + ": new id " + newMenuItem.ID);
+		}
 		newMenuItem.screenCenter();
 		newMenuItem.y = yShift + (yGap * menuItems.length);
-
-		if (menuItems.length == 0)
-		{
-			newMenuItem.addFormat(selectedTextFormat);
-		}
-		else
-		{
-			newMenuItem.addFormat(unselectedTextFormat);
-		}
 
 		menuItems.add(newMenuItem);
 		add(newMenuItem);
 
 		// Add function to array
 		menuFunctions.push(menuFunction);
+
+		changeSelected();
 	}
 
 	function changeSelected(direction:Int = 0)
@@ -87,16 +84,22 @@ class BasicMenuState extends FlxState
 		{
 			currentMenuItem = menuItems.length - 1;
 		}
-
+		if (Main.isDebugging)
+		{
+			trace(currentMenuItem);
+		}
 		menuItems.forEach(function(item:FlxText)
 		{
+			item.clearFormats();
+			item.addFormat(unselectedTextFormat);
 			if (item.ID == currentMenuItem)
 			{
+				if (Main.isDebugging)
+				{
+					trace("selected " + item.ID);
+				}
+				item.clearFormats();
 				item.addFormat(selectedTextFormat);
-			}
-			else
-			{
-				item.addFormat(unselectedTextFormat);
 			}
 		});
 	}

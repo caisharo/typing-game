@@ -31,6 +31,12 @@ class ShopConfirmSubState extends BasicMenuSubState
 
 	override public function update(elapsed:Float)
 	{
+		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
+		if (pressedEscape)
+		{
+			close();
+		}
+
 		super.update(elapsed);
 	}
 

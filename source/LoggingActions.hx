@@ -13,7 +13,8 @@ class LoggingActions
 	public static var PRESS_RETURN_TO_MENU:Int = 4;
 	public static var PRESS_PAUSE:Int = 5;
 	public static var PRESS_TUTORIAL_PAUSE:Int = 6;
-	// public static var PRESS_OPTIONS:Int = 7;  // not used yet - this one is ok to change
+	public static var PRESS_SHOP:Int = 7;
+	// public static var PRESS_OPTIONS:Int = 8;  // not used yet - this one is ok to change
 	//
 	// Tutorial levels
 	public static var PRESS_INTRO:Int = -1;
@@ -30,6 +31,9 @@ class LoggingActions
 	//
 	public static var NO_CUSTOMER_SELECTED:Int = 20;
 	public static var SHOW_ORDER_AGAIN:Int = 21; // {day: day, customer_position: number}
+	//
+	// Shop stuff
+	public static var BOUGHT_ITEM:Int = 30; // {previous_balance: money, item_name: "Name", item_price: price: total_owned: number}
 
 	public function new() {}
 }

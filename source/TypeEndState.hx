@@ -14,7 +14,10 @@ class TypeEndState extends BasicMenuState
 	{
 		super.create();
 
-		Main.logger.logLevelEnd({day_completed: -3, gained_money: 0, total_money: 0});
+		if (Main.isLogging)
+		{
+			Main.logger.logLevelEnd({day_completed: -3, gained_money: 0, total_money: 0});
+		}
 
 		menuItems = new FlxTypedGroup<FlxText>();
 		addMenuItem("Tutorial", returnToTutorial);
@@ -28,13 +31,19 @@ class TypeEndState extends BasicMenuState
 
 	function returnToTutorial()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "type_end"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "tutorial", from: "type_end"});
+		}
 		FlxG.switchState(new TutorialMenuState());
 	}
 
 	function returnToMenu()
 	{
-		Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "type_end"});
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "type_end"});
+		}
 		FlxG.switchState(new MenuState());
 	}
 }

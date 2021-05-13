@@ -41,13 +41,24 @@ class ShopConfirmSubState extends BasicMenuSubState
 			trace("yes");
 		}
 
+		var totalOwned = FlxG.save.data.itemsOwned.get(itemName) + 1;
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.BOUGHT_ITEM, {
+				previous_balance: ShopState.money,
+				item_name: itemName,
+				item_price: itemPrice,
+				total_owned: totalOwned
+			});
+		}
+
 		// Deduct cost from player (and save)
 		ShopState.money -= itemPrice;
 		ShopState.hud.updateHUD(0, ShopState.money); // Update money in shop HUD
 		FlxG.save.data.playerMoney = ShopState.money;
 
 		// Increase # owned (and save)
-		FlxG.save.data.itemsOwned.set(itemName, FlxG.save.data.itemsOwned.get(itemName) + 1);
+		FlxG.save.data.itemsOwned.set(itemName, totalOwned);
 		ShopState.updateOwned();
 
 		// Add and save effects (PlayState will use saved values)

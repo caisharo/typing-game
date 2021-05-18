@@ -34,13 +34,12 @@ class MenuStateTutorialForced extends BasicMenuState
 
 		menuItems = new FlxTypedGroup<FlxText>();
 		addMenuItem("Tutorial", startTutorial);
-		addMenuItem("Shop", openShop);
 
 		var keyboardOnlyText = new FlxText(0, 0, 0, "This is a keyboard only game.", 20);
 		keyboardOnlyText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
 		keyboardOnlyText.screenCenter();
 		keyboardOnlyText.y = 630;
-		var menuControlText = new FlxText(0, 0, 0, "Use UP/DOWN, W/S, or TAB to navigate menus.", 20);
+		var menuControlText = new FlxText(0, 0, 0, "Press ENTER to begin.", 20);
 		menuControlText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
 		menuControlText.screenCenter();
 		menuControlText.y = 660;
@@ -66,14 +65,5 @@ class MenuStateTutorialForced extends BasicMenuState
 		}
 
 		FlxG.switchState(new TutorialMenuState());
-	}
-
-	function openShop()
-	{
-		if (Main.isLogging)
-		{
-			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SHOP, {pressed: "shop", from: "main_menu_init"});
-		}
-		FlxG.switchState(new ShopState());
 	}
 }

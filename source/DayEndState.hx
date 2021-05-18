@@ -49,6 +49,7 @@ class DayEndState extends BasicMenuState
 		menuItems = new FlxTypedGroup<FlxText>();
 		yShift = 500;
 		addMenuItem("Continue", nextLevel);
+		addMenuItem("Shop", openShop);
 		addMenuItem("Menu", returnToMenu);
 
 		super.create();
@@ -57,6 +58,15 @@ class DayEndState extends BasicMenuState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+	}
+
+	function openShop()
+	{
+		if (Main.isLogging)
+		{
+			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SHOP, {pressed: "shop", from: "main_menu"});
+		}
+		FlxG.switchState(new ShopState());
 	}
 
 	function returnToMenu()

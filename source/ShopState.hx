@@ -135,7 +135,14 @@ class ShopState extends FlxState
 			{
 				Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "shop"});
 			}
-			FlxG.switchState(new MenuState());
+			if (FlxG.save.data.clearedTutorial)
+			{
+				FlxG.switchState(new MenuState());
+			}
+			else
+			{
+				FlxG.switchState(new MenuStateTutorialForced());
+			}
 		}
 
 		super.update(elapsed);

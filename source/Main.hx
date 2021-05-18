@@ -1,6 +1,7 @@
 package;
 
 import cse481d.logging.CapstoneLogger;
+import flixel.FlxG;
 import flixel.FlxGame;
 import hscript.Expr.VarDecl;
 import openfl.display.Sprite;
@@ -49,12 +50,12 @@ class Main extends Sprite
 		}
 		else
 		{
-			addChild(new FlxGame(0, 0, MenuState));
+			addChild(new FlxGame(0, 0, MenuStateTutorialForced));
 		}
 	}
 
 	function onSessionReady(sessionRecieved:Bool):Void
 	{
-		addChild(new FlxGame(0, 0, MenuState));
+		addChild(new FlxGame(0, 0, MenuStateTutorialForced));
 	}
 }

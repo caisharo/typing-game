@@ -1,6 +1,7 @@
 package;
 
 import cse481d.logging.CapstoneLogger;
+import flixel.FlxG;
 import flixel.FlxGame;
 import hscript.Expr.VarDecl;
 import openfl.display.Sprite;
@@ -21,8 +22,8 @@ class Main extends Sprite
 		var categoryId:Int = 1;
 		// categoryId: A number you assign to help categorize data from different releases for your game.
 		// debugging = 1
-		// release to family/friends = 2,
-		// release it to a public website = 3
+		// release to family/friends = 2, (NOTE: 2 will be our restricted itch.io family/friends)
+		// release it to a public website = 3 (NOTE: IGNORE 3 - failed initial itch.io)
 		// 5/11 playtesting = 4
 		// IMPORTANT: Change this when you have a new version of your game! (We will probably increase by 10 each version?)
 
@@ -30,23 +31,31 @@ class Main extends Sprite
 		{
 			Main.logger = new CapstoneLogger(gameId, gameName, gameKey, categoryId);
 
-			// Get user
-			var userId:String = Main.logger.getSavedUserId();
-			if (userId == null)
+			// Get user saved id (if possible - need to check in case user blocks third-party cookies)
+			try
 			{
-				userId = Main.logger.generateUuid();
-				Main.logger.setSavedUserId(userId);
+				var userId:String = Main.logger.getSavedUserId();
+				if (userId == null)
+				{
+					userId = Main.logger.generateUuid();
+					Main.logger.setSavedUserId(userId);
+				}
+				Main.logger.startNewSession(userId, this.onSessionReady);
 			}
-			Main.logger.startNewSession(userId, this.onSessionReady);
+			catch (e)
+			{
+				var userId = Main.logger.generateUuid();
+				Main.logger.startNewSession(userId, this.onSessionReady);
+			}
 		}
 		else
 		{
-			addChild(new FlxGame(0, 0, MenuState));
+			addChild(new FlxGame(0, 0, MenuStateTutorialForced));
 		}
 	}
 
 	function onSessionReady(sessionRecieved:Bool):Void
 	{
-		addChild(new FlxGame(0, 0, MenuState));
+		addChild(new FlxGame(0, 0, MenuStateTutorialForced));
 	}
 }

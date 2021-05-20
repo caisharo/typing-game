@@ -68,6 +68,13 @@ class TutorialMenuState extends BasicMenuState
 		{
 			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TUTORIAL, {pressed: "Menu", from: "tutorial_menu"});
 		}
-		FlxG.switchState(new MenuState());
+		if (FlxG.save.data.clearedTutorial)
+		{
+			FlxG.switchState(new MenuState());
+		}
+		else
+		{
+			FlxG.switchState(new MenuStateTutorialForced());
+		}
 	}
 }

@@ -1,119 +1,119 @@
-botz
-melya
-kaapi
-lungo
-mocha
-galao
-latte
 breve
-doppio
+lungo
+botz
 coffee
+melya
+mocha
+latte
+galao
+red eye
+red tie
+kaapi
 manilo
 frappe
-red tie
-cortado
-pocillo
-red eye
-palazzo
-mazagran
-espresso
 dead eye
+cortado
 ice shot
-pharisee
 affogato
-lemonade
-eiskaffee
-black eye
-guillermo
-americano
-ristretto
-antoccino
-gibraltar
-babyccino
-yuenyeung
-kopi susu
-black tie
-macchiato
-shakerato
-carajillo
-espressino
-kopi luwak
-barraquito
-mochaccino
-long black
-cappuccino
-freakshake
-iced mocha
+doppio
 egg coffee
+eiskaffee
+guillermo
+lemonade
+yuenyeung
+black eye
+black tie
+kopi susu
+pharisee
+pocillo
+espresso
+freakshake
+gibraltar
+mazagran
+ristretto
+carajillo
 flat white
+iced coffee
+iced mocha
+shakerato
+americano
+drip coffee
 iced latte
+long black
+macchiato
+babyccino
 cafe zorro
 chai latte
-drip coffee
-cafe cubano
-cafe bombon
-frappuccino
-cafe borgia
-iced coffee
-french press
-blonde roast
-cafe au lait
-irish coffee
-nitro coffee
-matcha latte
-eggnog latte
 decaf coffee
-espresso sara
-cowboy coffee
+irish coffee
+antoccino
+cafe borgia
+kopi luwak
+palazzo
+cafe bombon
+cafe cubano
+french press
+mochaccino
+nitro coffee
 vacuum coffee
-piccolo latte
-vienna coffee
-ca phe sua da
-double double
-caffe gommosa
-thai iced tea
-vanilla latte
-hot chocolate
-caramel latte
-cascara coffee
-instant coffee
-espresso lungo
-turkish coffee
+barraquito
+cafe au lait
+espressino
+eggnog latte
 infused coffee
-iced americano
-espresso tonic
-hazelnut latte
+turkish coffee
+caffe gommosa
+vienna coffee
+blonde roast
+ca phe sua da
+cappuccino
+double double
+frappuccino
+matcha latte
+thai iced tea
+cowboy coffee
+caramel latte
+instant coffee
+cascara coffee
+hot chocolate
 lavender latte
-espresso romano
-pistachio latte
+vanilla latte
+espresso sara
+iced americano
+cold brew coffee
+earl gray latte
+espresso lungo
+freddo espresso
+immersion coffee
 moka pot coffee
+pour over coffee
+hazelnut latte
+piccolo latte
+dark roast coffee
+dirty chai latte
+espresso tonic
 double espresso
 latte macchiato
-freddo espresso
-earl gray latte
-cold brew coffee
-espresso roberto
-dirty chai latte
-immersion coffee
-pour over coffee
-peppermint latte
-freddo cappuccino
 vietnamese coffee
-percolated coffee
-caramel macchiato
-dark roast coffee
+espresso romano
 gingerbread latte
-espresso ristretto
-espresso con panna
-espresso macchiato
+pistachio latte
+espresso roberto
+percolated coffee
 bulletproof coffee
+caramel macchiato
+freddo cappuccino
+indian filter coffee
+peppermint latte
+espresso ristretto
 espresso americano
+espresso macchiato
+dark chocolate mocha
+salted caramel mocha
+espresso con panna
 pumpkin spice latte
 blonde vanilla latte
-dark chocolate mocha
 cinnamon dolce latte
-indian filter coffee
-salted caramel mocha
 white chocolate mocha
 hazelnut bianco latte
 honey almondmilk flat white

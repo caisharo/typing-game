@@ -50,12 +50,12 @@ class Main extends Sprite
 		}
 		else
 		{
-			addChild(new FlxGame(0, 0, MenuStateTutorialForced));
+			addChild(new FlxGame(0, 0, MenuState));
 		}
 	}
 
 	function onSessionReady(sessionRecieved:Bool):Void
 	{
-		addChild(new FlxGame(0, 0, MenuStateTutorialForced));
+		addChild(new FlxGame(0, 0, MenuState));
 	}
 }

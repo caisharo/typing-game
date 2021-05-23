@@ -33,9 +33,17 @@ class MenuState extends BasicMenuState
 		add(titleText);
 
 		menuItems = new FlxTypedGroup<FlxText>();
-		addMenuItem("Start", startGame);
-		addMenuItem("Tutorial", startTutorial);
-		addMenuItem("Shop", openShop);
+		if (FlxG.save.data.clearedTutorial != null)
+		{
+			addMenuItem("Start", startGame);
+			addMenuItem("Tutorial", startTutorial);
+			addMenuItem("Shop", openShop);
+		}
+		else
+		{
+			// Only show tutorial if player hasn't finished
+			addMenuItem("Tutorial", startTutorial);
+		}
 
 		var keyboardOnlyText = new FlxText(0, 0, 0, "This is a keyboard only game.", 20);
 		keyboardOnlyText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);

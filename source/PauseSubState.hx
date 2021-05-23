@@ -31,14 +31,7 @@ class PauseSubState extends BasicMenuSubState
 
 	function returnToMenu()
 	{
-		if (FlxG.save.data.clearedTutorial)
-		{
-			FlxG.switchState(new MenuState());
-		}
-		else
-		{
-			FlxG.switchState(new MenuStateTutorialForced());
-		}
+		FlxG.switchState(new MenuState());
 	}
 
 	function returnToGame()

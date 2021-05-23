@@ -48,15 +48,26 @@ class MenuState extends BasicMenuState
 		var keyboardOnlyText = new FlxText(0, 0, 0, "This is a keyboard only game.", 20);
 		keyboardOnlyText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
 		keyboardOnlyText.screenCenter();
-		keyboardOnlyText.y = 630;
+		keyboardOnlyText.y = 600;
+		keyboardOnlyText.alpha = .7;
+		add(keyboardOnlyText);
+		// FlxFlicker.flicker(keyboardOnlyText, 0, 0.9);
+
 		var menuControlText = new FlxText(0, 0, 0, "Use UP/DOWN, W/S, or TAB to navigate menus.", 20);
 		menuControlText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
 		menuControlText.screenCenter();
-		menuControlText.y = 660;
-		add(keyboardOnlyText);
-		FlxFlicker.flicker(keyboardOnlyText, 0, 0.9);
+		menuControlText.y = 630;
+		menuControlText.alpha = .7;
 		add(menuControlText);
-		FlxFlicker.flicker(menuControlText, 0, 0.9);
+		// FlxFlicker.flicker(menuControlText, 0, 0.9);
+
+		var enterText = new FlxText(0, 0, 0, "Press ENTER to select.", 20);
+		enterText.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
+		enterText.screenCenter();
+		enterText.y = 660;
+		enterText.alpha = .7;
+		add(enterText);
+		// FlxFlicker.flicker(enterText, 0, 0.9);
 
 		super.create();
 	}

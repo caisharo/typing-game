@@ -501,7 +501,8 @@ class TypeState extends FlxState
 					// log it?
 					if (Main.isLogging)
 					{
-						Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+						Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+							{day: day, customer_position: 1, order: currentCustomer.getOrder().toString()});
 					}
 					currentCustomer.showText(3, 3, true);
 				}
@@ -524,7 +525,8 @@ class TypeState extends FlxState
 					// log it?
 					if (Main.isLogging)
 					{
-						Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+						Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+							{day: day, customer_position: 2, order: currentCustomer.getOrder().toString()});
 					}
 					currentCustomer.showText(3, 3, true);
 				}

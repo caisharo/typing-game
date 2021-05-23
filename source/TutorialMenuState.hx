@@ -23,7 +23,7 @@ class TutorialMenuState extends BasicMenuState
 		addMenuItem("Basics", startIntro);
 		addMenuItem("Customer Selection", startSelect);
 		addMenuItem("Final Tips", startType);
-		addMenuItem("Menu", startMenu);
+		addMenuItem("Main Menu", startMenu);
 
 		super.create();
 	}

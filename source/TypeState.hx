@@ -595,8 +595,13 @@ class TypeState extends FlxState
 			Main.logger.logLevelEnd({tutorial_completed: true, money: money});
 		}
 		// save that player cleared tutorial?
-		FlxG.save.data.clearedTutorial = true;
-		FlxG.save.flush(); // save data
+		FlxG.save.data.clearedThree = true;
+		FlxG.save.flush();
+		if (FlxG.save.data.clearedOne && FlxG.save.data.clearedTwo)
+		{
+			FlxG.save.data.clearedTutorial = true;
+			FlxG.save.flush(); // save data
+		}
 		temp = new FlxText(0, 0, 0, tutorialText[8], 20);
 		funText.screenCenter();
 		funText.y += yShift + 80;

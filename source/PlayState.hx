@@ -421,10 +421,20 @@ class PlayState extends FlxState
 				// log it?
 				if (Main.isLogging)
 				{
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 1});
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+						{day: day, customer_position: 1, order: currentCustomer.getOrder().toString()});
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// log switching customers
+			if (currentCustomer == null)
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: null, to: 1});
+			}
+			else
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: currentCustomer.getPosition(), to: 1});
 			}
 			currentCustomer = displayedCustomers.get(1);
 			if (currentCustomer != null)
@@ -445,10 +455,20 @@ class PlayState extends FlxState
 				// log it?
 				if (Main.isLogging)
 				{
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 2});
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+						{day: day, customer_position: 2, order: currentCustomer.getOrder().toString()});
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// log switching customers
+			if (currentCustomer == null)
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: null, to: 2});
+			}
+			else
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: currentCustomer.getPosition(), to: 2});
 			}
 			currentCustomer = displayedCustomers.get(2);
 			if (currentCustomer != null)
@@ -469,10 +489,20 @@ class PlayState extends FlxState
 				// log it?
 				if (Main.isLogging)
 				{
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 3});
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+						{day: day, customer_position: 3, order: currentCustomer.getOrder().toString()});
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// log switching customers
+			if (currentCustomer == null)
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: null, to: 3});
+			}
+			else
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: currentCustomer.getPosition(), to: 3});
 			}
 			currentCustomer = displayedCustomers.get(3);
 			if (currentCustomer != null)
@@ -493,10 +523,20 @@ class PlayState extends FlxState
 				// log it?
 				if (Main.isLogging)
 				{
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 4});
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+						{day: day, customer_position: 4, order: currentCustomer.getOrder().toString()});
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// log switching customers
+			if (currentCustomer == null)
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: null, to: 4});
+			}
+			else
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: currentCustomer.getPosition(), to: 4});
 			}
 			currentCustomer = displayedCustomers.get(4);
 			if (currentCustomer != null)
@@ -517,10 +557,20 @@ class PlayState extends FlxState
 				// log it?
 				if (Main.isLogging)
 				{
-					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN, {day: day, customer_position: 5});
+					Main.logger.logLevelAction(LoggingActions.SHOW_ORDER_AGAIN,
+						{day: day, customer_position: 5, order: currentCustomer.getOrder().toString()});
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// log switching customers
+			if (currentCustomer == null)
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: null, to: 5});
+			}
+			else
+			{
+				Main.logger.logLevelAction(LoggingActions.SWITCH_CUSTOMER, {from: currentCustomer.getPosition(), to: 5});
 			}
 			currentCustomer = displayedCustomers.get(5);
 			if (currentCustomer != null)

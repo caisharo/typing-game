@@ -30,7 +30,8 @@ class LoggingActions
 	public static var ANGRY_NO_PATIENCE:Int = 13; // angry customer due to running out of patience - log {day: day, customer_state: "state", order: "order"}
 	//
 	public static var NO_CUSTOMER_SELECTED:Int = 20;
-	public static var SHOW_ORDER_AGAIN:Int = 21; // {day: day, customer_position: number}
+	public static var SHOW_ORDER_AGAIN:Int = 21; // {day: day, customer_position: number, order: name,order}
+	public static var SWITCH_CUSTOMER:Int = 22; // {from: null/old customer position, to: new customer position}
 	//
 	// Shop stuff
 	public static var BOUGHT_ITEM:Int = 30; // {previous_balance: money, item_name: "Name", item_price: price: total_owned: number}

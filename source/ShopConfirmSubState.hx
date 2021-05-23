@@ -8,6 +8,7 @@ class ShopConfirmSubState extends BasicMenuSubState
 {
 	public static var itemName = "Item";
 	public static var itemPrice = 0;
+	public static var itemPriceIncrease = 0;
 
 	override public function create()
 	{
@@ -71,11 +72,22 @@ class ShopConfirmSubState extends BasicMenuSubState
 
 		// Increase # owned (and save)
 		FlxG.save.data.itemsOwned.set(itemName, totalOwned);
-		ShopState.updateOwned();
+		ShopState.updateOwned(itemPriceIncrease);
 
 		// Add and save effects (PlayState will use saved values)
 		// Hardcoded - will have to change everytime we modify items :(
-		if (itemName == "Marvelous Milk")
+		if (itemName == "Soothing Syrup")
+		{
+			if (FlxG.save.data.angryCustomerIncrease == null)
+			{
+				FlxG.save.data.angryCustomerIncrease = 1;
+			}
+			else
+			{
+				FlxG.save.data.angryCustomerIncrease += 1;
+			}
+		}
+		else if (itemName == "Marvelous Milk")
 		{
 			if (FlxG.save.data.satisfiedCustomerIncrease == null)
 			{

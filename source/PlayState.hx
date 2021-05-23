@@ -344,9 +344,9 @@ class PlayState extends FlxState
 
 				currentCustomer.stopPatienceBar();
 				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
-				// TODO: Change later when adding back angry customer item
-				money -= 5 - angryCustomerIncrease;
-				currentCustomer.showScore("-5", FlxColor.RED);
+				var scoreChange = -5 + angryCustomerIncrease;
+				money += scoreChange;
+				currentCustomer.showScore("-" + scoreChange, FlxColor.RED);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
 				Timer.delay(remove.bind(currentCustomer), 2000);

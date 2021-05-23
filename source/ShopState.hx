@@ -20,6 +20,8 @@ class ShopState extends FlxState
 
 	var itemNames:Array<String> = [];
 	var itemPrices:Array<Int> = [];
+	var priceIncreases:Array<Int> = [];
+	var maxNumItems:Array<Int> = [];
 	var yGap = 50; // gap between items
 
 	var selectedTextFormat = new FlxTextFormat(FlxColor.WHITE, false, false);
@@ -78,12 +80,11 @@ class ShopState extends FlxState
 
 		// Add shop items
 		shopItems = new FlxTypedGroup<FlxTypedGroup<FlxText>>();
-		// Not adding this item for now - will need to implement an item cap or else player can end up just earning infinitely from failing
-		// addItem("Soothing Syrup", "Lose $1 less from angry customers.", 120);
-		addItem("Marvelous Milk", "Earn $1 more from satisfied customers.", 60);
-		addItem("Better Beans", "Earn $1 more from happy customers.", 80);
-		addItem("Comfy Chair", "Increase customer base patience by 1.", 60);
-		addItem("Soft Sofa", "Increase customer base patience by 10.", 500);
+		addItem("Soothing Syrup", "Lose $1 less from angry customers.", 50, 5, 4); // item cap of 4 so player can only go up to -1
+		addItem("Marvelous Milk", "Earn $1 more from satisfied customers.", 10, 2);
+		addItem("Better Beans", "Earn $1 more from happy customers.", 80, 20);
+		addItem("Comfy Chair", "Increase customer base patience by 1.", 50, 10);
+		addItem("Soft Sofa", "Increase customer base patience by 10.", 100, 20);
 
 		super.create();
 	}
@@ -108,9 +109,10 @@ class ShopState extends FlxState
 		var pressedEnter = FlxG.keys.justPressed.ENTER;
 		if (pressedEnter)
 		{
-			// check if player has enough money first
+			var currentNumOwned = FlxG.save.data.itemsOwned.get(itemNames[currentItem]);
 			if (money < itemPrices[currentItem])
 			{
+				// check if player has enough money
 				var notEnoughMoneyText = new FlxText(0, 0, 0, "You don't have enough money!", 18);
 				notEnoughMoneyText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 				notEnoughMoneyText.screenCenter();
@@ -119,11 +121,24 @@ class ShopState extends FlxState
 				add(notEnoughMoneyText);
 				Timer.delay(remove.bind(notEnoughMoneyText), 1000);
 			}
+			else if (maxNumItems[currentItem] > 0 && currentNumOwned >= maxNumItems[currentItem])
+			{
+				// check if player can buy more of the item
+				var alertText = new FlxText(0, 0, 0, "You can't buy any more of this item!", 18);
+				alertText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
+				alertText.screenCenter();
+				alertText.y += 250;
+				alertText.color = FlxColor.RED;
+				add(alertText);
+				Timer.delay(remove.bind(alertText), 1000);
+			}
 			else
 			{
 				// pop up confirmation message
+				var actualPrice = itemPrices[currentItem] + (priceIncreases[currentItem] * currentNumOwned);
 				ShopConfirmSubState.itemName = itemNames[currentItem];
-				ShopConfirmSubState.itemPrice = itemPrices[currentItem];
+				ShopConfirmSubState.itemPrice = actualPrice;
+				ShopConfirmSubState.itemPriceIncrease = priceIncreases[currentItem];
 				openSubState(new ShopConfirmSubState());
 			}
 		}
@@ -135,20 +150,13 @@ class ShopState extends FlxState
 			{
 				Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "menu", from: "shop"});
 			}
-			if (FlxG.save.data.clearedTutorial)
-			{
-				FlxG.switchState(new MenuState());
-			}
-			else
-			{
-				FlxG.switchState(new MenuStateTutorialForced());
-			}
+			FlxG.switchState(new MenuState());
 		}
 
 		super.update(elapsed);
 	}
 
-	public static function updateOwned()
+	public static function updateOwned(priceIncrease:Int)
 	{
 		shopItems.forEach(function(itemGroup:FlxTypedGroup<FlxText>)
 		{
@@ -156,8 +164,14 @@ class ShopState extends FlxState
 			{
 				itemGroup.forEach(function(item:FlxText)
 				{
-					if (item.ID == 3)
+					if (item.ID == 2)
 					{
+						// Change price and text
+						item.text = "$" + (Std.parseInt(item.text.substring(1, item.text.length)) + priceIncrease);
+					}
+					else if (item.ID == 3)
+					{
+						// Change # owned text
 						item.text = "" + (Std.parseInt(item.text) + 1);
 					}
 				});
@@ -165,7 +179,7 @@ class ShopState extends FlxState
 		});
 	}
 
-	function addItem(name:String = "Item", description:String = "An item...", price:Int = 0)
+	function addItem(name:String = "Item", description:String = "An item...", price:Int = 0, priceIncrease = 0, maxNumber = 0)
 	{
 		// could probably add item images later?
 
@@ -181,13 +195,14 @@ class ShopState extends FlxState
 			FlxG.save.data.itemsOwned.set(name, 0);
 			FlxG.save.flush();
 		}
+		var actualPrice = price + (numOwned * priceIncrease);
 
 		var newItem = new FlxTypedGroup<FlxText>();
 		newItem.ID = shopItems.length;
 		var y = 300 + (yGap * shopItems.length);
 		var newItemName = new FlxText(100, y, 250, name, 20);
 		var newItemDescription = new FlxText(370, y, 490, description, 20);
-		var newItemPrice = new FlxText(880, y, 140, "$" + price, 20);
+		var newItemPrice = new FlxText(880, y, 140, "$" + actualPrice, 20);
 		var newItemOwned = new FlxText(1040, y, 140, "" + numOwned, 20);
 		newItemName.setFormat("assets/fonts/Kaorigel.ttf", 25);
 		newItemDescription.setFormat("assets/fonts/Kaorigel.ttf", 25);
@@ -205,6 +220,8 @@ class ShopState extends FlxState
 		// Add to arrays
 		itemNames.push(name);
 		itemPrices.push(price);
+		priceIncreases.push(priceIncrease);
+		maxNumItems.push(maxNumber);
 
 		if (shopItems.length == 0)
 		{

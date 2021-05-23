@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
@@ -114,6 +115,10 @@ class PlayState extends FlxState
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 
+		// background image
+		var background = new FlxSprite(0, 0, AssetPaths.cafe_background__png);
+		add(background);
+
 		setRange();
 
 		// Add HUD (score + day)
@@ -153,8 +158,13 @@ class PlayState extends FlxState
 		}
 		totalCustomers = (day + 3) > 15 ? 15 : day + 3;
 
-		addInput();
 		addCustomers(totalCustomers);
+
+		// counter image - add after customers to go on top (but before input fields)
+		var counter = new FlxSprite(0, 0, AssetPaths.counter__png);
+		add(counter);
+
+		addInput();
 
 		totalLeft = totalCustomers;
 		getRemaining();

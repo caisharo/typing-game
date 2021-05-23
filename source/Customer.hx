@@ -34,8 +34,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 		var x = 50 + (position - 1) * 200;
-		customer = new FlxSprite(x - 40, 170, AssetPaths.customer__png);
-		customer.scale.set(0.7, 0.7);
+		customer = new FlxSprite(x - 20, 250, AssetPaths.customer__png);
 		add(customer);
 		nameText = new FlxText(x, 120, 200, order[0], 16);
 		nameText.setFormat("assets/fonts/Kaorigelbold.ttf", 21);

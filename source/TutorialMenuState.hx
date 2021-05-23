@@ -31,6 +31,12 @@ class TutorialMenuState extends BasicMenuState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
+		if (pressedEscape)
+		{
+			startMenu();
+		}
 	}
 
 	function startIntro()

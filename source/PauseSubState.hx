@@ -27,6 +27,12 @@ class PauseSubState extends BasicMenuSubState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		var pressedEscape = FlxG.keys.justPressed.ESCAPE;
+		if (pressedEscape)
+		{
+			returnToGame();
+		}
 	}
 
 	function returnToMenu()

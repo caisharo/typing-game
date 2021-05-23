@@ -32,22 +32,23 @@ class DayEndState extends BasicMenuState
 		var mainText = new FlxText(0, 0, 0, "END OF DAY " + day, 64);
 		mainText.setFormat("assets/fonts/Kaorigelbold.ttf", 64, FlxColor.fromString("#FAF4E9"));
 		mainText.screenCenter();
-		mainText.y -= 70;
+		mainText.y -= 150;
 		add(mainText);
 
 		var subText = new FlxText(0, 0, 0, "Money Earned: " + difference, 32);
 		subText.setFormat("assets/fonts/Kaorigel.ttf", 32);
 		subText.screenCenter();
+		subText.y -= 90;
 		add(subText);
 
 		var subText2 = new FlxText(0, 0, 0, "Total: " + money, 32);
 		subText2.setFormat("assets/fonts/Kaorigel.ttf", 32);
 		subText2.screenCenter();
-		subText2.y += 40;
+		subText2.y -= 45;
 		add(subText2);
 
 		menuItems = new FlxTypedGroup<FlxText>();
-		yShift = 500;
+		yShift = 375;
 		addMenuItem("Continue", nextLevel);
 		addMenuItem("Shop", openShop);
 		addMenuItem("Main Menu", returnToMenu);

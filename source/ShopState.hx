@@ -80,11 +80,11 @@ class ShopState extends FlxState
 
 		// Add shop items
 		shopItems = new FlxTypedGroup<FlxTypedGroup<FlxText>>();
-		addItem("Soothing Syrup", "Lose $1 less from angry customers.", 50, 5, 4); // item cap of 4 so player can only go up to -1
-		addItem("Marvelous Milk", "Earn $1 more from satisfied customers.", 10, 2);
-		addItem("Better Beans", "Earn $1 more from happy customers.", 80, 20);
-		addItem("Comfy Chair", "Increase customer base patience by 1.", 50, 10);
-		addItem("Soft Sofa", "Increase customer base patience by 10.", 100, 20);
+		addItem("Soothing Syrup", "Lose $1 less from angry customers.", 25, 10, 4); // item cap of 4 so player can only go up to -1
+		addItem("Marvelous Milk", "Earn $1 more from satisfied customers.", 25, 10);
+		addItem("Better Beans", "Earn $1 more from happy customers.", 25, 10);
+		addItem("Comfy Chair", "Increase customer base patience by 1.", 20, 10);
+		addItem("Soft Sofa", "Increase customer base patience by 10.", 100, 50);
 
 		super.create();
 	}

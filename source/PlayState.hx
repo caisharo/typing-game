@@ -186,7 +186,7 @@ class PlayState extends FlxState
 		selectReminder.alpha = 0;
 		add(selectReminder);
 
-		showOrderAgainText = new FlxText(0, 0, 0, "Press the number key again to show the order.", 15);
+		showOrderAgainText = new FlxText(0, 0, 0, "Press again to show the order.", 16);
 		// showOrderAgainTip.setFormat("assets/fonts/Kaorigelbold.ttf", 15);
 		showOrderAgainText.screenCenter();
 		showOrderAgainText.y += 190;

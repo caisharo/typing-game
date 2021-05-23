@@ -50,7 +50,7 @@ class DayEndState extends BasicMenuState
 		yShift = 500;
 		addMenuItem("Continue", nextLevel);
 		addMenuItem("Shop", openShop);
-		addMenuItem("Menu", returnToMenu);
+		addMenuItem("Main Menu", returnToMenu);
 
 		super.create();
 	}

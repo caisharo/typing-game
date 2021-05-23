@@ -21,7 +21,7 @@ class TutorialPauseSubState extends BasicMenuSubState
 
 		menuItems = new FlxTypedGroup<FlxText>();
 		addMenuItem("Return", returnToGame);
-		addMenuItem("Menu", returnToTutorial);
+		addMenuItem("Tutorial Menu", returnToTutorial);
 	}
 
 	override public function update(elapsed:Float)

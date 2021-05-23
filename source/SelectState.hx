@@ -335,6 +335,7 @@ class SelectState extends FlxState
 		newField.y += yShift + (25 * fields.length);
 
 		var fieldLabel = new FlxText(0, 0, 0, label, 15);
+		fieldLabel.setFormat("assets/fonts/Kaorigelbold.ttf", 20);
 		fieldLabel.screenCenter();
 		fieldLabel.x = newField.x - 75;
 		fieldLabel.y += yShift + (25 * fields.length);

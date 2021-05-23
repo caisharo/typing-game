@@ -128,18 +128,6 @@ class PlayState extends FlxState
 		hud.updateHUD(day, money);
 		add(hud);
 
-		var text = "Current customer: ";
-		if (currentCustomer != null)
-		{
-			text += currentCustomer.getPosition();
-		}
-		currentCustomerText = new FlxText(0, 0, 0, text, 18);
-		currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
-		currentCustomerText.screenCenter();
-		currentCustomerText.y += 160;
-		currentCustomerText.x -= 300;
-		add(currentCustomerText);
-
 		// parse files once
 		for (label in labels)
 		{
@@ -166,7 +154,21 @@ class PlayState extends FlxState
 		var counter = new FlxSprite(0, 0, AssetPaths.counter__png);
 		add(counter);
 
+		// input fields - add after counter image to show on top
 		addInput();
+
+		// current customer text - add after counter image to show on top
+		var text = "Current customer: ";
+		if (currentCustomer != null)
+		{
+			text += currentCustomer.getPosition();
+		}
+		currentCustomerText = new FlxText(0, 0, 0, text, 18);
+		currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
+		currentCustomerText.screenCenter();
+		currentCustomerText.y += 160;
+		currentCustomerText.x -= 300;
+		add(currentCustomerText);
 
 		totalLeft = totalCustomers;
 		getRemaining();

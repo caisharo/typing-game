@@ -33,7 +33,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 	public function new(position:Int, order:Array<String>, time:Float)
 	{
 		super();
-		var x = 50 + (position - 1) * 200;
+		var x = 50 + (position - 1) * 250;
 		customer = new FlxSprite(x - 20, 250, AssetPaths.customer__png);
 		add(customer);
 		nameText = new FlxText(x, 120, 200, order[0], 16);

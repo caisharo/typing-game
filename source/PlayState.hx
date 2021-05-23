@@ -346,7 +346,7 @@ class PlayState extends FlxState
 				currentCustomer.changeSprite(AssetPaths.angry_customer__png);
 				var scoreChange = -5 + angryCustomerIncrease;
 				money += scoreChange;
-				currentCustomer.showScore("-" + scoreChange, FlxColor.RED);
+				currentCustomer.showScore("" + scoreChange, FlxColor.RED);
 				currentCustomer.fadeAway();
 				Timer.delay(hud.updateHUD.bind(day, money), 2000);
 				Timer.delay(remove.bind(currentCustomer), 2000);

@@ -20,8 +20,8 @@ class TypeEndState extends BasicMenuState
 		}
 
 		menuItems = new FlxTypedGroup<FlxText>();
-		addMenuItem("Tutorial", returnToTutorial);
-		addMenuItem("Menu", returnToMenu);
+		addMenuItem("Tutorial Menu", returnToTutorial);
+		addMenuItem("Main Menu", returnToMenu);
 	}
 
 	override public function update(elapsed:Float)

@@ -201,7 +201,7 @@ class ShopState extends FlxState
 		newItem.ID = shopItems.length;
 		var y = 300 + (yGap * shopItems.length);
 		var newItemName = new FlxText(100, y, 250, name, 20);
-		var newItemDescription = new FlxText(370, y, 490, description, 20);
+		var newItemDescription = new FlxText(360, y, 490, description, 20);
 		var newItemPrice = new FlxText(880, y, 140, "$" + actualPrice, 20);
 		var newItemOwned = new FlxText(1040, y, 140, "" + numOwned, 20);
 		newItemName.setFormat("assets/fonts/Kaorigel.ttf", 25);

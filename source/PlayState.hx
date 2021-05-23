@@ -151,7 +151,7 @@ class PlayState extends FlxState
 		{
 			maxCustomersAtOnce = 4;
 		}
-		totalCustomers = (day + 3) > 20 ? 20 : day + 3;
+		totalCustomers = (day + 3) > 15 ? 15 : day + 3;
 
 		addInput();
 		addCustomers(totalCustomers);

@@ -38,6 +38,8 @@ class PlayState extends FlxState
 	var currentCustomer:Customer;
 	var possibleOrders:Map<String, Array<String>> = []; // maps label to array of possible choices (so we don't have to parse file every time)
 	var currentCustomerText:FlxText;
+	var selectReminder:FlxText;
+	var showOrderAgainText:FlxText;
 
 	// Player input section
 	var yShift = 150; // how much to move everything down by
@@ -164,6 +166,23 @@ class PlayState extends FlxState
 		{
 			Main.logger.logLevelStart(day, {day_started: day, money: money});
 		}
+
+		selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 18);
+		// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 18);
+		selectReminder.screenCenter();
+		selectReminder.y += 190;
+		selectReminder.x -= 320;
+		selectReminder.color = FlxColor.RED;
+		selectReminder.alpha = 0;
+		add(selectReminder);
+
+		showOrderAgainText = new FlxText(0, 0, 0, "Press the number key again to show the order again.", 15);
+		// showOrderAgainTip.setFormat("assets/fonts/Kaorigelbold.ttf", 15);
+		showOrderAgainText.screenCenter();
+		showOrderAgainText.y += 190;
+		showOrderAgainText.x -= 390;
+		showOrderAgainText.alpha = 0;
+		add(showOrderAgainText);
 	}
 
 	function getRemaining()
@@ -228,15 +247,12 @@ class PlayState extends FlxState
 				Main.logger.logLevelAction(LoggingActions.NO_CUSTOMER_SELECTED);
 			}
 
-			var selectReminder = new FlxText(0, 0, 0, "Please select customer first!", 18);
-			// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
-			selectReminder.screenCenter();
-			selectReminder.y += 190;
-			selectReminder.x -= 320;
-			selectReminder.color = FlxColor.RED;
-			// selectReminder.setFormat("assets/fonts/Kaorigelbold.ttf", 18);
-			add(selectReminder);
-			Timer.delay(remove.bind(selectReminder), 1000);
+			showOrderAgainText.alpha = 0;
+			selectReminder.alpha = 1;
+			Timer.delay(function()
+			{
+				selectReminder.alpha = 0;
+			}, 1000);
 		}
 
 		if (pressedEnter && currentCustomer != null)
@@ -427,6 +443,16 @@ class PlayState extends FlxState
 
 				currentCustomer.showText(3, 3);
 			}
+			// remind user to hit num key again to show order again
+			else
+			{
+				selectReminder.alpha = 0;
+				showOrderAgainText.alpha = 1;
+				Timer.delay(function()
+				{
+					showOrderAgainText.alpha = 0;
+				}, 2000);
+			}
 			// log switching customers
 			if (currentCustomer == null)
 			{
@@ -460,6 +486,16 @@ class PlayState extends FlxState
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// remind user to hit num key again to show order again
+			else
+			{
+				selectReminder.alpha = 0;
+				showOrderAgainText.alpha = 1;
+				Timer.delay(function()
+				{
+					showOrderAgainText.alpha = 0;
+				}, 2000);
 			}
 			// log switching customers
 			if (currentCustomer == null)
@@ -495,6 +531,16 @@ class PlayState extends FlxState
 
 				currentCustomer.showText(3, 3);
 			}
+			// remind user to hit num key again to show order again
+			else
+			{
+				selectReminder.alpha = 0;
+				showOrderAgainText.alpha = 1;
+				Timer.delay(function()
+				{
+					showOrderAgainText.alpha = 0;
+				}, 2000);
+			}
 			// log switching customers
 			if (currentCustomer == null)
 			{
@@ -529,6 +575,16 @@ class PlayState extends FlxState
 
 				currentCustomer.showText(3, 3);
 			}
+			// remind user to hit num key again to show order again
+			else
+			{
+				selectReminder.alpha = 0;
+				showOrderAgainText.alpha = 1;
+				Timer.delay(function()
+				{
+					showOrderAgainText.alpha = 0;
+				}, 2000);
+			}
 			// log switching customers
 			if (currentCustomer == null)
 			{
@@ -562,6 +618,16 @@ class PlayState extends FlxState
 				}
 
 				currentCustomer.showText(3, 3);
+			}
+			// remind user to hit num key again to show order again
+			else
+			{
+				selectReminder.alpha = 0;
+				showOrderAgainText.alpha = 1;
+				Timer.delay(function()
+				{
+					showOrderAgainText.alpha = 0;
+				}, 2000);
 			}
 			// log switching customers
 			if (currentCustomer == null)

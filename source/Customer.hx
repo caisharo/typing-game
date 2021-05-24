@@ -79,8 +79,8 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		customerPosition.text = Std.string(position);
 
 		// Move everything to proper position
-		var x = 50 + (position - 1) * 200;
-		customer.x = x - 40;
+		var x = 50 + (position - 1) * 250;
+		customer.x = x - 20;
 		nameText.x = x;
 		orderText.x = x;
 		customerPosition.x = x;

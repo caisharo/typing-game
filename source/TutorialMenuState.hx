@@ -21,8 +21,14 @@ class TutorialMenuState extends BasicMenuState
 		yShift = 300;
 		menuItems = new FlxTypedGroup<FlxText>();
 		addMenuItem("Basics", startIntro);
-		addMenuItem("Customer Selection", startSelect);
-		addMenuItem("Final Tips", startType);
+		if (FlxG.save.data.clearedOne)
+		{
+			addMenuItem("Customer Selection", startSelect);
+		}
+		if (FlxG.save.data.clearedTwo)
+		{
+			addMenuItem("Final Tips", startType);
+		}
 		addMenuItem("Main Menu", startMenu);
 
 		super.create();

@@ -252,6 +252,8 @@ class IntroState extends FlxState
 				{
 					Timer.delay(function()
 					{
+						FlxG.save.data.clearedOne = true;
+						FlxG.save.flush();
 						FlxG.switchState(new IntroEndState());
 					}, 1000);
 				});

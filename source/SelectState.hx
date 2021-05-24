@@ -292,6 +292,8 @@ class SelectState extends FlxState
 				{
 					Timer.delay(function()
 					{
+						FlxG.save.data.clearedTwo = true;
+						FlxG.save.flush();
 						FlxG.switchState(new SelectEndState());
 					}, 1000);
 				});

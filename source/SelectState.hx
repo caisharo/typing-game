@@ -84,6 +84,10 @@ class SelectState extends FlxState
 		// background color
 		FlxG.cameras.bgColor = FlxColor.fromString("#14100E");
 
+		// background image
+		var background = new FlxSprite(0, 0, AssetPaths.cafe_background__png);
+		add(background);
+
 		// Add HUD (score + day)
 		hud = new HUD();
 		hud.updateHUD(day, money);

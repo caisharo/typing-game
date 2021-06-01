@@ -21,9 +21,13 @@ class LoggingActions
 	public static var PRESS_SELECT:Int = -2;
 	public static var PRESS_TYPE:Int = -3;
 	//
+	// Whether or not game starts immediately after tutorial
+	public static var MENU_START:Int = 40;
+	public static var AUTO_START:Int = 41;
+	//
 	// logLevelAction
 	//
-	// Customer satisfaction - log {day: day, customer_state: "state", percent_matched: percent, matched: "field: expected; ", failed: "field: expected, actual; "}
+	// Customer satisfaction - log {day: day, customer_state: "state", percent_matched: percent, matched: "field: expected; ", failed: "field: expected, actual; patience_left: patienceLeft, customer_left: totalLeft - 1
 	public static var HAPPY_CUSTOMER:Int = 10;
 	public static var SATISFIED_CUSTOMER:Int = 11;
 	public static var ANGRY_CUSTOMER:Int = 12; // only from incorrect matching

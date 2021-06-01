@@ -624,8 +624,37 @@ class TypeState extends FlxState
 					Main.logger.logLevelEnd({tutorial_completed: true, money: money});
 					Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "auto-menu", from: "type_end"});
 				}
-				FlxG.switchState(new MenuState());
-			}, 1000);
+
+				// A/B testing is only for tutorial at beginning of game - make sure to not do it if user replays tutorial
+				if (FlxG.save.data.dayCompleted == null)
+				{
+					// 50% chance to return to Main Menu
+					if (FlxG.random.bool(50))
+					{
+						if (Main.isLogging)
+						{
+							Main.logger.logActionWithNoLevel(LoggingActions.MENU_START, "returned to main menu after tutorial");
+						}
+						FlxG.switchState(new MenuState());
+					}
+					// 50% chance to go directly to Day 1
+					else
+					{
+						if (Main.isLogging)
+						{
+							Main.logger.logActionWithNoLevel(LoggingActions.AUTO_START, "automatically started game after tutorial");
+						}
+						Timer.delay(function()
+						{
+							FlxG.switchState(new PlayState());
+						}, 1000);
+					}
+				}
+				else
+				{
+					FlxG.switchState(new MenuState());
+				}
+			}, 2000);
 		});
 	}
 

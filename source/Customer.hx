@@ -186,7 +186,7 @@ class Customer extends FlxTypedGroup<FlxSprite>
 		}
 	}
 
-	public function getPatience()
+	public function getPatience():Float
 	{
 		return patience.timeLeft;
 	}

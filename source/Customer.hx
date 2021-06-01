@@ -185,4 +185,9 @@ class Customer extends FlxTypedGroup<FlxSprite>
 			patienceBar.destroy();
 		}
 	}
+
+	public function getPatience()
+	{
+		return patience.timeLeft;
+	}
 }

@@ -62,6 +62,7 @@ class PlayState extends FlxState
 	var remaining = "Remaining customers: ";
 	var timer:FlxText;
 	var totalLeft:Int;
+	var patienceLeft:Float;
 
 	override public function create()
 	{
@@ -310,6 +311,7 @@ class PlayState extends FlxState
 			{
 				trace("matches score: " + score);
 			}
+			patienceLeft = currentCustomer.getPatience();
 			if (score == 1)
 			{
 				// logging
@@ -320,7 +322,9 @@ class PlayState extends FlxState
 						customer_state: "happy",
 						percent_matched: score,
 						matched: matchedString,
-						failed: failedString
+						failed: failedString,
+						patience_left: patienceLeft,
+						customer_left: totalLeft - 1
 					});
 				}
 
@@ -343,7 +347,9 @@ class PlayState extends FlxState
 						customer_state: "satisfied",
 						percent_matched: score,
 						matched: matchedString,
-						failed: failedString
+						failed: failedString,
+						patience_left: patienceLeft,
+						customer_left: totalLeft - 1
 					});
 				}
 
@@ -366,7 +372,9 @@ class PlayState extends FlxState
 						customer_state: "angry",
 						percent_matched: score,
 						matched: matchedString,
-						failed: failedString
+						failed: failedString,
+						patience_left: patienceLeft,
+						customer_left: totalLeft - 1
 					});
 				}
 
@@ -675,7 +683,13 @@ class PlayState extends FlxState
 				// logging
 				if (Main.isLogging)
 				{
-					Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {day: day, customer_state: "angry", order: order});
+					Main.logger.logLevelAction(LoggingActions.ANGRY_NO_PATIENCE, {
+						day: day,
+						customer_state: "angry",
+						order: order,
+						patience_left: 0,
+						customer_left: totalLeft - 1
+					});
 				}
 
 				customer.changeSprite(AssetPaths.angry_customer__png);

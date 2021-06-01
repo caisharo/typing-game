@@ -74,7 +74,7 @@ class SelectState extends FlxState
 	var newCustomer:Customer = new Customer(2, ["bob", "latte"], 20);
 
 	var skipInput:Array<FlxKey> = [FlxKey.ENTER];
-	var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
+	// var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
 	var text = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
 
 	override public function create()
@@ -110,7 +110,7 @@ class SelectState extends FlxState
 		aliceText.start(0.04, false, false, skipInput, function()
 		{
 			aliceDone = true;
-			enterToContinue();
+			// enterToContinue();
 		});
 
 		// logging tutorial level start
@@ -137,7 +137,7 @@ class SelectState extends FlxState
 			Timer.delay(function()
 			{
 				remove(aliceText);
-				remove(enterText);
+				// remove(enterText);
 				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
 				numberText.screenCenter();
 				numberText.y += yShift + 80;
@@ -294,7 +294,11 @@ class SelectState extends FlxState
 					{
 						FlxG.save.data.clearedTwo = true;
 						FlxG.save.flush();
-						FlxG.switchState(new SelectEndState());
+						if (Main.isLogging)
+						{
+							Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "auto-next", from: "select_end"});
+						}
+						FlxG.switchState(new TypeState());
 					}, 1000);
 				});
 			}, 100);
@@ -303,17 +307,17 @@ class SelectState extends FlxState
 		super.update(elapsed);
 	}
 
-	function enterToContinue()
-	{
-		Timer.delay(function()
-		{
-			enterText.screenCenter();
-			enterText.y += yShift + 130;
-			enterText.x = (FlxG.width - text.width) / 2 + 150;
-			add(enterText);
-			FlxFlicker.flicker(enterText, 0, 0.8);
-		}, 400);
-	}
+	// function enterToContinue()
+	// {
+	// 	Timer.delay(function()
+	// 	{
+	// 		enterText.screenCenter();
+	// 		enterText.y += yShift + 130;
+	// 		enterText.x = (FlxG.width - text.width) / 2 + 150;
+	// 		add(enterText);
+	// 		FlxFlicker.flicker(enterText, 0, 0.8);
+	// 	}, 400);
+	// }
 
 	function addInput()
 	{

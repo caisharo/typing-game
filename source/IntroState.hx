@@ -40,7 +40,7 @@ class IntroState extends FlxState
 		"The text below the name is the order.",
 		"The bar is the customer's patience bar, and it will decrease over time.",
 		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.",
-		"Now let's go to the next tutorial."
+		"Now let's get some keyboard interactions involved."
 	];
 
 	var welcomeText = new FlxTypeText(0, 0, 0, "Welcome to the introduction!", 20);
@@ -51,7 +51,7 @@ class IntroState extends FlxState
 	var patienceText = new FlxTypeText(0, 0, 0, "The bar is the customer's patience bar, and it will decrease over time.", 20);
 	var actualText = new FlxTypeText(0, 0, FlxG.width - 400,
 		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.", 20);
-	var nextText = new FlxTypeText(0, 0, 0, "Now let's go to the next tutorial.", 20);
+	var nextText = new FlxTypeText(0, 0, 0, "Now let's get some keyboard interactions involved.", 20);
 
 	var welcomeDone = false;
 	var conceptDone = false;
@@ -254,7 +254,11 @@ class IntroState extends FlxState
 					{
 						FlxG.save.data.clearedOne = true;
 						FlxG.save.flush();
-						FlxG.switchState(new IntroEndState());
+						if (Main.isLogging)
+						{
+							Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SELECT, {pressed: "auto-next", from: "intro_end"});
+						}
+						FlxG.switchState(new SelectState());
 					}, 1000);
 				});
 			}, 100);

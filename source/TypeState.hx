@@ -74,7 +74,7 @@ class TypeState extends FlxState
 	var total = 2;
 
 	var skipInput:Array<FlxKey> = [FlxKey.ENTER];
-	var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
+	// var enterText = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
 	var text = new FlxText(0, 0, 0, "Press ENTER to continue...", 16);
 
 	override public function create()
@@ -140,7 +140,7 @@ class TypeState extends FlxState
 			}, 1500);*/
 
 			lastDone = true;
-			enterToContinue();
+			// enterToContinue();
 		});
 
 		// logging tutorial level start
@@ -167,7 +167,7 @@ class TypeState extends FlxState
 			Timer.delay(function()
 			{
 				remove(lastText);
-				remove(enterText);
+				// remove(enterText);
 				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
 				firstText.screenCenter();
 				firstText.y += 80;
@@ -575,42 +575,57 @@ class TypeState extends FlxState
 		super.update(elapsed);
 	}
 
-	function enterToContinue()
-	{
-		Timer.delay(function()
-		{
-			enterText.screenCenter();
-			enterText.y += yShift + 130;
-			enterText.x = (FlxG.width - text.width) / 2 + 150;
-			add(enterText);
-			FlxFlicker.flicker(enterText, 0, 0.8);
-		}, 400);
-	}
+	// function enterToContinue()
+	// {
+	// 	Timer.delay(function()
+	// 	{
+	// 		enterText.screenCenter();
+	// 		enterText.y += yShift + 130;
+	// 		enterText.x = (FlxG.width - text.width) / 2 + 150;
+	// 		add(enterText);
+	// 		FlxFlicker.flicker(enterText, 0, 0.8);
+	// 	}, 400);
+	// }
 
 	function end()
 	{
 		remove(submitText);
-		if (Main.isLogging)
-		{
-			Main.logger.logLevelEnd({tutorial_completed: true, money: money});
-		}
-		// save that player cleared tutorial?
-		FlxG.save.data.clearedThree = true;
-		FlxG.save.flush();
-		if (FlxG.save.data.clearedOne && FlxG.save.data.clearedTwo)
-		{
-			FlxG.save.data.clearedTutorial = true;
-			FlxG.save.flush(); // save data
-		}
+		// if (Main.isLogging)
+		// {
+		// 	Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+		// }
+		// FlxG.save.data.clearedThree = true;
+		// FlxG.save.flush();
+		// if (FlxG.save.data.clearedOne && FlxG.save.data.clearedTwo)
+		// {
+		// 	FlxG.save.data.clearedTutorial = true;
+		// 	FlxG.save.flush(); // save data
+		// }
 		temp = new FlxText(0, 0, 0, tutorialText[8], 20);
 		funText.screenCenter();
 		funText.y += yShift + 80;
 		funText.x = (FlxG.width - temp.width) / 2;
 		funText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 		add(funText);
-		funText.start(0.04, false, false, [], function()
+		funText.start(0.04, false, false, skipInput, function()
 		{
-			Timer.delay(FlxG.switchState.bind(new TypeEndState()), 1000);
+			// Timer.delay(FlxG.switchState.bind(new TypeEndState()), 1000);
+			Timer.delay(function()
+			{
+				FlxG.save.data.clearedThree = true;
+				FlxG.save.flush();
+				if (FlxG.save.data.clearedOne && FlxG.save.data.clearedTwo)
+				{
+					FlxG.save.data.clearedTutorial = true;
+					FlxG.save.flush(); // save data
+				}
+				if (Main.isLogging)
+				{
+					Main.logger.logLevelEnd({tutorial_completed: true, money: money});
+					Main.logger.logActionWithNoLevel(LoggingActions.PRESS_RETURN_TO_MENU, {pressed: "auto-menu", from: "type_end"});
+				}
+				FlxG.switchState(new MenuState());
+			}, 1000);
 		});
 	}
 

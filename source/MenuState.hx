@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.effects.FlxFlicker;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
@@ -26,11 +27,17 @@ class MenuState extends BasicMenuState
 
 		yShift = 350;
 
-		var titleText = new FlxText(0, 0, 0, "type a latte", 150);
-		titleText.setFormat("assets/fonts/SuperSimpleBrushScript.ttf", 150, FlxColor.fromString("#FAF4E9"));
-		titleText.screenCenter();
-		titleText.y = 80;
-		add(titleText);
+		// var titleText = new FlxText(0, 0, 0, "type a latte", 150);
+		// titleText.setFormat("assets/fonts/SuperSimpleBrushScript.ttf", 150, FlxColor.fromString("#FAF4E9"));
+		// titleText.screenCenter();
+		// titleText.y = 80;
+		// add(titleText);
+
+		var titleImage = new FlxSprite(0, 0, AssetPaths.title__png);
+		titleImage.screenCenter();
+		titleImage.x += 20;
+		titleImage.y = 80;
+		add(titleImage);
 
 		menuItems = new FlxTypedGroup<FlxText>();
 		if (FlxG.save.data.clearedTutorial != null)

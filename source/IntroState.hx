@@ -49,6 +49,8 @@ class IntroState extends FlxState
 	var nameText = new FlxTypeText(0, 0, 0, "The blue text above the customer's head is the name.", 20);
 	var orderText = new FlxTypeText(0, 0, 0, "The text below the name is the order.", 20);
 	var patienceText = new FlxTypeText(0, 0, 0, "The bar is the customer's patience bar, and it will decrease over time.", 20);
+
+	// skip these
 	var actualText = new FlxTypeText(0, 0, FlxG.width - 400,
 		"In the actual game, you will need to type the name and order in the corresponding fields before the patience runs out, but not for now.", 20);
 	var nextText = new FlxTypeText(0, 0, 0, "Now let's get some keyboard interactions involved.", 20);
@@ -211,48 +213,23 @@ class IntroState extends FlxState
 				patienceText.x = (FlxG.width - temp.width) / 2;
 				patienceText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
 				add(patienceText);
+				// patienceText.start(0.04, false, false, skipInput, function()
+				// {
+				// 	patienceDone = true;
+				// 	// enterToContinue();
+				// 	Timer.delay(function()
+				// 	{
+				// 		FlxG.save.data.clearedOne = true;
+				// 		FlxG.save.flush();
+				// 		if (Main.isLogging)
+				// 		{
+				// 			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SELECT, {pressed: "auto-next", from: "intro_end"});
+				// 			Main.logger.logLevelEnd({day_completed: -1, money: money});
+				// 		}
+				// 		FlxG.switchState(new SelectState());
+				// 	}, 1000);
+				// });
 				patienceText.start(0.04, false, false, skipInput, function()
-				{
-					patienceDone = true;
-					// enterToContinue();
-				});
-			}, 100);
-		}
-
-		if (patienceDone && !actualDone && FlxG.keys.justPressed.ENTER)
-		{
-			Timer.delay(function()
-			{
-				remove(patienceText);
-				// remove(enterText);
-				temp = new FlxText(0, 0, 0, tutorialText[6], 20);
-				actualText.screenCenter();
-				actualText.y += yShift + 80;
-				actualText.x = (FlxG.width - actualText.width) / 2;
-				actualText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-				add(actualText);
-				actualText.start(0.04, false, false, skipInput, function()
-				{
-					actualDone = true;
-					// enterToContinue();
-				});
-				addInput();
-			}, 100);
-		}
-
-		if (actualDone && FlxG.keys.justPressed.ENTER)
-		{
-			Timer.delay(function()
-			{
-				remove(actualText);
-				// remove(enterText);
-				temp = new FlxText(0, 0, 0, tutorialText[7], 20);
-				nextText.screenCenter();
-				nextText.y += yShift + 80;
-				nextText.x = (FlxG.width - temp.width) / 2;
-				nextText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-				add(nextText);
-				nextText.start(0.04, false, false, skipInput, function()
 				{
 					Timer.delay(function()
 					{
@@ -268,6 +245,56 @@ class IntroState extends FlxState
 				});
 			}, 100);
 		}
+
+		// if (patienceDone && !actualDone && FlxG.keys.justPressed.ENTER)
+		// {
+		// 	Timer.delay(function()
+		// 	{
+		// 		remove(patienceText);
+		// 		// remove(enterText);
+		// 		temp = new FlxText(0, 0, 0, tutorialText[6], 20);
+		// 		actualText.screenCenter();
+		// 		actualText.y += yShift + 80;
+		// 		actualText.x = (FlxG.width - actualText.width) / 2;
+		// 		actualText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+		// 		add(actualText);
+		// 		actualText.start(0.04, false, false, skipInput, function()
+		// 		{
+		// 			actualDone = true;
+		// 			// enterToContinue();
+		// 		});
+		// 		addInput();
+		// 	}, 100);
+		// }
+
+		// if (actualDone && FlxG.keys.justPressed.ENTER)
+		// {
+		// 	Timer.delay(function()
+		// 	{
+		// 		remove(actualText);
+		// 		// remove(enterText);
+		// 		temp = new FlxText(0, 0, 0, tutorialText[7], 20);
+		// 		nextText.screenCenter();
+		// 		nextText.y += yShift + 80;
+		// 		nextText.x = (FlxG.width - temp.width) / 2;
+		// 		nextText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+		// 		add(nextText);
+		// 		nextText.start(0.04, false, false, skipInput, function()
+		// 		{
+		// 			Timer.delay(function()
+		// 			{
+		// 				FlxG.save.data.clearedOne = true;
+		// 				FlxG.save.flush();
+		// 				if (Main.isLogging)
+		// 				{
+		// 					Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SELECT, {pressed: "auto-next", from: "intro_end"});
+		// 					Main.logger.logLevelEnd({day_completed: -1, money: money});
+		// 				}
+		// 				FlxG.switchState(new SelectState());
+		// 			}, 1000);
+		// 		});
+		// 	}, 100);
+		// }
 
 		super.update(elapsed);
 	}

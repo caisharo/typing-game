@@ -49,7 +49,7 @@ class MenuState extends BasicMenuState
 		else
 		{
 			// Only show tutorial if player hasn't finished
-			addMenuItem("Tutorial", startTutorial);
+			addMenuItem("Start", startTutorial);
 		}
 
 		var keyboardOnlyText = new FlxText(0, 0, 0, "This is a keyboard only game.", 20);

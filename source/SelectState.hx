@@ -38,9 +38,9 @@ class SelectState extends FlxState
 		"Press 1 to select her."
 	];
 
-	var aliceText = new FlxTypeText(0, 0, 0, "Here's Alice again.", 20);
-	var numberText = new FlxTypeText(0, 0, 0, "She is assigned with number 1, as you can see next to her.", 20);
-	var pressText = new FlxTypeText(0, 0, 0, "Press 1 to select her.", 20);
+	// var aliceText = new FlxTypeText(0, 0, 0, "Here's Alice again.", 20);
+	// var numberText = new FlxTypeText(0, 0, 0, "She is assigned with number 1, as you can see next to her.", 20);
+	var pressText = new FlxTypeText(0, 0, 0, "Press 1 to select Alice.", 20);
 
 	var aliceDone = false;
 	var numberDone = false;
@@ -94,12 +94,20 @@ class SelectState extends FlxState
 		add(hud);
 
 		// Start with welcome text
-		temp = new FlxText(0, 0, 0, tutorialText[0], 20);
-		aliceText.screenCenter();
-		aliceText.y += yShift + 80;
-		aliceText.x = (FlxG.width - temp.width) / 2;
-		aliceText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-		add(aliceText);
+		// temp = new FlxText(0, 0, 0, tutorialText[0], 20);
+		// aliceText.screenCenter();
+		// aliceText.y += yShift + 80;
+		// aliceText.x = (FlxG.width - temp.width) / 2;
+		// aliceText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+		// add(aliceText);
+
+		temp = new FlxText(0, 0, 0, tutorialText[2], 20);
+		pressText.screenCenter();
+		pressText.y += yShift + 80;
+		pressText.x = (FlxG.width - temp.width) / 2;
+		pressText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+		add(pressText);
+
 		// var customer:Customer = new Customer(1, ["alice", "coffee"], 25);
 		customers.set(1, customer);
 		add(customer);
@@ -111,9 +119,15 @@ class SelectState extends FlxState
 		currentCustomerText.x -= 300;
 		currentCustomerText.setFormat("assets/fonts/Kaorigelbold.ttf", 23);
 		add(currentCustomerText);
-		aliceText.start(0.04, false, false, skipInput, function()
+		// aliceText.start(0.04, false, false, skipInput, function()
+		// {
+		// 	aliceDone = true;
+		// 	// enterToContinue();
+		// });
+
+		pressText.start(0.04, false, false, skipInput, function()
 		{
-			aliceDone = true;
+			stageOneDone = true;
 			// enterToContinue();
 		});
 
@@ -136,31 +150,31 @@ class SelectState extends FlxState
 			openSubState(new TutorialPauseSubState(FlxColor.fromString("#14100E")));
 		}
 
-		if (aliceDone && !numberDone && FlxG.keys.justPressed.ENTER)
-		{
-			Timer.delay(function()
-			{
-				remove(aliceText);
-				// remove(enterText);
-				temp = new FlxText(0, 0, 0, tutorialText[1], 20);
-				numberText.screenCenter();
-				numberText.y += yShift + 80;
-				numberText.x = (FlxG.width - temp.width) / 2;
-				numberText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-				add(numberText);
-				numberText.start(0.04, false, false, skipInput, function()
-				{
-					numberDone = true;
-					// enterToContinue();
-				});
-			}, 100);
-		}
+		// if (aliceDone && !numberDone && FlxG.keys.justPressed.ENTER)
+		// {
+		// 	Timer.delay(function()
+		// 	{
+		// 		remove(aliceText);
+		// 		// remove(enterText);
+		// 		temp = new FlxText(0, 0, 0, tutorialText[1], 20);
+		// 		numberText.screenCenter();
+		// 		numberText.y += yShift + 80;
+		// 		numberText.x = (FlxG.width - temp.width) / 2;
+		// 		numberText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+		// 		add(numberText);
+		// 		numberText.start(0.04, false, false, skipInput, function()
+		// 		{
+		// 			numberDone = true;
+		// 			// enterToContinue();
+		// 		});
+		// 	}, 100);
+		// }
 
 		if (numberDone && !stageOneDone && FlxG.keys.justPressed.ENTER)
 		{
 			Timer.delay(function()
 			{
-				remove(numberText);
+				// remove(numberText);
 				// remove(enterText);
 				temp = new FlxText(0, 0, 0, tutorialText[2], 20);
 				pressText.screenCenter();
@@ -286,29 +300,40 @@ class SelectState extends FlxState
 				add(currentCustomerText);
 				currentCustomer.changeNumColor(FlxColor.YELLOW);
 
-				temp = new FlxText(0, 0, 0, tutorialTextThree[0], 20);
-				moreText.screenCenter();
-				moreText.y += yShift + 80;
-				moreText.x = (FlxG.width - temp.width) / 2;
-				moreText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
-				add(moreText);
-				moreText.start(0.04, false, false, skipInput, function()
+				Timer.delay(function()
 				{
-					Timer.delay(function()
+					FlxG.save.data.clearedTwo = true;
+					FlxG.save.flush();
+					if (Main.isLogging)
 					{
-						FlxG.save.data.clearedTwo = true;
-						FlxG.save.flush();
-						if (Main.isLogging)
-						{
-							Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "auto-next", from: "select_end"});
-							Main.logger.logLevelEnd({day_completed: -2, money: money});
-						}
-						FlxG.switchState(new TypeState());
-					}, 1000);
-				});
+						Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "auto-next", from: "select_end"});
+						Main.logger.logLevelEnd({day_completed: -2, money: money});
+					}
+					FlxG.switchState(new TypeState());
+				}, 1000);
+
+				// temp = new FlxText(0, 0, 0, tutorialTextThree[0], 20);
+				// moreText.screenCenter();
+				// moreText.y += yShift + 80;
+				// moreText.x = (FlxG.width - temp.width) / 2;
+				// moreText.setFormat("assets/fonts/Kaorigelbold.ttf", 25);
+				// add(moreText);
+				// moreText.start(0.04, false, false, skipInput, function()
+				// {
+				// 	Timer.delay(function()
+				// 	{
+				// 		FlxG.save.data.clearedTwo = true;
+				// 		FlxG.save.flush();
+				// 		if (Main.isLogging)
+				// 		{
+				// 			Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "auto-next", from: "select_end"});
+				// 			Main.logger.logLevelEnd({day_completed: -2, money: money});
+				// 		}
+				// 		FlxG.switchState(new TypeState());
+				// 	}, 1000);
+				// });
 			}, 100);
 		}
-
 		super.update(elapsed);
 	}
 

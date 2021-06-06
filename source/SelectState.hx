@@ -301,6 +301,7 @@ class SelectState extends FlxState
 						if (Main.isLogging)
 						{
 							Main.logger.logActionWithNoLevel(LoggingActions.PRESS_TYPE, {pressed: "auto-next", from: "select_end"});
+							Main.logger.logLevelEnd({day_completed: -2, money: money});
 						}
 						FlxG.switchState(new TypeState());
 					}, 1000);

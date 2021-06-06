@@ -638,6 +638,7 @@ class TypeState extends FlxState
 						if (Main.isLogging)
 						{
 							Main.logger.logActionWithNoLevel(LoggingActions.MENU_START, "returned to main menu after tutorial");
+							Main.logger.logLevelEnd({day_completed: -3, money: money});
 						}
 						FlxG.switchState(new MenuState());
 					}
@@ -647,6 +648,7 @@ class TypeState extends FlxState
 						if (Main.isLogging)
 						{
 							Main.logger.logActionWithNoLevel(LoggingActions.AUTO_START, "automatically started game after tutorial");
+							Main.logger.logLevelEnd({day_completed: -3, money: money});
 						}
 						Timer.delay(function()
 						{

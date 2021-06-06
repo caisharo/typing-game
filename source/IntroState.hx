@@ -261,6 +261,7 @@ class IntroState extends FlxState
 						if (Main.isLogging)
 						{
 							Main.logger.logActionWithNoLevel(LoggingActions.PRESS_SELECT, {pressed: "auto-next", from: "intro_end"});
+							Main.logger.logLevelEnd({day_completed: -1, money: money});
 						}
 						FlxG.switchState(new SelectState());
 					}, 1000);

@@ -83,8 +83,8 @@ class ShopState extends FlxState
 		addItem("Soothing Syrup", "Lose $1 less from angry customers.", 25, 10, 4); // item cap of 4 so player can only go up to -1
 		addItem("Marvelous Milk", "Earn $1 more from satisfied customers.", 25, 10);
 		addItem("Better Beans", "Earn $1 more from happy customers.", 25, 10);
-		addItem("Comfy Chair", "Increase customer base patience by 1.", 20, 10);
-		addItem("Soft Sofa", "Increase customer base patience by 10.", 100, 50);
+		addItem("Comfy Chair", "Increase customer base patience by a bit.", 20, 10);
+		addItem("Soft Sofa", "Increase customer base patience by a lot.", 100, 50);
 
 		super.create();
 	}

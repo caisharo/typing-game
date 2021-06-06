@@ -33,7 +33,7 @@ class IntroState extends FlxState
 	var currentCustomerText:FlxText;
 
 	var tutorialText:Array<String> = [
-		"Welcome to the introduction!",
+		"Welcome to Type a Latte!",
 		"You will learn the basic concepts here.",
 		"This is a customer.",
 		"The blue text above the customer's head is the name.",
@@ -43,7 +43,7 @@ class IntroState extends FlxState
 		"Now let's get some keyboard interactions involved."
 	];
 
-	var welcomeText = new FlxTypeText(0, 0, 0, "Welcome to the introduction!", 20);
+	var welcomeText = new FlxTypeText(0, 0, 0, "Welcome to Type a Latte!", 20);
 	var conceptText = new FlxTypeText(0, 0, 0, "You will learn the basic concepts here.", 20);
 	var customerText = new FlxTypeText(0, 0, 0, "This is a customer.", 20);
 	var nameText = new FlxTypeText(0, 0, 0, "The blue text above the customer's head is the name.", 20);

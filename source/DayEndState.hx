@@ -9,6 +9,7 @@ class DayEndState extends BasicMenuState
 {
 	public static var day = 0;
 	public static var money = 0;
+	public static var performance = 0.0;
 
 	override public function create()
 	{
@@ -21,12 +22,18 @@ class DayEndState extends BasicMenuState
 		}
 		FlxG.save.data.playerMoney = money;
 		var difference = money - lastSavedMoney;
+		FlxG.save.data.performance = performance;
 		FlxG.save.flush(); // save data
 
 		// logging level end
 		if (Main.isLogging)
 		{
-			Main.logger.logLevelEnd({day_completed: day, gained_money: difference, total_money: money});
+			Main.logger.logLevelEnd({
+				day_completed: day,
+				gained_money: difference,
+				total_money: money,
+				avg_patience_left: performance
+			});
 		}
 
 		var mainText = new FlxText(0, 0, 0, "END OF DAY " + day, 64);

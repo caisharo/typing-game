@@ -64,6 +64,13 @@ class PlayState extends FlxState
 	var totalLeft:Int;
 	var patienceLeft:Float;
 
+	var totalPatienceLeft = 0.0;
+	var performance = 0.0;
+	var DECREASE_LIMIT = 17;
+	var INCREASE_LIMIT = 5;
+	var DECREASE_FACTOR = 3;
+	var INCREASE_FACTOR = 1.5;
+
 	override public function create()
 	{
 		super.create();
@@ -112,6 +119,15 @@ class PlayState extends FlxState
 			if (Main.isDebugging)
 			{
 				trace("happy increase " + this.happyCustomerIncrease);
+			}
+		}
+
+		if (FlxG.save.data.performance != null)
+		{
+			this.performance = FlxG.save.data.performance;
+			if (Main.isDebugging)
+			{
+				trace("previous performance: " + this.performance);
 			}
 		}
 
@@ -314,6 +330,7 @@ class PlayState extends FlxState
 			patienceLeft = currentCustomer.getPatience();
 			if (score == 1)
 			{
+				totalPatienceLeft += patienceLeft;
 				// logging
 				if (Main.isLogging)
 				{
@@ -339,6 +356,7 @@ class PlayState extends FlxState
 			}
 			else if (score >= 0.5)
 			{
+				totalPatienceLeft += patienceLeft * 0.5;
 				// logging
 				if (Main.isLogging)
 				{
@@ -740,6 +758,14 @@ class PlayState extends FlxState
 			var order:Array<String> = [];
 			var random = new FlxRandom();
 			var patience = 15 + random.float() * 80 / 2 + basePatienceIncrease;
+			if (performance >= DECREASE_LIMIT)
+			{
+				patience -= performance / DECREASE_FACTOR;
+			}
+			else if (performance <= INCREASE_LIMIT)
+			{
+				patience += performance * INCREASE_FACTOR;
+			}
 			if (position <= maxCustomersAtOnce && displayedCustomers.get(position) == null)
 			{
 				// no customer in position yet - add
@@ -867,6 +893,7 @@ class PlayState extends FlxState
 
 	function endDay()
 	{
+		DayEndState.performance = totalPatienceLeft / totalCustomers;
 		DayEndState.day = day;
 		DayEndState.money = money;
 		Timer.delay(FlxG.switchState.bind(new DayEndState()), 3000);

@@ -485,6 +485,7 @@ class PlayState extends FlxState
 			// remind user to hit num key again to show order again
 			else
 			{
+				FlxG.sound.play(AssetPaths.menuSwitch__wav);
 				selectReminder.alpha = 0;
 				showOrderAgainText.alpha = 1;
 				Timer.delay(function()
@@ -529,6 +530,7 @@ class PlayState extends FlxState
 			// remind user to hit num key again to show order again
 			else
 			{
+				FlxG.sound.play(AssetPaths.menuSwitch__wav);
 				selectReminder.alpha = 0;
 				showOrderAgainText.alpha = 1;
 				Timer.delay(function()
@@ -573,6 +575,7 @@ class PlayState extends FlxState
 			// remind user to hit num key again to show order again
 			else
 			{
+				FlxG.sound.play(AssetPaths.menuSwitch__wav);
 				selectReminder.alpha = 0;
 				showOrderAgainText.alpha = 1;
 				Timer.delay(function()
@@ -617,6 +620,7 @@ class PlayState extends FlxState
 			// remind user to hit num key again to show order again
 			else
 			{
+				FlxG.sound.play(AssetPaths.menuSwitch__wav);
 				selectReminder.alpha = 0;
 				showOrderAgainText.alpha = 1;
 				Timer.delay(function()
@@ -661,6 +665,7 @@ class PlayState extends FlxState
 			// remind user to hit num key again to show order again
 			else
 			{
+				FlxG.sound.play(AssetPaths.menuSwitch__wav);
 				selectReminder.alpha = 0;
 				showOrderAgainText.alpha = 1;
 				Timer.delay(function()

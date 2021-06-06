@@ -286,6 +286,7 @@ class PlayState extends FlxState
 
 		if (pressedEnter && currentCustomer != null)
 		{
+			FlxG.sound.play(AssetPaths.submit__wav);
 			var currentPosition = currentCustomer.getPosition();
 			var customerOrder:Array<String> = currentCustomer.getOrder();
 			var matches:Int = 0;

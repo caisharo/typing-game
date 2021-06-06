@@ -37,11 +37,13 @@ class BasicMenuState extends FlxState
 		if (pressedPrevious)
 		{
 			// Go to previous input field
+			FlxG.sound.play(AssetPaths.menuSwitch__wav);
 			changeSelected(-1);
 		}
 		else if (pressedNext)
 		{
 			// Go to next input field
+			FlxG.sound.play(AssetPaths.menuSwitch__wav);
 			changeSelected(1);
 		}
 		var pressedEnter = FlxG.keys.justPressed.ENTER;

@@ -11,6 +11,11 @@ class MenuState extends BasicMenuState
 {
 	override public function create()
 	{
+		if (FlxG.sound.music == null) // don't restart the music if it's already playing
+		{
+			FlxG.sound.playMusic(AssetPaths.background__ogg, .3, true);
+		}
+
 		// Will probably disable mouse since we want our controls to be keyboard-based
 		// Currently not disabled just to make testing a bit easier
 		#if (!FLX_NO_MOUSE)
